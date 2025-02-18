@@ -1,8 +1,10 @@
 package com.dutra.food_api.entities;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.context.annotation.Configuration;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -12,12 +14,27 @@ public class Restaurante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
+    private BigDecimal taxaFrete;
+    @ManyToOne
+    @JoinColumn(name = "cozinha_id", nullable = false)
+    private Cozinha cozinha;
 
     public Restaurante() {}
-    public Restaurante(Long id, String nome) {
+    public Restaurante(Long id, String nome, Cozinha cozinha) {
         this.id = id;
         this.nome = nome;
+        this.cozinha = cozinha;
+    }
+
+    public Cozinha getCozinha() {
+        return cozinha;
+    }
+
+    public void setCozinha(Cozinha cozinha) {
+        this.cozinha = cozinha;
     }
 
     public Long getId() {
