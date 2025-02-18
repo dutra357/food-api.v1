@@ -12,10 +12,10 @@ public class Cidade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String name;
+    private String nome;
 
     @ManyToOne
-    @JoinColumn(name = "estado_id", nullable = false)
+    @JoinColumn(name = "estado_id")
     private Estado estado;
 
     public Long getId() {
@@ -26,12 +26,12 @@ public class Cidade {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Estado getEstado() {
