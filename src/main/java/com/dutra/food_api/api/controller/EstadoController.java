@@ -1,7 +1,8 @@
 package com.dutra.food_api.api.controller;
 
-import com.dutra.food_api.entities.Estado;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dutra.food_api.domain.models.Estado;
+import com.dutra.food_api.domain.services.CadastroEstadoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,11 +13,14 @@ import java.util.List;
 @RequestMapping("/estados")
 public class EstadoController {
 
-    private final EstadoRepository estadoRepository;
+    private final CadastroEstadoService cadastroEstadoService;
+    public EstadoController(CadastroEstadoService cadastroEstadoService) {
+        this.cadastroEstadoService = cadastroEstadoService;
+    }
 
     @GetMapping
-    public List<Estado> listar() {
-        return estadoRepository.listar();
+    public ResponseEntity<List<Estado>> listarTodos() {
+        return ResponseEntity.ok(cadastroEstadoService.buscarTodos());
     }
 
 }

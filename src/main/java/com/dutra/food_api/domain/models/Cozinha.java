@@ -1,4 +1,4 @@
-package com.dutra.food_api.entities;
+package com.dutra.food_api.domain.models;
 
 import jakarta.persistence.*;
 

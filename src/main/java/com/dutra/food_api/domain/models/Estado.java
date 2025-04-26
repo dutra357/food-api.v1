@@ -1,12 +1,12 @@
-package com.dutra.food_api.entities;
+package com.dutra.food_api.domain.models;
 
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_cidade")
-public class Cidade {
+@Table(name = "tb_estado")
+public class Estado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +14,11 @@ public class Cidade {
     @Column(nullable = false)
     private String nome;
 
-    @ManyToOne
-    @JoinColumn(name = "estado_id")
-    private Estado estado;
+    public Estado() {}
+    public Estado(Long id, String nome) {
+        this.id = id;
+        this.nome = nome;
+    }
 
     public Long getId() {
         return id;
@@ -34,20 +36,12 @@ public class Cidade {
         this.nome = nome;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Cidade cidade = (Cidade) o;
-        return Objects.equals(id, cidade.id);
+        Estado estado = (Estado) o;
+        return Objects.equals(id, estado.id);
     }
 
     @Override

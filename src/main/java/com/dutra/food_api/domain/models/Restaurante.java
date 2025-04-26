@@ -1,8 +1,6 @@
-package com.dutra.food_api.entities;
+package com.dutra.food_api.domain.models;
 
 import jakarta.persistence.*;
-import org.antlr.v4.runtime.misc.NotNull;
-import org.springframework.context.annotation.Configuration;
 
 import java.math.BigDecimal;
 import java.util.Objects;

@@ -10,7 +10,7 @@ package com.dutra.food_api.api.model;
  * afetam tanto a serialização JSON como também XML.
  */
 
-import com.dutra.food_api.entities.Cozinha;
+import com.dutra.food_api.domain.models.Cozinha;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;

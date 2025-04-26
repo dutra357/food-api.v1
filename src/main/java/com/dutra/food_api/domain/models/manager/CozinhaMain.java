@@ -1,7 +1,7 @@
-package com.dutra.food_api.entities.manager;
+package com.dutra.food_api.domain.models.manager;
 
 import com.dutra.food_api.FoodApiApplication;
-import com.dutra.food_api.entities.Cozinha;
+import com.dutra.food_api.domain.models.Cozinha;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ConfigurableApplicationContext;

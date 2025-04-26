@@ -1,18 +1,27 @@
-package com.dutra.food_api.entities;
+package com.dutra.food_api.domain.models;
 
 import jakarta.persistence.*;
 
 import java.util.Objects;
 
 @Entity
-@Table(name = "tb_forma_pagamento")
-public class FormaPagamento {
+@Table(name = "tb_permissao")
+public class Permissao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
+    private String nome;
+    @Column(nullable = false)
     private String descricao;
+
+    public Permissao() {}
+    public Permissao(Long id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+    }
 
     public Long getId() {
         return id;
@@ -20,6 +29,14 @@ public class FormaPagamento {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescricao() {
@@ -34,8 +51,8 @@ public class FormaPagamento {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FormaPagamento that = (FormaPagamento) o;
-        return Objects.equals(id, that.id);
+        Permissao permissao = (Permissao) o;
+        return Objects.equals(id, permissao.id);
     }
 
     @Override
