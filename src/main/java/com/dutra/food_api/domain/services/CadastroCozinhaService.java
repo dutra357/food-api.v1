@@ -3,6 +3,7 @@ package com.dutra.food_api.domain.services;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.models.Cozinha;
 import com.dutra.food_api.domain.repositories.CozinhaRepository;
+import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -32,24 +33,22 @@ public class CadastroCozinhaService {
                 .orElseThrow( () -> new EmptyResultDataAccessException(1));
 
         BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-
-        return cozinhaRepository.save(cozinha);
+        return cozinhaRepository.save(cozinhaAtual);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public void remover(Long id) {
-        Cozinha cozinha = cozinhaRepository.findById(id)
-                .orElseThrow( () -> new EmptyResultDataAccessException(1));
-
-        if (cozinha != null) {
-            throw new EmptyResultDataAccessException(1); //Número esperado de elementos
-        }
+    public void remover(Long cozinhaId) {
 
         try {
-            cozinhaRepository.delete(cozinha);
+            if (!cozinhaRepository.existsById(cozinhaId)) {
+                throw new EntidadeNaoEncontradaException(
+                        String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));
+            }
+            cozinhaRepository.deleteById(cozinhaId);
 
         } catch (DataIntegrityViolationException e) {
-            throw new EntidadeEmUsoException("Entidade em uso, impossível excluir.");
+            throw new EntidadeEmUsoException(
+                    String.format("Cozinha de código %d não pode ser removida, pois está em uso", cozinhaId));
         }
     }
 
