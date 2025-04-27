@@ -1,7 +1,7 @@
 package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.domain.models.Restaurante;
-import com.dutra.food_api.domain.repositories.repo.RestauranteRepository;
+import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,7 +12,6 @@ import org.springframework.util.ReflectionUtils;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 public class CadastroRestauranteService {

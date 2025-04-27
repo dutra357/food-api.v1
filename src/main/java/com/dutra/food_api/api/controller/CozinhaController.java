@@ -1,10 +1,8 @@
 package com.dutra.food_api.api.controller;
 
-import com.dutra.food_api.api.model.CozinhasXmlWrapper;
 import com.dutra.food_api.domain.models.Cozinha;
 import com.dutra.food_api.domain.services.CadastroCozinhaService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,12 +43,5 @@ public class CozinhaController {
     @GetMapping("/{cozinhaId}")
     public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
         return ResponseEntity.ok(cadastroCozinhaService.buscar(cozinhaId));
-    }
-
-
-    //Endpoint legado para XMLWrapper
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
-    public CozinhasXmlWrapper listarXml() {
-        return new CozinhasXmlWrapper(cadastroCozinhaService.buscarTodas());
     }
 }

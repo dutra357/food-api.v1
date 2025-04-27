@@ -2,7 +2,7 @@ package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.models.Cozinha;
-import com.dutra.food_api.domain.repositories.repo.CozinhaRepository;
+import com.dutra.food_api.domain.repositories.CozinhaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;

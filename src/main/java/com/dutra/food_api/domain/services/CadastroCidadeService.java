@@ -3,7 +3,7 @@ package com.dutra.food_api.domain.services;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Cidade;
 import com.dutra.food_api.domain.models.Estado;
-import com.dutra.food_api.domain.repositories.repo.CidadeRepository;
+import com.dutra.food_api.domain.repositories.CidadeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
