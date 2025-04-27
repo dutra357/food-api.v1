@@ -2,10 +2,9 @@ package com.dutra.food_api.api.controller;
 
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.services.CadastroEstadoService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +22,27 @@ public class EstadoController {
         return ResponseEntity.ok(cadastroEstadoService.buscarTodos());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Estado> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(cadastroEstadoService.buscarPorId(id));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Estado> atualizar(@PathVariable Long id, @RequestBody Estado estado) {
+        estado.setId(id);
+        return ResponseEntity.ok(cadastroEstadoService.atualizar(estado));
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Estado> salvar(@RequestBody Estado estado) {
+        return ResponseEntity.ok(cadastroEstadoService.salvar(estado));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        cadastroEstadoService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

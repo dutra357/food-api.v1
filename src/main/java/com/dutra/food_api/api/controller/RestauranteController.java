@@ -2,11 +2,9 @@ package com.dutra.food_api.api.controller;
 
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.services.CadastroRestauranteService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +17,13 @@ public class RestauranteController {
         this.cadastroRestauranteService = cadastroRestauranteService;
     }
 
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Restaurante> salvar(@RequestBody Restaurante restaurante) {
+        return ResponseEntity.ok(cadastroRestauranteService.salvar(restaurante));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Restaurante> buscar(@PathVariable Long id) {
         return ResponseEntity.ok(cadastroRestauranteService.buscar(id));
@@ -27,5 +32,11 @@ public class RestauranteController {
     @GetMapping()
     public ResponseEntity<List<Restaurante>> buscarTodos() {
         return ResponseEntity.ok(cadastroRestauranteService.buscarTodos());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Restaurante> atualizar(@PathVariable Long id,
+                                                 @RequestBody Restaurante restaurante) {
+        return ResponseEntity.ok(cadastroRestauranteService.salvar(restaurante));
     }
 }

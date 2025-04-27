@@ -15,13 +15,25 @@ public class CadastroRestauranteService {
         this.restauranteRepository = restauranteRepository;
     }
 
+    @Transactional
+    public Restaurante salvar(Restaurante restaurante) {
+        return restauranteRepository.save(restaurante);
+    }
+
     @Transactional(readOnly = true)
     public Restaurante buscar(Long id) {
-        return restauranteRepository.buscar(id);
+        return restauranteRepository.findById(id).get();
     }
 
     @Transactional(readOnly = true)
     public List<Restaurante> buscarTodos() {
-        return restauranteRepository.buscarTodos();
+        return restauranteRepository.findAll();
     }
+
+    @Transactional
+    public Restaurante atualizar(Restaurante restaurante) {
+        return restauranteRepository.save(restaurante);
+    }
+
+
 }

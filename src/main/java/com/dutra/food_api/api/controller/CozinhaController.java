@@ -27,30 +27,30 @@ public class CozinhaController {
 
     @DeleteMapping("/{cozinhaId}")
     public ResponseEntity<Void> remover(@PathVariable Long cozinhaId) {
-        cadastroCozinhaService.removerCozinha(cozinhaId);
+        cadastroCozinhaService.remover(cozinhaId);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{cozinhaId}")
     public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId,
                                              @RequestBody Cozinha cozinha) {
-        return ResponseEntity.ok(cadastroCozinhaService.buscarCozinha(cozinhaId));
+        return ResponseEntity.ok(cadastroCozinhaService.atualizarCozinha(cozinhaId, cozinha));
     }
 
     @GetMapping
     public ResponseEntity<List<Cozinha>> buscarTodas() {
-        return ResponseEntity.ok(cadastroCozinhaService.buscarTodasCozinhas());
+        return ResponseEntity.ok(cadastroCozinhaService.buscarTodas());
     }
 
     @GetMapping("/{cozinhaId}")
     public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
-        return ResponseEntity.ok(cadastroCozinhaService.buscarCozinha(cozinhaId));
+        return ResponseEntity.ok(cadastroCozinhaService.buscar(cozinhaId));
     }
 
 
     //Endpoint legado para XMLWrapper
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public CozinhasXmlWrapper listarXml() {
-        return new CozinhasXmlWrapper(cadastroCozinhaService.buscarTodasCozinhas());
+        return new CozinhasXmlWrapper(cadastroCozinhaService.buscarTodas());
     }
 }

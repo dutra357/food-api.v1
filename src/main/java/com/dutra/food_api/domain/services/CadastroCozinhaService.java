@@ -23,40 +23,45 @@ public class CadastroCozinhaService {
 
     @Transactional
     public Cozinha salvarCozinha(Cozinha cozinha) {
-        return cozinhaRepository.salvar(cozinha);
+        return cozinhaRepository.save(cozinha);
     }
 
     @Transactional
-    public Cozinha atualizarCozinha(Cozinha cozinha) {
-        Cozinha cozinhaAtual = cozinhaRepository.buscar(cozinha.getId());
+    public Cozinha atualizarCozinha(Long cozinhaId, Cozinha cozinha) {
+        Cozinha cozinhaAtual = cozinhaRepository.findById(cozinhaId)
+                .orElseThrow( () -> new EmptyResultDataAccessException(1));
+
         BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
 
-        return cozinhaRepository.salvar(cozinha);
+        return cozinhaRepository.save(cozinha);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
-    public void removerCozinha(Long id) {
-        Cozinha cozinha = cozinhaRepository.buscar(id);
+    public void remover(Long id) {
+        Cozinha cozinha = cozinhaRepository.findById(id)
+                .orElseThrow( () -> new EmptyResultDataAccessException(1));
 
         if (cozinha != null) {
             throw new EmptyResultDataAccessException(1); //Número esperado de elementos
         }
 
         try {
-            cozinhaRepository.remover(cozinha);
+            cozinhaRepository.delete(cozinha);
+
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException("Entidade em uso, impossível excluir.");
         }
     }
 
     @Transactional(readOnly = false)
-    public Cozinha buscarCozinha(Long id) {
-        return cozinhaRepository.buscar(id);
+    public Cozinha buscar(Long id) {
+        return cozinhaRepository.findById(id)
+                .orElseThrow( () -> new EmptyResultDataAccessException(1));
     }
 
     @Transactional(readOnly = false)
-    public List<Cozinha> buscarTodasCozinhas() {
-        return cozinhaRepository.buscarTodas();
+    public List<Cozinha> buscarTodas() {
+        return cozinhaRepository.findAll();
     }
 
 }

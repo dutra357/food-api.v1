@@ -1,15 +1,10 @@
 package com.dutra.food_api.domain.repositories.repo;
 
 import com.dutra.food_api.domain.models.Restaurante;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
-public interface RestauranteRepository {
-
-    List<Restaurante> buscarTodos();
-    Restaurante buscar(Long id);
-
-    Restaurante salvar(Restaurante cozinha);
-    void remover(Long id);
-
+@Repository
+public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
 }
