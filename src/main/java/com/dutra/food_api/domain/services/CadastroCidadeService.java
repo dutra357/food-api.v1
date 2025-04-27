@@ -1,8 +1,7 @@
 package com.dutra.food_api.domain.services;
 
-import com.dutra.food_api.domain.exceptions.EntidadeNaoEncontradaException;
+import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Cidade;
-import com.dutra.food_api.domain.models.Cozinha;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.repositories.repo.CidadeRepository;
 import org.springframework.beans.BeanUtils;

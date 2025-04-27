@@ -7,12 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/restaurantes")
 public class RestauranteController {
 
     private final CadastroRestauranteService cadastroRestauranteService;
+
     public RestauranteController(CadastroRestauranteService cadastroRestauranteService) {
         this.cadastroRestauranteService = cadastroRestauranteService;
     }
@@ -37,6 +39,12 @@ public class RestauranteController {
     @PutMapping("/{id}")
     public ResponseEntity<Restaurante> atualizar(@PathVariable Long id,
                                                  @RequestBody Restaurante restaurante) {
-        return ResponseEntity.ok(cadastroRestauranteService.salvar(restaurante));
+        return ResponseEntity.ok(cadastroRestauranteService.atualizarTudo(restaurante));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Restaurante> atualizarParcial(@PathVariable Long id,
+                                               @RequestBody Map<String, Object> campos) {
+        return  ResponseEntity.ok(cadastroRestauranteService.atualizarParcial(id, campos));
     }
 }

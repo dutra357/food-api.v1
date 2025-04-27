@@ -30,14 +30,6 @@ public class Restaurante {
         this.cozinha = cozinha;
     }
 
-    public Cozinha getCozinha() {
-        return cozinha;
-    }
-
-    public void setCozinha(Cozinha cozinha) {
-        this.cozinha = cozinha;
-    }
-
     public Long getId() {
         return id;
     }
@@ -54,6 +46,22 @@ public class Restaurante {
         this.nome = nome;
     }
 
+    public BigDecimal getTaxaFrete() {
+        return taxaFrete;
+    }
+
+    public void setTaxaFrete(BigDecimal taxaFrete) {
+        this.taxaFrete = taxaFrete;
+    }
+
+    public Cozinha getCozinha() {
+        return cozinha;
+    }
+
+    public void setCozinha(Cozinha cozinha) {
+        this.cozinha = cozinha;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,5 +73,15 @@ public class Restaurante {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurante{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", taxaFrete=" + taxaFrete +
+                ", cozinha=" + cozinha +
+                '}';
     }
 }

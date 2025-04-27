@@ -1,6 +1,6 @@
 package com.dutra.food_api.domain.services;
 
-import com.dutra.food_api.domain.exceptions.EntidadeNaoEncontradaException;
+import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.repositories.repo.EstadoRepository;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,7 +25,8 @@ public class CadastroEstadoService {
 
     @Transactional(readOnly = true)
     public Estado buscarPorId(Long id) {
-        return estadoRepository.findById(id).orElseThrow(() -> new EmptyResultDataAccessException(1));
+        return estadoRepository.findById(id)
+                .orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
     @Transactional(readOnly = false)
