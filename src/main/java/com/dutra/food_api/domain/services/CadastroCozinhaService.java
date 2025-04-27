@@ -4,6 +4,7 @@ import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.models.Cozinha;
 import com.dutra.food_api.domain.repositories.CozinhaRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
+import com.dutra.food_api.domain.services.interfaces.CadastroCozinhaInterface;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -15,7 +16,7 @@ import java.util.List;
 
 
 @Service
-public class CadastroCozinhaService {
+public class CadastroCozinhaService implements CadastroCozinhaInterface {
 
     private final CozinhaRepository cozinhaRepository;
     public CadastroCozinhaService(CozinhaRepository cozinhaRepository) {
@@ -23,11 +24,13 @@ public class CadastroCozinhaService {
     }
 
     @Transactional
+    @Override
     public Cozinha salvarCozinha(Cozinha cozinha) {
         return cozinhaRepository.save(cozinha);
     }
 
     @Transactional
+    @Override
     public Cozinha atualizarCozinha(Long cozinhaId, Cozinha cozinha) {
         Cozinha cozinhaAtual = cozinhaRepository.findById(cozinhaId)
                 .orElseThrow( () -> new EmptyResultDataAccessException(1));
@@ -37,6 +40,7 @@ public class CadastroCozinhaService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
     public void remover(Long cozinhaId) {
 
         try {
@@ -53,12 +57,14 @@ public class CadastroCozinhaService {
     }
 
     @Transactional(readOnly = false)
+    @Override
     public Cozinha buscar(Long id) {
         return cozinhaRepository.findById(id)
                 .orElseThrow( () -> new EmptyResultDataAccessException(1));
     }
 
     @Transactional(readOnly = false)
+    @Override
     public List<Cozinha> buscarTodas() {
         return cozinhaRepository.findAll();
     }

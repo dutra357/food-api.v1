@@ -4,6 +4,7 @@ import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaExcept
 import com.dutra.food_api.domain.models.Cidade;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.repositories.CidadeRepository;
+import com.dutra.food_api.domain.services.interfaces.CadastroCidadeInterface;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class CadastroCidadeService {
+public class CadastroCidadeService implements CadastroCidadeInterface {
 
     private final CidadeRepository cidadeRepository;
     private final CadastroEstadoService cadastroEstadoService;
@@ -25,6 +26,7 @@ public class CadastroCidadeService {
 
 
     @Transactional
+    @Override
     public Cidade salvar(Cidade cidade) {
 
         Long estadoId = cidade.getEstado().getId();
@@ -41,6 +43,7 @@ public class CadastroCidadeService {
     }
 
     @Transactional
+    @Override
     public Cidade atualizar(Long cidadeId, Cidade cidade) {
 
         Cidade cidadeAtual = cidadeRepository.findById(cidadeId)
@@ -52,16 +55,19 @@ public class CadastroCidadeService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
     public void excluir(Long cidadeId) {
         cidadeRepository.deleteById(cidadeId);
     }
 
     @Transactional(readOnly = true)
+    @Override
     public Cidade buscarPorId(Long cidadeId) {
         return cidadeRepository.findById(cidadeId).orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
     @Transactional(readOnly = true)
+    @Override
     public List<Cidade> buscarTodas() {
         return cidadeRepository.findAll();
     }

@@ -1,7 +1,7 @@
 package com.dutra.food_api.api.controller;
 
 import com.dutra.food_api.domain.models.Restaurante;
-import com.dutra.food_api.domain.services.CadastroRestauranteService;
+import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.Map;
 @RequestMapping("/restaurantes")
 public class RestauranteController {
 
-    private final CadastroRestauranteService cadastroRestauranteService;
+    private final CadastroRestauranteInterface cadastroRestauranteService;
 
-    public RestauranteController(CadastroRestauranteService cadastroRestauranteService) {
+    public RestauranteController(CadastroRestauranteInterface cadastroRestauranteService) {
         this.cadastroRestauranteService = cadastroRestauranteService;
     }
 

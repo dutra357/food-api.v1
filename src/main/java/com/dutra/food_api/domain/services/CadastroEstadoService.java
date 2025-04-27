@@ -3,6 +3,7 @@ package com.dutra.food_api.domain.services;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.repositories.EstadoRepository;
+import com.dutra.food_api.domain.services.interfaces.CadastroEstadoInterface;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class CadastroEstadoService {
+public class CadastroEstadoService implements CadastroEstadoInterface {
 
     private final EstadoRepository estadoRepository;
     public CadastroEstadoService(EstadoRepository estadoRepository) {
@@ -19,22 +20,26 @@ public class CadastroEstadoService {
     }
 
     @Transactional(readOnly = true)
+    @Override
     public List<Estado> buscarTodos() {
         return estadoRepository.findAll();
     }
 
     @Transactional(readOnly = true)
+    @Override
     public Estado buscarPorId(Long id) {
         return estadoRepository.findById(id)
                 .orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
     @Transactional(readOnly = false)
+    @Override
     public Estado salvar(Estado estado) {
         return estadoRepository.save(estado);
     }
 
     @Transactional(readOnly = false)
+    @Override
     public void delete(Long estadoId) {
 
         Estado estado = estadoRepository.findById(estadoId)
@@ -51,6 +56,7 @@ public class CadastroEstadoService {
     }
 
     @Transactional(readOnly = false)
+    @Override
     public Estado atualizar(Estado estado) {
         return estadoRepository.save(estado);
     }

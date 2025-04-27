@@ -3,6 +3,7 @@ package com.dutra.food_api.domain.services;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
+import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CadastroRestauranteService {
+public class CadastroRestauranteService implements CadastroRestauranteInterface {
 
     private final RestauranteRepository restauranteRepository;
     public CadastroRestauranteService(RestauranteRepository restauranteRepository) {
@@ -22,27 +23,32 @@ public class CadastroRestauranteService {
     }
 
     @Transactional
+    @Override
     public Restaurante salvar(Restaurante restaurante) {
         return restauranteRepository.save(restaurante);
     }
 
     @Transactional(readOnly = true)
+    @Override
     public Restaurante buscar(Long id) {
         return restauranteRepository.findById(id)
                 .orElseThrow(() -> new EmptyResultDataAccessException(1));
     }
 
     @Transactional(readOnly = true)
+    @Override
     public List<Restaurante> buscarTodos() {
         return restauranteRepository.findAll();
     }
 
     @Transactional
+    @Override
     public Restaurante atualizarTudo(Restaurante restaurante) {
         return restauranteRepository.save(restaurante);
     }
 
     @Transactional
+    @Override
     public Restaurante atualizarParcial(Long id, Map<String, Object> camposInformados) {
 
         Restaurante  restaurante = restauranteRepository.findById(id)

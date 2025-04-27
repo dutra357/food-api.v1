@@ -12,10 +12,6 @@ import java.util.List;
 @Repository
 public interface RestauranteRepository extends JpaRepository<Restaurante, Long> {
 
-    List<Restaurante> findPersonalizado(String nome,
-                                        BigDecimal taxaFreteInicial,
-                                        BigDecimal taxaFreteFinal);
-
     @Query("from Restaurante where nome like %:parametro% and cozinha.id = :id")
     List<Restaurante> findPersonalizado(String parametro, @Param("id") Long cozinhaId);
 
@@ -26,4 +22,5 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     List<Restaurante> findByNomeContainingAndTaxaFrete(String nome, BigDecimal taxaFrete);
 
     List<Restaurante> findByNomeContainingAndCozinhaId(String nome, Long cozinhaId);
+
 }
