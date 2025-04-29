@@ -15,6 +15,9 @@ public interface RestauranteRepository extends JpaRepository<Restaurante, Long> 
     @Query("from Restaurante where nome like %:parametro% and cozinha.id = :id")
     List<Restaurante> findPersonalizado(String parametro, @Param("id") Long cozinhaId);
 
+    @Query("from Restaurante where nome like %:nome% and taxaFrete between :taxaInicial and :taxaFinal")
+    List<Restaurante> findPersonalizadoBetween(String nome, BigDecimal taxaInicial, BigDecimal taxaFinal);
+
     List<Restaurante> consultaFromXml(String nome, @Param("id") Long cozinhaId);
 
     List<Restaurante> findByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
