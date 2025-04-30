@@ -1,8 +1,7 @@
 package com.dutra.food_api.domain.repositories;
 
 import com.dutra.food_api.domain.models.Restaurante;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.dutra.food_api.domain.repositories.custom.CustomJpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, JpaSpecificationExecutor<Restaurante> {
+public interface RestauranteRepository extends CustomJpaRepository<Restaurante, Long>, JpaSpecificationExecutor<Restaurante> {
 
     @Query("from Restaurante where nome like %:parametro% and cozinha.id = :id")
     List<Restaurante> findPersonalizado(String parametro, @Param("id") Long cozinhaId);

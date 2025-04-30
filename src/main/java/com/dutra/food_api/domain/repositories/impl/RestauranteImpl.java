@@ -1,6 +1,7 @@
 package com.dutra.food_api.domain.repositories.impl;
 
 import com.dutra.food_api.domain.models.Restaurante;
+import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -15,17 +16,23 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.dutra.food_api.domain.repositories.specifications.SpecFactory.comFreteGratis;
+import static com.dutra.food_api.domain.repositories.specifications.SpecFactory.comNomeSemelhante;
+
 @Repository
 public class RestauranteImpl implements RestauranteRepositoryQueries {
 
     @PersistenceContext
     private final EntityManager manager;
+    private final RestauranteRepository restauranteRepository;
 
-    public RestauranteImpl(EntityManager manager) {
+    public RestauranteImpl(EntityManager manager, RestauranteRepository restauranteRepository) {
         this.manager = manager;
+        this.restauranteRepository = restauranteRepository;
     }
 
 
+    // * Método para Criteria API
     @Override
     public List<Restaurante> find(String nome,
                                   BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
@@ -52,5 +59,12 @@ public class RestauranteImpl implements RestauranteRepositoryQueries {
 
         TypedQuery<Restaurante> query = manager.createQuery(criteria);
         return query.getResultList();
+    }
+
+    //Mètodo para Specializations
+    @Override
+    public List<Restaurante> findComFreteGratis(String nome) {
+        //Import estático
+        return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
     }
 }

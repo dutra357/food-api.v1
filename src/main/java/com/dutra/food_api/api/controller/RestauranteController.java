@@ -1,6 +1,7 @@
 package com.dutra.food_api.api.controller;
 
 import com.dutra.food_api.domain.models.Restaurante;
+import com.dutra.food_api.domain.repositories.impl.RestauranteImpl;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,11 +15,23 @@ import java.util.Map;
 public class RestauranteController {
 
     private final CadastroRestauranteInterface cadastroRestauranteService;
+    private final RestauranteImpl restauranteImpl;
 
-    public RestauranteController(CadastroRestauranteInterface cadastroRestauranteService) {
+    public RestauranteController(CadastroRestauranteInterface cadastroRestauranteService,
+                                 RestauranteImpl restauranteImpl) {
         this.cadastroRestauranteService = cadastroRestauranteService;
+        this.restauranteImpl = restauranteImpl;
     }
 
+    @GetMapping("/com-frete-gratis")
+    public ResponseEntity<List<Restaurante>> buscar(@RequestParam String comNome) {
+        return ResponseEntity.ok(restauranteImpl.findComFreteGratis(comNome));
+    }
+
+    @GetMapping("/buscar-primeiro")
+    public ResponseEntity<Restaurante> buscarPrimeiro() {
+        return ResponseEntity.ok(cadastroRestauranteService.buscarPrimeiro());
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

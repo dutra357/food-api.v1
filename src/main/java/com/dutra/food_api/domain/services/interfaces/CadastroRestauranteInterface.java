@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface CadastroRestauranteInterface {
+
+    public Restaurante buscarPrimeiro();
+
     @Transactional
     Restaurante salvar(Restaurante restaurante);
 

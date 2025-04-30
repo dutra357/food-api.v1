@@ -22,6 +22,13 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         this.restauranteRepository = restauranteRepository;
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public Restaurante buscarPrimeiro() {
+        return restauranteRepository.buscarPrimeiro()
+                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+    }
+
     @Transactional
     @Override
     public Restaurante salvar(Restaurante restaurante) {
