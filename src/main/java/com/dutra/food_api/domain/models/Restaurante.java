@@ -7,7 +7,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -49,12 +48,20 @@ public class Restaurante {
     @Column(columnDefinition = "datetime")
     private LocalDateTime dataAtualizacao;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "restaurante")
+    private final List<Produto> produtos = new ArrayList<>();
+
     public Restaurante() {}
 
     public Restaurante(Long id, String nome, Cozinha cozinha) {
         this.id = id;
         this.nome = nome;
         this.cozinha = cozinha;
+    }
+
+    public List<Produto> getProdutos() {
+        return produtos;
     }
 
     public LocalDateTime getDataCadastro() {
