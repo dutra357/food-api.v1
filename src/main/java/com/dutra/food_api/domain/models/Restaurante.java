@@ -1,10 +1,10 @@
 package com.dutra.food_api.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +14,20 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_restaurante")
 public class Restaurante {
+
+    /**
+     * Problem N+1.
+     * Terminando com ToOne, o carregamento é Eager, ou seja, carrega todos os dados
+     * de uma vez.
+     * Para isso, deve-se usar a anotação @Fetch(FetchMode.JOIN) em cima do atributo
+     * que queremos carregar.
+     *
+     * Termiando com ToMany, o carregamento é Lazy, ou seja, carrega os dados apenas
+     * quando for necessário.
+     *
+     * Para resolver o problema, deve-se usar a anotação @Fetch(FetchMode.SUBSELECT)
+     * em cima do atributo que queremos carregar.
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +39,11 @@ public class Restaurante {
     @Column(nullable = false)
     private BigDecimal taxaFrete;
 
+    @JsonIgnoreProperties(value = "restaurantes")
     @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "tb_restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),

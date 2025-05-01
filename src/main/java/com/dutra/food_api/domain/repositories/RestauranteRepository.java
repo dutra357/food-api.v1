@@ -13,6 +13,11 @@ import java.util.List;
 @Repository
 public interface RestauranteRepository extends CustomJpaRepository<Restaurante, Long>, JpaSpecificationExecutor<Restaurante> {
 
+    //Para problem N+1
+    @Query("from Restaurante r join fetch r.cozinha left join fetch r.formasPagamento left join fetch r.endereco")
+    List<Restaurante> buscarTodosSemN1();
+
+
     @Query("from Restaurante where nome like %:parametro% and cozinha.id = :id")
     List<Restaurante> findPersonalizado(String parametro, @Param("id") Long cozinhaId);
 

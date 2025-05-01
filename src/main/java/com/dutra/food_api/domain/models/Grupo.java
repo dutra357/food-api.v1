@@ -28,6 +28,10 @@ public class Grupo {
         this.nome = nome;
     }
 
+    public List<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
     public Long getId() {
         return id;
     }

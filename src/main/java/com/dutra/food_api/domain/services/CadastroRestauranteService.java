@@ -45,7 +45,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     @Transactional(readOnly = true)
     @Override
     public List<Restaurante> buscarTodos() {
-        return restauranteRepository.findAll();
+        return restauranteRepository.buscarTodosSemN1();
     }
 
     @Transactional

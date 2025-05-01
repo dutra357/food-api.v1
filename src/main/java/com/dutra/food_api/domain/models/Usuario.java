@@ -44,6 +44,14 @@ public class Usuario {
         this.dataCadastro = dataCadastro;
     }
 
+    public List<Grupo> getGrupos() {
+        return grupos;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+        this.grupos = grupos;
+    }
+
     public Long getId() {
         return id;
     }
