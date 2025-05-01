@@ -2,6 +2,8 @@ package com.dutra.food_api.domain.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -11,8 +13,19 @@ public class FormaPagamento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String descricao;
+
+    @ManyToMany(mappedBy = "formasPagamento")
+    private List<Restaurante> restaurantes = new ArrayList<>();
+
+    public FormaPagamento() {}
+
+    public FormaPagamento(Long id, String descricao) {
+        this.id = id;
+        this.descricao = descricao;
+    }
 
     public Long getId() {
         return id;

@@ -1,8 +1,11 @@
 package com.dutra.food_api.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,11 +26,35 @@ public class Restaurante {
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(name = "tb_restaurante_forma_pagamento",
+            joinColumns = @JoinColumn(name = "restaurante_id"),
+            inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
+    private final List<FormaPagamento> formasPagamento = new ArrayList<>();
+
+    @JsonIgnore
+    @Embedded
+    private Endereco endereco;
+
     public Restaurante() {}
+
     public Restaurante(Long id, String nome, Cozinha cozinha) {
         this.id = id;
         this.nome = nome;
         this.cozinha = cozinha;
+    }
+
+    public List<FormaPagamento> getFormasPagamento() {
+        return formasPagamento;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     public Long getId() {

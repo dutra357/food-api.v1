@@ -1,7 +1,10 @@
 package com.dutra.food_api.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -11,10 +14,16 @@ public class Cozinha {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String nome;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "cozinha")
+    private final List<Restaurante> restaurantes = new ArrayList<>();
+
     public Cozinha() {}
+
     public Cozinha(Long id, String nome) {
         this.id = id;
         this.nome = nome;
@@ -34,6 +43,10 @@ public class Cozinha {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public List<Restaurante> getRestaurantes() {
+        return restaurantes;
     }
 
     @Override
