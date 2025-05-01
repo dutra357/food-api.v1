@@ -19,6 +19,7 @@ insert into tb_restaurante (nome, taxa_frete, cozinha_id, cidade_id, cep, lograd
 insert into tb_forma_pagamento (descricao) values ('Cartão de crédito');
 insert into tb_forma_pagamento (descricao) values ('Cartão de débito');
 insert into tb_forma_pagamento (descricao) values ('Dinheiro');
+insert into tb_forma_pagamento (descricao) values ('PIX');
 
 insert into tb_permissao (nome, descricao) values ('CONSULTAR_COZINHAS', 'Permite consultar cozinhas');
 insert into tb_permissao (nome, descricao) values ('EDITAR_COZINHAS', 'Permite editar cozinhas');

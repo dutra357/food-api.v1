@@ -2,8 +2,12 @@ package com.dutra.food_api.domain.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,12 +41,36 @@ public class Restaurante {
     @Embedded
     private Endereco endereco;
 
+    @CreationTimestamp
+    @Column(columnDefinition = "datetime")
+    private LocalDateTime dataCadastro;
+
+    @UpdateTimestamp
+    @Column(columnDefinition = "datetime")
+    private LocalDateTime dataAtualizacao;
+
     public Restaurante() {}
 
     public Restaurante(Long id, String nome, Cozinha cozinha) {
         this.id = id;
         this.nome = nome;
         this.cozinha = cozinha;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
     }
 
     public List<FormaPagamento> getFormasPagamento() {
