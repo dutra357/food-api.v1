@@ -14,7 +14,7 @@ import java.util.List;
 public interface RestauranteRepository extends CustomJpaRepository<Restaurante, Long>, JpaSpecificationExecutor<Restaurante> {
 
     //Para problem N+1
-    @Query("from Restaurante r join fetch r.cozinha left join fetch r.formasPagamento left join fetch r.endereco")
+    @Query("from Restaurante r join fetch r.cozinha left join fetch r.formasPagamento")
     List<Restaurante> buscarTodosSemN1();
 
 
