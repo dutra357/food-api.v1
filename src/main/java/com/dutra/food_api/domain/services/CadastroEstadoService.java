@@ -1,11 +1,11 @@
 package com.dutra.food_api.domain.services;
 
+import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.repositories.EstadoRepository;
 import com.dutra.food_api.domain.services.interfaces.CadastroEstadoInterface;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +13,8 @@ import java.util.List;
 
 @Service
 public class CadastroEstadoService implements CadastroEstadoInterface {
+
+    private static final String ESTADO_NOT_FOUND = "Estado não encontrado";
 
     private final EstadoRepository estadoRepository;
     public CadastroEstadoService(EstadoRepository estadoRepository) {
@@ -29,7 +31,7 @@ public class CadastroEstadoService implements CadastroEstadoInterface {
     @Override
     public Estado buscarPorId(Long id) {
         return estadoRepository.findById(id)
-                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(ESTADO_NOT_FOUND));
     }
 
     @Transactional(readOnly = false)
@@ -43,15 +45,14 @@ public class CadastroEstadoService implements CadastroEstadoInterface {
     public void delete(Long estadoId) {
 
         Estado estado = estadoRepository.findById(estadoId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(
-                        String.format("Não existe um cadastro de estado com código %d", estadoId)));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(ESTADO_NOT_FOUND));
 
         try {
             estadoRepository.delete(estado);
 
         } catch (DataIntegrityViolationException e) {
-            throw new DataIntegrityViolationException(
-                    String.format("Estado de código %d não pode ser removido, pois está em uso", estadoId));
+
+            throw new EntidadeEmUsoException("Estado em uso.");
         }
     }
 

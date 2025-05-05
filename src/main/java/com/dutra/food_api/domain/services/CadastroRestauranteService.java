@@ -2,6 +2,7 @@ package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
+import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,6 +17,8 @@ import java.util.Map;
 
 @Service
 public class CadastroRestauranteService implements CadastroRestauranteInterface {
+
+    private static final String RESTAURANTE_NOT_FOUND = "Restaurante não encontrado";
 
     private final RestauranteRepository restauranteRepository;
     public CadastroRestauranteService(RestauranteRepository restauranteRepository) {
@@ -39,7 +42,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     @Override
     public Restaurante buscar(Long id) {
         return restauranteRepository.findById(id)
-                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(RESTAURANTE_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)
@@ -62,6 +65,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
                 .orElseThrow(() -> new EmptyResultDataAccessException(1));
 
         ObjectMapper objectMapper = new ObjectMapper();
+
         Restaurante restauranteOrigem = objectMapper.convertValue(camposInformados, Restaurante.class);
 
         camposInformados.forEach((campoInformado, valor) -> {

@@ -4,9 +4,9 @@ import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaExcept
 import com.dutra.food_api.domain.models.Cidade;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.repositories.CidadeRepository;
+import com.dutra.food_api.domain.services.exceptions.EstadoNaoEncontradoException;
 import com.dutra.food_api.domain.services.interfaces.CadastroCidadeInterface;
 import org.springframework.beans.BeanUtils;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +15,8 @@ import java.util.List;
 
 @Service
 public class CadastroCidadeService implements CadastroCidadeInterface {
+
+    private static final String CIDADE_NOT_FOUND = "Cidade não encontrada";
 
     private final CidadeRepository cidadeRepository;
     private final CadastroEstadoService cadastroEstadoService;
@@ -29,15 +31,14 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
     @Override
     public Cidade salvar(Cidade cidade) {
 
-        Long estadoId = cidade.getEstado().getId();
-        Estado estado = cadastroEstadoService.buscarPorId(estadoId);
+        try {
+            Long estadoId = cidade.getEstado().getId();
+            Estado estado = cadastroEstadoService.buscarPorId(estadoId);
+            cidade.setEstado(estado);
 
-        if (estado == null) {
-            throw new EntidadeNaoEncontradaException(
-                    String.format("Não existe cadastro de estado com código %d", estadoId));
+        } catch (EntidadeNaoEncontradaException err) {
+            throw new EstadoNaoEncontradoException("Estado não encontrado");
         }
-
-        cidade.setEstado(estado);
 
         return cidadeRepository.save(cidade);
     }
@@ -47,7 +48,7 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
     public Cidade atualizar(Long cidadeId, Cidade cidade) {
 
         Cidade cidadeAtual = cidadeRepository.findById(cidadeId)
-                .orElseThrow( () -> new EmptyResultDataAccessException(1));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException(CIDADE_NOT_FOUND));
 
         BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
@@ -63,7 +64,8 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
     @Transactional(readOnly = true)
     @Override
     public Cidade buscarPorId(Long cidadeId) {
-        return cidadeRepository.findById(cidadeId).orElseThrow(() -> new EmptyResultDataAccessException(1));
+        return cidadeRepository.findById(cidadeId)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(CIDADE_NOT_FOUND));
     }
 
     @Transactional(readOnly = true)

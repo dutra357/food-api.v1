@@ -7,7 +7,6 @@ import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaExcept
 import com.dutra.food_api.domain.services.interfaces.CadastroCozinhaInterface;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +16,8 @@ import java.util.List;
 
 @Service
 public class CadastroCozinhaService implements CadastroCozinhaInterface {
+
+    private static final String COZINHA_NOT_FOUND = "Cozinha não encontrada.";
 
     private final CozinhaRepository cozinhaRepository;
     public CadastroCozinhaService(CozinhaRepository cozinhaRepository) {
@@ -33,7 +34,7 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
     @Override
     public Cozinha atualizarCozinha(Long cozinhaId, Cozinha cozinha) {
         Cozinha cozinhaAtual = cozinhaRepository.findById(cozinhaId)
-                .orElseThrow( () -> new EmptyResultDataAccessException(1));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND));
 
         BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
         return cozinhaRepository.save(cozinhaAtual);
@@ -45,8 +46,7 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
 
         try {
             if (!cozinhaRepository.existsById(cozinhaId)) {
-                throw new EntidadeNaoEncontradaException(
-                        String.format("Não existe um cadastro de cozinha com código %d", cozinhaId));
+                throw new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND);
             }
             cozinhaRepository.deleteById(cozinhaId);
 
@@ -60,7 +60,7 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
     @Override
     public Cozinha buscar(Long id) {
         return cozinhaRepository.findById(id)
-                .orElseThrow( () -> new EmptyResultDataAccessException(1));
+                .orElseThrow( () -> new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND));
     }
 
     @Transactional(readOnly = false)
