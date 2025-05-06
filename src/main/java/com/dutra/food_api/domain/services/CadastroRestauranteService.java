@@ -1,5 +1,6 @@
 package com.dutra.food_api.domain.services;
 
+import com.dutra.food_api.api.model.RestauranteInput;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
@@ -22,8 +23,12 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     private static final String RESTAURANTE_NOT_FOUND = "Restaurante não encontrado";
 
     private final RestauranteRepository restauranteRepository;
-    public CadastroRestauranteService(RestauranteRepository restauranteRepository) {
+    private final CadastroCozinhaService cozinhaService;
+
+    public CadastroRestauranteService(RestauranteRepository restauranteRepository,
+                                      CadastroCozinhaService cozinhaService) {
         this.restauranteRepository = restauranteRepository;
+        this.cozinhaService = cozinhaService;
     }
 
     @Transactional(readOnly = true)
@@ -35,8 +40,14 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
 
     @Transactional
     @Override
-    public Restaurante salvar(Restaurante restaurante) {
-        return restauranteRepository.save(restaurante);
+    public Restaurante salvar(RestauranteInput restaurante) {
+        Restaurante restauranteNovo = new Restaurante();
+
+        restauranteNovo.setNome(restaurante.getNome());
+        restauranteNovo.setTaxaFrete(restaurante.getTaxaFrete());
+        restauranteNovo.setCozinha(cozinhaService.buscar(restaurante.getCozinhaId()));
+
+        return restauranteRepository.save(restauranteNovo);
     }
 
     @Transactional(readOnly = true)

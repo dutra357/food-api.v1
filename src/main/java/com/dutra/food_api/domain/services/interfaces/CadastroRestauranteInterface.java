@@ -1,5 +1,6 @@
 package com.dutra.food_api.domain.services.interfaces;
 
+import com.dutra.food_api.api.model.RestauranteInput;
 import com.dutra.food_api.domain.models.Restaurante;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +12,7 @@ public interface CadastroRestauranteInterface {
     public Restaurante buscarPrimeiro();
 
     @Transactional
-    Restaurante salvar(Restaurante restaurante);
+    Restaurante salvar(RestauranteInput restaurante);
 
     @Transactional(readOnly = true)
     Restaurante buscar(Long id);

@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -14,6 +16,8 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class ApiExceptionHandler {
@@ -63,7 +67,8 @@ public class ApiExceptionHandler {
 
     //Handler para path variable de tipo errado
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    private ResponseEntity<ProblemDetail> handleMethodArgumentNotValid(MethodArgumentTypeMismatchException exception, HttpServletRequest request) {
+    private ResponseEntity<ProblemDetail> handleMethodArgumentNotValid(MethodArgumentTypeMismatchException exception,
+                                                                       HttpServletRequest request) {
 
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setType(URI.create("/errors/parametro-invalido"));
@@ -78,7 +83,8 @@ public class ApiExceptionHandler {
 
     //Handler para endpoint inexistente
     @ExceptionHandler(NoHandlerFoundException.class)
-    private ResponseEntity<ProblemDetail> handleNoHandlerFoundException(NoHandlerFoundException exception, HttpServletRequest request) {
+    private ResponseEntity<ProblemDetail> handleNoHandlerFoundException(NoHandlerFoundException exception,
+                                                                        HttpServletRequest request) {
 
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setType(URI.create("/errors/uri-inexistente"));
@@ -91,9 +97,32 @@ public class ApiExceptionHandler {
         return ResponseEntity.of(problemDetail).build();
     }
 
+    //Handler para campos BeanValidation
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ProblemDetail> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
+                                                                               HttpServletRequest request) {
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(status);
+        problemDetail.setType(URI.create("/errors/validation-error"));
+        problemDetail.setTitle("Erro de validação");
+        problemDetail.setDetail("Um ou mais campos possuem valores inválidos.");
+        problemDetail.setInstance(URI.create(request.getRequestURI()));
+
+        Map<String, String> fieldErrors = new HashMap<>();
+        for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
+            fieldErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+
+        problemDetail.setProperty("fieldErrors", fieldErrors);
+
+        return ResponseEntity.status(status).body(problemDetail);
+    }
+
     //Handler geral
     @ExceptionHandler(Exception.class)
-    private ResponseEntity<ProblemDetail> handleException(Exception exception, HttpServletRequest request) {
+    private ResponseEntity<ProblemDetail> handleException(Exception exception,
+                                                          HttpServletRequest request) {
 
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setType(URI.create("/errors/general-error"));
@@ -101,11 +130,10 @@ public class ApiExceptionHandler {
 
         problemDetail.setDetail(exception.getCause() != null ? exception
                 .getCause().toString() : "Ocorreu um erro interno inesperado no sistema. Tente novamente, e, se o problema persistir, entre em contato com o administrador do sistema.");
-
+        problemDetail.setProperty(TIME_STAMP, OffsetDateTime.now());
         problemDetail.setInstance(URI.create(request.getRequestURI()));
 
         problemDetail.setProperty("StackTrace:", exception.getStackTrace());
-        problemDetail.setProperty(TIME_STAMP, OffsetDateTime.now());
 
         return ResponseEntity.of(problemDetail).build();
     }

@@ -1,8 +1,10 @@
 package com.dutra.food_api.api.controller;
 
+import com.dutra.food_api.api.model.RestauranteInput;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.impl.RestauranteImpl;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +37,7 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Restaurante> salvar(@RequestBody Restaurante restaurante) {
+    public ResponseEntity<Restaurante> salvar(@Valid @RequestBody RestauranteInput restaurante) {
         return ResponseEntity.ok(cadastroRestauranteService.salvar(restaurante));
     }
 

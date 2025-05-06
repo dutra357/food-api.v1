@@ -57,7 +57,7 @@ public class Restaurante {
 
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
-    private LocalDateTime dataCadastro;
+    private LocalDateTime dataCadastro = LocalDateTime.now();
 
     @UpdateTimestamp
     @Column(columnDefinition = "datetime")
