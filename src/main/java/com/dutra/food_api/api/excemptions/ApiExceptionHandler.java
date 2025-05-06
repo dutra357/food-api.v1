@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -93,6 +94,20 @@ public class ApiExceptionHandler {
         problemDetail.setInstance(URI.create(request.getRequestURI()));
 
         problemDetail.setProperty(TIME_STAMP, OffsetDateTime.now());
+
+        return ResponseEntity.of(problemDetail).build();
+    }
+
+    //Handler para Jackson/JSON
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    private ResponseEntity<ProblemDetail> handleJsonParseException(HttpMessageNotReadableException  exception,
+                                                                        HttpServletRequest request) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setType(URI.create("/errors/json-parse-exception"));
+        problemDetail.setTitle(exception.getMessage());
+        problemDetail.setDetail("Erro na formatação do JSON: " + exception.getCause());
+        problemDetail.setInstance(URI.create(request.getRequestURI()));
 
         return ResponseEntity.of(problemDetail).build();
     }

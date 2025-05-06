@@ -13,7 +13,7 @@ public class RestauranteInput {
     private String nome;
 
     @NotNull(message = "Campo requerido")
-    @PositiveOrZero(message = "Deve ser informado um valor positivo ou zero para Taxa de Frete")
+    @DecimalMin(value = "0", message = "Deve ser informado um valor positivo ou zero para Taxa de Frete")
     private BigDecimal taxaFrete;
 
     @NotNull(message = "Campo requerido")
