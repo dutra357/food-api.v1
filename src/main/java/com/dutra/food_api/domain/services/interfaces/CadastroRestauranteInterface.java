@@ -21,7 +21,7 @@ public interface CadastroRestauranteInterface {
     List<Restaurante> buscarTodos();
 
     @Transactional
-    Restaurante atualizarTudo(Restaurante restaurante);
+    Restaurante atualizarTudo(Long id, Restaurante restaurante);
 
     @Transactional
     Restaurante atualizarParcial(Long id, Map<String, Object> camposInformados);

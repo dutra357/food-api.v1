@@ -35,6 +35,8 @@ public class RestauranteController {
         return ResponseEntity.ok(cadastroRestauranteService.buscarPrimeiro());
     }
 
+
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Restaurante> salvar(@Valid @RequestBody RestauranteInput restaurante) {
@@ -53,8 +55,8 @@ public class RestauranteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Restaurante> atualizar(@PathVariable Long id,
-                                                 @RequestBody Restaurante restaurante) {
-        return ResponseEntity.ok(cadastroRestauranteService.atualizarTudo(restaurante));
+                                                 @Valid @RequestBody Restaurante restaurante) {
+        return ResponseEntity.ok(cadastroRestauranteService.atualizarTudo(id, restaurante));
     }
 
     @PatchMapping("/{id}")

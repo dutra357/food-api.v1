@@ -7,13 +7,17 @@ import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaExcept
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.SmartValidator;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +28,14 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
 
     private final RestauranteRepository restauranteRepository;
     private final CadastroCozinhaService cozinhaService;
+    private final SmartValidator validator;
 
     public CadastroRestauranteService(RestauranteRepository restauranteRepository,
-                                      CadastroCozinhaService cozinhaService) {
+                                      CadastroCozinhaService cozinhaService,
+                                      SmartValidator validator) {
         this.restauranteRepository = restauranteRepository;
         this.cozinhaService = cozinhaService;
+        this.validator = validator;
     }
 
     @Transactional(readOnly = true)
@@ -53,8 +60,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     @Transactional(readOnly = true)
     @Override
     public Restaurante buscar(Long id) {
-        return restauranteRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(RESTAURANTE_NOT_FOUND));
+        return findRestaurante(id);
     }
 
     @Transactional(readOnly = true)
@@ -65,16 +71,22 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
 
     @Transactional
     @Override
-    public Restaurante atualizarTudo(Restaurante restaurante) {
-        return restauranteRepository.save(restaurante);
+    public Restaurante atualizarTudo(Long id, Restaurante restaurante) {
+        Restaurante restauranteAlvo = findRestaurante(id);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Restaurante restauranteAtualizado = objectMapper.convertValue(restaurante, Restaurante.class);
+
+        restauranteAtualizado.setId(restauranteAlvo.getId());
+
+        return restauranteRepository.save(restauranteAtualizado);
     }
 
     @Transactional
     @Override
     public Restaurante atualizarParcial(Long id, Map<String, Object> camposInformados) {
 
-        Restaurante  restaurante = restauranteRepository.findById(id)
-                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+        Restaurante  restaurante = findRestaurante(id);
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, true);
@@ -95,6 +107,24 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
             }
         });
 
+        //Não funcional
+        validarPatch(restaurante);
+
         return restauranteRepository.save(restaurante);
+    }
+
+    private Restaurante findRestaurante(Long id) {
+        return restauranteRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(RESTAURANTE_NOT_FOUND));
+    }
+
+    private void validarPatch(Restaurante restaurante) {
+        BeanPropertyBindingResult  bindingResult = new BeanPropertyBindingResult(restaurante, "restaurante");
+
+        validator.validate(restaurante, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            throw new PatchMergeFieldsException("Erro nos campos informados.");
+        }
     }
 }
