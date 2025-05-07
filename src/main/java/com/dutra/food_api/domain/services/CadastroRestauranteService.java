@@ -102,7 +102,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
                 Object novoValor = ReflectionUtils.getField(campo, restauranteOrigem);
                 ReflectionUtils.setField(campo, restaurante, novoValor);
 
-            } catch (NoSuchFieldException | IllegalArgumentException e) {
+            } catch (NoSuchFieldException _) {
                 throw new PatchMergeFieldsException("Erro ao atualizar o campo: " + campoInformado);
             }
         });
