@@ -1,7 +1,7 @@
 package com.dutra.food_api.domain.services.interfaces;
 
-import com.dutra.food_api.api.model.RestauranteInput;
-import com.dutra.food_api.api.model.RestauranteOutput;
+import com.dutra.food_api.api.model.input.RestauranteInput;
+import com.dutra.food_api.api.model.output.RestauranteOutput;
 import com.dutra.food_api.domain.models.Restaurante;
 
 import java.util.List;

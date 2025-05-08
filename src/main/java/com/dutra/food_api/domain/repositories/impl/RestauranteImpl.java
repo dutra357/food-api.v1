@@ -1,6 +1,6 @@
 package com.dutra.food_api.domain.repositories.impl;
 
-import com.dutra.food_api.api.model.RestauranteOutput;
+import com.dutra.food_api.api.model.output.RestauranteOutput;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import jakarta.persistence.EntityManager;

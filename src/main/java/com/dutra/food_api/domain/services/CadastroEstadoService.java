@@ -1,6 +1,6 @@
 package com.dutra.food_api.domain.services;
 
-import com.dutra.food_api.api.model.EstadoOutput;
+import com.dutra.food_api.api.model.output.EstadoOutput;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Estado;

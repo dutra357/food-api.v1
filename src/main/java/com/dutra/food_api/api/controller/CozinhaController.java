@@ -1,6 +1,6 @@
 package com.dutra.food_api.api.controller;
 
-import com.dutra.food_api.api.model.CozinhaOutput;
+import com.dutra.food_api.api.model.output.CozinhaOutput;
 import com.dutra.food_api.domain.models.Cozinha;
 import com.dutra.food_api.domain.services.CadastroCozinhaService;
 import org.springframework.http.HttpStatus;

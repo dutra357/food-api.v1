@@ -1,4 +1,4 @@
-package com.dutra.food_api.api.model;
+package com.dutra.food_api.api.model.output;
 
 import com.dutra.food_api.domain.models.Estado;
 

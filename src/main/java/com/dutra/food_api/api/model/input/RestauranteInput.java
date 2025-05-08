@@ -1,6 +1,7 @@
-package com.dutra.food_api.api.model;
+package com.dutra.food_api.api.model.input;
 
 import com.dutra.food_api.domain.models.Endereco;
+import com.dutra.food_api.domain.models.Restaurante;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
@@ -22,10 +23,6 @@ public class RestauranteInput {
 
     private Endereco endereco;
 
-    private List<Long> produtosIds;
-    private List<Long> formasPagamentoIds;
-
-
     public RestauranteInput() {
     }
 
@@ -35,6 +32,14 @@ public class RestauranteInput {
         this.taxaFrete = taxaFrete;
         this.cozinhaId = cozinhaId;
         this.endereco = endereco;
+    }
+
+    public Restaurante toEntity() {
+        Restaurante  restaurante = new Restaurante();
+        restaurante.setNome(nome);
+        restaurante.setTaxaFrete(taxaFrete);
+        restaurante.setEndereco(endereco);
+        return restaurante;
     }
 
     public String getNome() {
@@ -61,14 +66,6 @@ public class RestauranteInput {
         this.cozinhaId = cozinhaId;
     }
 
-    public List<Long> getProdutosIds() {
-        return produtosIds;
-    }
-
-    public List<Long> getFormasPagamentoIds() {
-        return formasPagamentoIds;
-    }
-
     public Endereco getEndereco() {
         return endereco;
     }
@@ -76,4 +73,5 @@ public class RestauranteInput {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
 }

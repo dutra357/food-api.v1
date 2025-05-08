@@ -1,6 +1,6 @@
 package com.dutra.food_api.domain.repositories.impl;
 
-import com.dutra.food_api.api.model.RestauranteOutput;
+import com.dutra.food_api.api.model.output.RestauranteOutput;
 
 import java.math.BigDecimal;
 import java.util.List;

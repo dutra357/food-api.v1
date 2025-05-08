@@ -1,6 +1,6 @@
 package com.dutra.food_api.api.controller;
 
-import com.dutra.food_api.api.model.CidadeOutput;
+import com.dutra.food_api.api.model.output.CidadeOutput;
 import com.dutra.food_api.domain.models.Cidade;
 import com.dutra.food_api.domain.services.CadastroCidadeService;
 import org.springframework.http.HttpStatus;

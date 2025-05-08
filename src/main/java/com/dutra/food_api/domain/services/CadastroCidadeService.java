@@ -1,6 +1,6 @@
 package com.dutra.food_api.domain.services;
 
-import com.dutra.food_api.api.model.CidadeOutput;
+import com.dutra.food_api.api.model.output.CidadeOutput;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Cidade;
 import com.dutra.food_api.domain.models.Estado;

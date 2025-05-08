@@ -1,6 +1,6 @@
 package com.dutra.food_api.domain.services.interfaces;
 
-import com.dutra.food_api.api.model.CidadeOutput;
+import com.dutra.food_api.api.model.output.CidadeOutput;
 import com.dutra.food_api.domain.models.Cidade;
 
 import java.util.List;

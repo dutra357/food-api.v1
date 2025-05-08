@@ -1,7 +1,7 @@
 package com.dutra.food_api.domain.services;
 
-import com.dutra.food_api.api.model.RestauranteInput;
-import com.dutra.food_api.api.model.RestauranteOutput;
+import com.dutra.food_api.api.model.input.RestauranteInput;
+import com.dutra.food_api.api.model.output.RestauranteOutput;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
@@ -9,7 +9,6 @@ import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
@@ -47,10 +46,8 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     @Transactional
     @Override
     public RestauranteOutput salvar(RestauranteInput restaurante) {
-        Restaurante restauranteNovo = new Restaurante();
 
-        restauranteNovo.setNome(restaurante.getNome());
-        restauranteNovo.setTaxaFrete(restaurante.getTaxaFrete());
+        Restaurante restauranteNovo = restaurante.toEntity();
         restauranteNovo.setCozinha(cozinhaService.buscarCozinha(restaurante.getCozinhaId()));
 
         return RestauranteOutput.toRestauranteOutput(restauranteRepository.save(restauranteNovo));
