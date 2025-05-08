@@ -58,4 +58,18 @@ public class CozinhaControllerIT {
                 .statusCode(HttpStatus.OK.value())
                 .body("nome", Matchers.hasItems("Tailandesa", "Indiana", "Argentina"));
     }
+
+    @Test
+    public void deveRetornarStatus201QuandoCadastrarCozinha() {
+
+        RestAssured.given()
+                .body("{ \"nome\": \"Chinesa\" }")
+                .contentType(ContentType.JSON)
+                .accept(ContentType.JSON)
+                .when()
+                .post("/cozinhas")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.CREATED.value());
+    }
 }
