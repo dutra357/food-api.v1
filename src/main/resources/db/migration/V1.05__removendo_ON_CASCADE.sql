@@ -1,31 +1,32 @@
-CREATE TABLE tb_item_pedido (
-    preco_total NUMERIC(38,2) NOT NULL,
-    preco_unitario NUMERIC(38,2) NOT NULL,
-    quantidade INTEGER NOT NULL,
-    id BIGSERIAL PRIMARY KEY,
-    pedido_id BIGINT NOT NULL,
-    produto_id BIGINT NOT NULL,
-    observacao VARCHAR(255) NOT NULL
-);
+ALTER TABLE tb_grupo_permissao DROP CONSTRAINT fk_grupo;
+ALTER TABLE tb_grupo_permissao DROP CONSTRAINT fk_permissao;
+ALTER TABLE tb_restaurante DROP CONSTRAINT fk_cozinha;
+ALTER TABLE tb_produto DROP CONSTRAINT fk_restaurante;
+ALTER TABLE tb_restaurante_forma_pagamento DROP CONSTRAINT fk_restaurante;
+ALTER TABLE tb_restaurante_forma_pagamento DROP CONSTRAINT fk_forma_pagamento;
+ALTER TABLE tb_usuario_grupo DROP CONSTRAINT fk_usuario;
+ALTER TABLE tb_usuario_grupo DROP CONSTRAINT fk_grupo;
 
-CREATE TABLE tb_pedido (
-    data_cancelamento TIMESTAMP,
-    data_confirmacao TIMESTAMP,
-    data_criacao TIMESTAMP NOT NULL,
-    data_entrega TIMESTAMP,
-    status SMALLINT NOT NULL CHECK (status BETWEEN 0 AND 3),
-    sub_total NUMERIC(38,2) NOT NULL,
-    taxa_frete NUMERIC(38,2) NOT NULL,
-    valor_total NUMERIC(38,2) NOT NULL,
-    cidade_id BIGINT,
-    estado_id BIGINT,
-    forma_pagamento_id BIGINT NOT NULL,
-    id BIGSERIAL PRIMARY KEY,
-    restaurante_id BIGINT NOT NULL,
-    usuario_id BIGINT NOT NULL,
-    bairro VARCHAR(255),
-    cep VARCHAR(255),
-    complemento VARCHAR(255),
-    logradouro VARCHAR(255),
-    numero VARCHAR(255)
-);
+ALTER TABLE tb_grupo_permissao
+ADD CONSTRAINT fk_grupo FOREIGN KEY (grupo_id) REFERENCES tb_grupo ON DELETE RESTRICT;
+
+ALTER TABLE tb_grupo_permissao
+ADD CONSTRAINT fk_permissao FOREIGN KEY (permissao_id) REFERENCES tb_permissao ON DELETE RESTRICT;
+
+ALTER TABLE tb_restaurante
+ADD CONSTRAINT fk_cozinha FOREIGN KEY (cozinha_id) REFERENCES tb_cozinha ON DELETE RESTRICT;
+
+ALTER TABLE tb_produto
+ADD CONSTRAINT fk_restaurante FOREIGN KEY (restaurante_id) REFERENCES tb_restaurante ON DELETE SET NULL;
+
+ALTER TABLE tb_restaurante_forma_pagamento
+ADD CONSTRAINT fk_restaurante FOREIGN KEY (restaurante_id) REFERENCES tb_restaurante ON DELETE SET NULL;
+
+ALTER TABLE tb_restaurante_forma_pagamento
+ADD CONSTRAINT fk_forma_pagamento FOREIGN KEY (forma_pagamento_id) REFERENCES tb_forma_pagamento ON DELETE SET NULL;
+
+ALTER TABLE tb_usuario_grupo
+ADD CONSTRAINT fk_usuario FOREIGN KEY (usuario_id) REFERENCES tb_usuario ON DELETE RESTRICT;
+
+ALTER TABLE tb_usuario_grupo
+ADD CONSTRAINT fk_grupo FOREIGN KEY (grupo_id) REFERENCES tb_grupo ON DELETE RESTRICT;

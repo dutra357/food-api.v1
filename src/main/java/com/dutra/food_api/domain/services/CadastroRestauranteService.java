@@ -7,7 +7,6 @@ import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaExcept
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
 
 import java.lang.reflect.Field;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
