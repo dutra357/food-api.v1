@@ -1,5 +1,6 @@
 package com.dutra.food_api.domain.services;
 
+import com.dutra.food_api.api.model.EstadoOutput;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Estado;
@@ -23,21 +24,21 @@ public class CadastroEstadoService implements CadastroEstadoInterface {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Estado> buscarTodos() {
-        return estadoRepository.findAll();
+    public List<EstadoOutput> buscarTodos() {
+        return estadoRepository.findAll().stream().map(EstadoOutput::toEstadoOutput).toList();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Estado buscarPorId(Long id) {
-        return estadoRepository.findById(id)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(ESTADO_NOT_FOUND));
+    public EstadoOutput buscarPorId(Long id) {
+        return EstadoOutput.toEstadoOutput(estadoRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(ESTADO_NOT_FOUND)));
     }
 
     @Transactional(readOnly = false)
     @Override
-    public Estado salvar(Estado estado) {
-        return estadoRepository.save(estado);
+    public EstadoOutput salvar(Estado estado) {
+        return EstadoOutput.toEstadoOutput(estadoRepository.save(estado));
     }
 
     @Transactional(readOnly = false)
@@ -58,8 +59,12 @@ public class CadastroEstadoService implements CadastroEstadoInterface {
 
     @Transactional(readOnly = false)
     @Override
-    public Estado atualizar(Estado estado) {
-        return estadoRepository.save(estado);
+    public EstadoOutput atualizar(Estado estado) {
+        return EstadoOutput.toEstadoOutput(estadoRepository.save(estado));
     }
 
+    protected Estado buscaInternaEstado(Long id) {
+        return estadoRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(ESTADO_NOT_FOUND));
+    }
 }

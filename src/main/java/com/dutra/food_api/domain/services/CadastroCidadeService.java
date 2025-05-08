@@ -1,5 +1,6 @@
 package com.dutra.food_api.domain.services;
 
+import com.dutra.food_api.api.model.CidadeOutput;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Cidade;
 import com.dutra.food_api.domain.models.Estado;
@@ -29,30 +30,30 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
 
     @Transactional
     @Override
-    public Cidade salvar(Cidade cidade) {
+    public CidadeOutput salvar(Cidade cidade) {
 
         try {
             Long estadoId = cidade.getEstado().getId();
-            Estado estado = cadastroEstadoService.buscarPorId(estadoId);
+            Estado estado = cadastroEstadoService.buscaInternaEstado(estadoId);
             cidade.setEstado(estado);
 
-        } catch (EntidadeNaoEncontradaException err) {
+        } catch (EntidadeNaoEncontradaException _) {
             throw new EstadoNaoEncontradoException("Estado não encontrado");
         }
 
-        return cidadeRepository.save(cidade);
+        return CidadeOutput.toCidadeOutput(cidadeRepository.save(cidade));
     }
 
     @Transactional
     @Override
-    public Cidade atualizar(Long cidadeId, Cidade cidade) {
+    public CidadeOutput atualizar(Long cidadeId, Cidade cidade) {
 
         Cidade cidadeAtual = cidadeRepository.findById(cidadeId)
                 .orElseThrow( () -> new EntidadeNaoEncontradaException(CIDADE_NOT_FOUND));
 
         BeanUtils.copyProperties(cidade, cidadeAtual, "id");
 
-        return cidadeRepository.save(cidade);
+        return CidadeOutput.toCidadeOutput(cidadeRepository.save(cidade));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -63,15 +64,16 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
 
     @Transactional(readOnly = true)
     @Override
-    public Cidade buscarPorId(Long cidadeId) {
-        return cidadeRepository.findById(cidadeId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(CIDADE_NOT_FOUND));
+    public CidadeOutput buscarPorId(Long cidadeId) {
+        return CidadeOutput.toCidadeOutput(cidadeRepository.findById(cidadeId)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(CIDADE_NOT_FOUND)));
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Cidade> buscarTodas() {
-        return cidadeRepository.findAll();
+    public List<CidadeOutput> buscarTodas() {
+        return cidadeRepository.findAll()
+                .stream().map(CidadeOutput::toCidadeOutput).toList();
     }
 
 }

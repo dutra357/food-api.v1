@@ -1,6 +1,7 @@
 package com.dutra.food_api.domain.services.interfaces;
 
 import com.dutra.food_api.api.model.RestauranteInput;
+import com.dutra.food_api.api.model.RestauranteOutput;
 import com.dutra.food_api.domain.models.Restaurante;
 
 import java.util.List;
@@ -8,15 +9,15 @@ import java.util.Map;
 
 public interface CadastroRestauranteInterface {
 
-    public Restaurante buscarPrimeiro();
+    RestauranteOutput buscarPrimeiro();
 
-    Restaurante salvar(RestauranteInput restaurante);
+    RestauranteOutput salvar(RestauranteInput restaurante);
 
-    Restaurante buscar(Long id);
+    RestauranteOutput buscar(Long id);
 
-    List<Restaurante> buscarTodos();
+    List<RestauranteOutput> buscarTodos();
 
-    Restaurante atualizarTudo(Long id, Restaurante restaurante);
+    RestauranteOutput atualizarTudo(Long id, Restaurante restaurante);
 
-    Restaurante atualizarParcial(Long id, Map<String, Object> camposInformados);
+    RestauranteOutput atualizarParcial(Long id, Map<String, Object> camposInformados);
 }

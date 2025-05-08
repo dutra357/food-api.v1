@@ -1,5 +1,6 @@
 package com.dutra.food_api.api.controller;
 
+import com.dutra.food_api.api.model.CozinhaOutput;
 import com.dutra.food_api.domain.models.Cozinha;
 import com.dutra.food_api.domain.services.CadastroCozinhaService;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ public class CozinhaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cozinha adicionar(@RequestBody Cozinha cozinha) {
+    public CozinhaOutput adicionar(@RequestBody Cozinha cozinha) {
         return cadastroCozinhaService.salvarCozinha(cozinha);
     }
 
@@ -30,18 +31,18 @@ public class CozinhaController {
     }
 
     @PutMapping("/{cozinhaId}")
-    public ResponseEntity<Cozinha> atualizar(@PathVariable Long cozinhaId,
+    public ResponseEntity<CozinhaOutput> atualizar(@PathVariable Long cozinhaId,
                                              @RequestBody Cozinha cozinha) {
         return ResponseEntity.ok(cadastroCozinhaService.atualizarCozinha(cozinhaId, cozinha));
     }
 
     @GetMapping
-    public ResponseEntity<List<Cozinha>> buscarTodas() {
+    public ResponseEntity<List<CozinhaOutput>> buscarTodas() {
         return ResponseEntity.ok(cadastroCozinhaService.buscarTodas());
     }
 
     @GetMapping("/{cozinhaId}")
-    public ResponseEntity<Cozinha> buscar(@PathVariable Long cozinhaId) {
+    public ResponseEntity<CozinhaOutput> buscar(@PathVariable Long cozinhaId) {
         return ResponseEntity.ok(cadastroCozinhaService.buscar(cozinhaId));
     }
 }

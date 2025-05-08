@@ -1,5 +1,6 @@
 package com.dutra.food_api.domain.repositories.impl;
 
+import com.dutra.food_api.api.model.RestauranteOutput;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import jakarta.persistence.EntityManager;
@@ -34,8 +35,8 @@ public class RestauranteImpl implements RestauranteRepositoryQueries {
 
     // * Método para Criteria API
     @Override
-    public List<Restaurante> find(String nome,
-                                  BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
+    public List<RestauranteOutput> find(String nome,
+                                        BigDecimal taxaFreteInicial, BigDecimal taxaFreteFinal) {
 
         CriteriaBuilder builder = manager.getCriteriaBuilder();
         CriteriaQuery<Restaurante> criteria = builder.createQuery(Restaurante.class);
@@ -58,13 +59,15 @@ public class RestauranteImpl implements RestauranteRepositoryQueries {
         criteria.where(predicates.toArray(new Predicate[0])); //Converte ArrayList em array
 
         TypedQuery<Restaurante> query = manager.createQuery(criteria);
-        return query.getResultList();
+        return query.getResultList().stream().map(RestauranteOutput::toRestauranteOutput).toList();
     }
 
     //Mètodo para Specializations
     @Override
-    public List<Restaurante> findComFreteGratis(String nome) {
+    public List<RestauranteOutput> findComFreteGratis(String nome) {
         //Import estático
-        return restauranteRepository.findAll(comFreteGratis().and(comNomeSemelhante(nome)));
+        return restauranteRepository.findAll(comFreteGratis()
+                .and(comNomeSemelhante(nome)))
+                .stream().map(RestauranteOutput::toRestauranteOutput).toList();
     }
 }

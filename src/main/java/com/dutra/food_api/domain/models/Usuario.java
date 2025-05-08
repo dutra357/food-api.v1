@@ -3,7 +3,7 @@ package com.dutra.food_api.domain.models;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public class Usuario {
 
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
-    private LocalDateTime  dataCadastro;
+    private OffsetDateTime dataCadastro;
 
     @ManyToMany
     @JoinTable(name = "tb_usuario_grupo",
@@ -36,7 +36,7 @@ public class Usuario {
     public Usuario() {}
 
     public Usuario(Long id, String nome, String email,
-                   String senha, LocalDateTime dataCadastro) {
+                   String senha, OffsetDateTime dataCadastro) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -84,11 +84,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public LocalDateTime getDataCadastro() {
+    public OffsetDateTime getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
+    public void setDataCadastro(OffsetDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 

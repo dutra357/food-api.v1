@@ -1,6 +1,7 @@
 package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.api.model.RestauranteInput;
+import com.dutra.food_api.api.model.RestauranteOutput;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
@@ -38,38 +39,39 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
 
     @Transactional(readOnly = true)
     @Override
-    public Restaurante buscarPrimeiro() {
-        return restauranteRepository.buscarPrimeiro()
-                .orElseThrow(() -> new EmptyResultDataAccessException(1));
+    public RestauranteOutput buscarPrimeiro() {
+        return RestauranteOutput.toRestauranteOutput(restauranteRepository.buscarPrimeiro()
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Restaurante não encontrado.")));
     }
 
     @Transactional
     @Override
-    public Restaurante salvar(RestauranteInput restaurante) {
+    public RestauranteOutput salvar(RestauranteInput restaurante) {
         Restaurante restauranteNovo = new Restaurante();
 
         restauranteNovo.setNome(restaurante.getNome());
         restauranteNovo.setTaxaFrete(restaurante.getTaxaFrete());
-        restauranteNovo.setCozinha(cozinhaService.buscar(restaurante.getCozinhaId()));
+        restauranteNovo.setCozinha(cozinhaService.buscarCozinha(restaurante.getCozinhaId()));
 
-        return restauranteRepository.save(restauranteNovo);
+        return RestauranteOutput.toRestauranteOutput(restauranteRepository.save(restauranteNovo));
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Restaurante buscar(Long id) {
-        return findRestaurante(id);
+    public RestauranteOutput buscar(Long id) {
+        return RestauranteOutput.toRestauranteOutput(findRestaurante(id));
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Restaurante> buscarTodos() {
-        return restauranteRepository.buscarTodosSemN1();
+    public List<RestauranteOutput> buscarTodos() {
+        return restauranteRepository.buscarTodosSemN1()
+                .stream().map(RestauranteOutput::toRestauranteOutput).toList();
     }
 
     @Transactional
     @Override
-    public Restaurante atualizarTudo(Long id, Restaurante restaurante) {
+    public RestauranteOutput atualizarTudo(Long id, Restaurante restaurante) {
         Restaurante restauranteAlvo = findRestaurante(id);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -77,12 +79,12 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
 
         restauranteAtualizado.setId(restauranteAlvo.getId());
 
-        return restauranteRepository.save(restauranteAtualizado);
+        return RestauranteOutput.toRestauranteOutput(restauranteRepository.save(restauranteAtualizado));
     }
 
     @Transactional
     @Override
-    public Restaurante atualizarParcial(Long id, Map<String, Object> camposInformados) {
+    public RestauranteOutput atualizarParcial(Long id, Map<String, Object> camposInformados) {
 
         Restaurante  restaurante = findRestaurante(id);
 
@@ -108,7 +110,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         //Não funcional
         validarPatch(restaurante);
 
-        return restauranteRepository.save(restaurante);
+        return RestauranteOutput.toRestauranteOutput(restauranteRepository.save(restaurante));
     }
 
     private Restaurante findRestaurante(Long id) {

@@ -1,5 +1,6 @@
 package com.dutra.food_api.domain.services;
 
+import com.dutra.food_api.api.model.CozinhaOutput;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.models.Cozinha;
 import com.dutra.food_api.domain.repositories.CozinhaRepository;
@@ -26,18 +27,18 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
 
     @Transactional
     @Override
-    public Cozinha salvarCozinha(Cozinha cozinha) {
-        return cozinhaRepository.save(cozinha);
+    public CozinhaOutput salvarCozinha(Cozinha cozinha) {
+        return CozinhaOutput.toCozinhaOutput(cozinhaRepository.save(cozinha));
     }
 
     @Transactional
     @Override
-    public Cozinha atualizarCozinha(Long cozinhaId, Cozinha cozinha) {
+    public CozinhaOutput atualizarCozinha(Long cozinhaId, Cozinha cozinha) {
         Cozinha cozinhaAtual = cozinhaRepository.findById(cozinhaId)
                 .orElseThrow( () -> new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND));
 
         BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-        return cozinhaRepository.save(cozinhaAtual);
+        return CozinhaOutput.toCozinhaOutput(cozinhaRepository.save(cozinha));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
@@ -58,15 +59,20 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
 
     @Transactional(readOnly = false)
     @Override
-    public Cozinha buscar(Long id) {
-        return cozinhaRepository.findById(id)
-                .orElseThrow( () -> new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND));
+    public CozinhaOutput buscar(Long id) {
+        return CozinhaOutput.toCozinhaOutput(cozinhaRepository.findById(id)
+                .orElseThrow( () -> new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND)));
     }
 
     @Transactional(readOnly = false)
     @Override
-    public List<Cozinha> buscarTodas() {
-        return cozinhaRepository.findAll();
+    public List<CozinhaOutput> buscarTodas() {
+        return cozinhaRepository.findAll().stream().map(CozinhaOutput::toCozinhaOutput).toList();
+    }
+
+    protected Cozinha buscarCozinha(Long id) {
+        return cozinhaRepository.findById(id)
+                .orElseThrow( () -> new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND));
     }
 
 }
