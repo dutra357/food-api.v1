@@ -5,7 +5,7 @@ import com.dutra.food_api.domain.models.Restaurante;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
-import java.util.List;
+
 
 public class RestauranteInput {
 

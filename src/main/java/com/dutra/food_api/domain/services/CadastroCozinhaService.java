@@ -41,7 +41,7 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
         return CozinhaOutput.toCozinhaOutput(cozinhaRepository.save(cozinha));
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    //@Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public void remover(Long cozinhaId) {
 
@@ -49,7 +49,8 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
             if (!cozinhaRepository.existsById(cozinhaId)) {
                 throw new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND);
             }
-            cozinhaRepository.deleteById(cozinhaId);
+            cozinhaRepository.delete(cozinhaId);
+            //cozinhaRepository.flush();
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
