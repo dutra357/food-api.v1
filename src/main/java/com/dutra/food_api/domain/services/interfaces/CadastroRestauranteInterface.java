@@ -20,4 +20,10 @@ public interface CadastroRestauranteInterface {
     RestauranteOutput atualizarTudo(Long id, Restaurante restaurante);
 
     RestauranteOutput atualizarParcial(Long id, Map<String, Object> camposInformados);
+
+    void remover(Long id);
+
+    void ativar(Long id);
+
+    void inativar(Long id);
 }

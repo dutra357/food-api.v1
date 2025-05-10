@@ -46,6 +46,7 @@ public class ApiExceptionHandler {
         problemDetail.setTitle("Recurso em uso");
         problemDetail.setType(URI.create("/errors/conflict"));
         problemDetail.setProperty(TIME_STAMP, OffsetDateTime.now());
+        problemDetail.setDetail(e.getMessage());
 
         return problemDetail;
     }

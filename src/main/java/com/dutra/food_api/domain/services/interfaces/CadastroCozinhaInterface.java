@@ -1,15 +1,15 @@
 package com.dutra.food_api.domain.services.interfaces;
 
+import com.dutra.food_api.api.model.input.CozinhaInput;
 import com.dutra.food_api.api.model.output.CozinhaOutput;
-import com.dutra.food_api.domain.models.Cozinha;
 
 import java.util.List;
 
 public interface CadastroCozinhaInterface {
 
-    CozinhaOutput salvarCozinha(Cozinha cozinha);
+    CozinhaOutput salvarCozinha(CozinhaInput cozinhaInput);
 
-    CozinhaOutput atualizarCozinha(Long cozinhaId, Cozinha cozinha);
+    CozinhaOutput atualizarCozinha(Long cozinhaId, CozinhaInput cozinhaInput);
 
     void remover(Long cozinhaId);
 

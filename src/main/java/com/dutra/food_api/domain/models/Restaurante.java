@@ -39,21 +39,20 @@ public class Restaurante {
     @Column(nullable = false)
     private BigDecimal taxaFrete;
 
-    @JsonIgnoreProperties(value = "restaurantes")
     @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(name = "tb_restaurante_forma_pagamento",
             joinColumns = @JoinColumn(name = "restaurante_id"),
             inverseJoinColumns = @JoinColumn(name = "forma_pagamento_id"))
     private final List<FormaPagamento> formasPagamento = new ArrayList<>();
 
-    @JsonIgnore
     @Embedded
     private Endereco endereco;
+
+    private boolean ativo = true;
 
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
@@ -63,16 +62,38 @@ public class Restaurante {
     @Column(columnDefinition = "datetime")
     private OffsetDateTime dataAtualizacao;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "restaurante")
     private final List<Produto> produtos = new ArrayList<>();
 
-    public Restaurante() {}
-
-    public Restaurante(Long id, String nome, Cozinha cozinha) {
+    public Restaurante() {
+    }
+    public Restaurante(Long id, String nome, BigDecimal taxaFrete,
+                       Cozinha cozinha, Endereco endereco, boolean ativo,
+                       OffsetDateTime dataCadastro, OffsetDateTime dataAtualizacao) {
         this.id = id;
         this.nome = nome;
+        this.taxaFrete = taxaFrete;
         this.cozinha = cozinha;
+        this.endereco = endereco;
+        this.ativo = ativo;
+        this.dataCadastro = dataCadastro;
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public void ativar() {
+        setAtivo(true);
+    }
+
+    public void inativar() {
+        setAtivo(false);
+    }
+
+    public boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public List<Produto> getProdutos() {

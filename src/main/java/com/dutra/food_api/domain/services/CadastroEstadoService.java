@@ -1,6 +1,8 @@
 package com.dutra.food_api.domain.services;
 
+import com.dutra.food_api.api.model.input.EstadoInput;
 import com.dutra.food_api.api.model.output.EstadoOutput;
+import com.dutra.food_api.domain.models.Cozinha;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Estado;
@@ -37,29 +39,32 @@ public class CadastroEstadoService implements CadastroEstadoInterface {
 
     @Transactional(readOnly = false)
     @Override
-    public EstadoOutput salvar(Estado estado) {
+    public EstadoOutput salvar(EstadoInput estadoInput) {
+        Estado estado = estadoInput.toEntity();
         return EstadoOutput.toEstadoOutput(estadoRepository.save(estado));
     }
 
     @Transactional(readOnly = false)
     @Override
     public void delete(Long estadoId) {
-
-        Estado estado = estadoRepository.findById(estadoId)
-                .orElseThrow(() -> new EntidadeNaoEncontradaException(ESTADO_NOT_FOUND));
+        Estado estado = buscaInternaEstado(estadoId);
 
         try {
             estadoRepository.delete(estado);
+            estadoRepository.flush();
 
-        } catch (DataIntegrityViolationException e) {
-
-            throw new EntidadeEmUsoException("Estado em uso.");
+        } catch (DataIntegrityViolationException _) {
+            throw new EntidadeEmUsoException(
+                    String.format("Restaurante de código %d não pode ser removida, pois está em uso", estadoId));
         }
     }
 
     @Transactional(readOnly = false)
     @Override
-    public EstadoOutput atualizar(Estado estado) {
+    public EstadoOutput atualizar(Long id, EstadoInput estadoInput) {
+        Estado estado = buscaInternaEstado(id);
+        estado.setNome(estadoInput.getNome());
+
         return EstadoOutput.toEstadoOutput(estadoRepository.save(estado));
     }
 

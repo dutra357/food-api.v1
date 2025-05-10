@@ -10,6 +10,7 @@ import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterfac
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -108,6 +109,27 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         validarPatch(restaurante);
 
         return RestauranteOutput.toRestauranteOutput(restauranteRepository.save(restaurante));
+    }
+
+    @Transactional
+    @Override
+    public void remover(Long id) {
+        Restaurante restaurante = findRestaurante(id);
+        restauranteRepository.delete(restaurante);
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void ativar(Long id) {
+        Restaurante restaurante = findRestaurante(id);
+        restaurante.ativar();
+        //Instância em estado gerenciado
+        //dispensado o 'save'.
+    }
+
+    @Transactional(propagation = Propagation.MANDATORY)
+    public void inativar(Long id) {
+        Restaurante restaurante = findRestaurante(id);
+        restaurante.inativar();
     }
 
     private Restaurante findRestaurante(Long id) {

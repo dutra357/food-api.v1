@@ -1,13 +1,15 @@
 package com.dutra.food_api.domain.services;
 
+import com.dutra.food_api.api.model.input.CidadeInput;
 import com.dutra.food_api.api.model.output.CidadeOutput;
+import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.models.Cidade;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.repositories.CidadeRepository;
 import com.dutra.food_api.domain.services.exceptions.EstadoNaoEncontradoException;
 import com.dutra.food_api.domain.services.interfaces.CadastroCidadeInterface;
-import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,11 +32,11 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
 
     @Transactional
     @Override
-    public CidadeOutput salvar(Cidade cidade) {
+    public CidadeOutput salvar(CidadeInput cidadeInput) {
 
+        Cidade cidade = cidadeInput.toEntity();
+        Estado estado = cadastroEstadoService.buscaInternaEstado(cidadeInput.getEstadoId());
         try {
-            Long estadoId = cidade.getEstado().getId();
-            Estado estado = cadastroEstadoService.buscaInternaEstado(estadoId);
             cidade.setEstado(estado);
 
         } catch (EntidadeNaoEncontradaException _) {
@@ -46,20 +48,30 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
 
     @Transactional
     @Override
-    public CidadeOutput atualizar(Long cidadeId, Cidade cidade) {
+    public CidadeOutput atualizar(Long cidadeId, CidadeInput cidadeInput) {
 
         Cidade cidadeAtual = cidadeRepository.findById(cidadeId)
                 .orElseThrow( () -> new EntidadeNaoEncontradaException(CIDADE_NOT_FOUND));
 
-        BeanUtils.copyProperties(cidade, cidadeAtual, "id");
+        cidadeAtual.setNome(cidadeInput.getNome());
+        cidadeAtual.setEstado(cadastroEstadoService.buscaInternaEstado(cidadeInput.getEstadoId()));
 
-        return CidadeOutput.toCidadeOutput(cidadeRepository.save(cidade));
+        return CidadeOutput.toCidadeOutput(cidadeRepository.save(cidadeAtual));
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)
     @Override
     public void excluir(Long cidadeId) {
-        cidadeRepository.deleteById(cidadeId);
+        Cidade cidade = buscaInternaCidade(cidadeId);
+
+        try {
+            cidadeRepository.delete(cidade);
+            cidadeRepository.flush();
+
+        } catch (DataIntegrityViolationException _) {
+            throw new EntidadeEmUsoException(
+                    String.format("Cidade de código %d não pode ser removida, pois está em uso", cidadeId));
+        }
     }
 
     @Transactional(readOnly = true)
@@ -74,6 +86,11 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
     public List<CidadeOutput> buscarTodas() {
         return cidadeRepository.findAll()
                 .stream().map(CidadeOutput::toCidadeOutput).toList();
+    }
+
+    protected Cidade buscaInternaCidade(Long id) {
+        return cidadeRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(CIDADE_NOT_FOUND));
     }
 
 }

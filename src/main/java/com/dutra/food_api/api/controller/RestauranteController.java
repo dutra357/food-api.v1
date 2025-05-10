@@ -65,4 +65,16 @@ public class RestauranteController {
                                                @RequestBody Map<String, Object> campos) {
         return  ResponseEntity.ok(cadastroRestauranteService.atualizarParcial(id, campos));
     }
+
+    @PutMapping("/{id}/ativar")
+    public void ativar(@PathVariable Long id) {
+        cadastroRestauranteService.ativar(id);
+        ResponseEntity.noContent();
+    }
+
+    @DeleteMapping("/{id}/inativar")
+    public void inativar(@PathVariable Long id) {
+        cadastroRestauranteService.inativar(id);
+        ResponseEntity.noContent();
+    }
 }

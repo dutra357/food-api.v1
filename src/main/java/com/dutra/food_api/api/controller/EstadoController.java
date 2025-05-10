@@ -1,5 +1,6 @@
 package com.dutra.food_api.api.controller;
 
+import com.dutra.food_api.api.model.input.EstadoInput;
 import com.dutra.food_api.api.model.output.EstadoOutput;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.services.CadastroEstadoService;
@@ -29,15 +30,14 @@ public class EstadoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EstadoOutput> atualizar(@PathVariable Long id, @RequestBody Estado estado) {
-        estado.setId(id);
-        return ResponseEntity.ok(cadastroEstadoService.atualizar(estado));
+    public ResponseEntity<EstadoOutput> atualizar(@PathVariable Long id, @RequestBody EstadoInput  estadoInput) {
+        return ResponseEntity.ok(cadastroEstadoService.atualizar(id, estadoInput));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EstadoOutput> salvar(@RequestBody Estado estado) {
-        return ResponseEntity.ok(cadastroEstadoService.salvar(estado));
+    public ResponseEntity<EstadoOutput> salvar(@RequestBody EstadoInput  estadoInput) {
+        return ResponseEntity.ok(cadastroEstadoService.salvar(estadoInput));
     }
 
     @DeleteMapping("/{id}")

@@ -12,6 +12,7 @@ public class RestauranteOutput {
     private Long id;
     private String nome;
     private BigDecimal taxaFrete;
+    private Boolean ativo;
     private CozinhaOutput cozinha;
     private Endereco endereco;
 
@@ -23,7 +24,8 @@ public class RestauranteOutput {
 
     public RestauranteOutput(Long id, String nome, BigDecimal taxaFrete,
                              CozinhaOutput cozinha, Endereco endereco,
-                             OffsetDateTime dataCadastro, OffsetDateTime dataAtualizacao) {
+                             OffsetDateTime dataCadastro, OffsetDateTime dataAtualizacao,
+                             boolean  ativo) {
         this.id = id;
         this.nome = nome;
         this.taxaFrete = taxaFrete;
@@ -31,6 +33,7 @@ public class RestauranteOutput {
         this.endereco = endereco;
         this.dataCadastro = dataCadastro;
         this.dataAtualizacao = dataAtualizacao;
+        this.ativo = ativo;
     }
 
     public static RestauranteOutput toRestauranteOutput(Restaurante restaurante) {
@@ -41,8 +44,17 @@ public class RestauranteOutput {
                 CozinhaOutput.toCozinhaOutput(restaurante.getCozinha()),
                 restaurante.getEndereco(),
                 restaurante.getDataCadastro(),
-                restaurante.getDataAtualizacao()
+                restaurante.getDataAtualizacao(),
+                restaurante.getAtivo()
         );
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public Long getId() {
