@@ -1,9 +1,11 @@
 package com.dutra.food_api.api.model.input;
 
 import com.dutra.food_api.domain.models.Cozinha;
+import jakarta.validation.constraints.NotNull;
 
 public class CozinhaInput {
 
+    @NotNull(message = "Campo requerido")
     private String nome;
 
     public CozinhaInput() {

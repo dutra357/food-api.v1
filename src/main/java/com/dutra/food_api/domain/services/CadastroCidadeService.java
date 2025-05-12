@@ -59,7 +59,7 @@ public class CadastroCidadeService implements CadastroCidadeInterface {
         return CidadeOutput.toCidadeOutput(cidadeRepository.save(cidadeAtual));
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional
     @Override
     public void excluir(Long cidadeId) {
         Cidade cidade = buscaInternaCidade(cidadeId);

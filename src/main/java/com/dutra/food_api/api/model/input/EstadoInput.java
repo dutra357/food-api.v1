@@ -1,10 +1,12 @@
 package com.dutra.food_api.api.model.input;
 
 import com.dutra.food_api.domain.models.Estado;
+import jakarta.validation.constraints.NotNull;
 
 
 public class EstadoInput {
 
+    @NotNull(message = "Campo requerido")
     private String nome;
 
     public EstadoInput() {

@@ -2,13 +2,16 @@ package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
+import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
+import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -115,7 +118,15 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     @Override
     public void remover(Long id) {
         Restaurante restaurante = findRestaurante(id);
-        restauranteRepository.delete(restaurante);
+
+        try {
+            restauranteRepository.delete(restaurante);
+            restauranteRepository.flush();
+
+        } catch (DataIntegrityViolationException _) {
+            throw new EntidadeEmUsoException(
+                    String.format("Restaurante de código %d não pode ser removida, pois está em uso", id));
+        }
     }
 
     @Transactional(propagation = Propagation.MANDATORY)

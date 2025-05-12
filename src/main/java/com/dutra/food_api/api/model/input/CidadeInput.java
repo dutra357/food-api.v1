@@ -1,11 +1,17 @@
 package com.dutra.food_api.api.model.input;
 
 import com.dutra.food_api.domain.models.Cidade;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 
 public class CidadeInput {
 
+    @NotNull(message = "Campo requerido")
     private String nome;
+
+    @Positive(message = "Deve ser informado um ID positivo para Estado")
+    @NotNull(message = "Campo requerido")
     private Long estadoId;
 
     public CidadeInput() {
