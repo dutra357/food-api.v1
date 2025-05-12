@@ -1,17 +1,33 @@
 package com.dutra.food_api.api.model.input;
 
 import com.dutra.food_api.domain.models.Endereco;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 
 public class EnderecoInput {
 
+    @NotBlank(message = "Campo requerido")
     private String cep;
+
+    @NotBlank(message = "Campo requerido")
     private String logradouro;
+
+    @NotBlank(message = "Campo requerido. Não havendo número use 'S/N'.")
     private String numero;
+
     private String complemento;
+
+    @NotBlank(message = "Campo requerido")
     private String bairro;
 
+    @NotNull(message = "Campo requerido")
+    @Positive(message = "Deve ser informado um ID positivo para Cidade")
     private Long cidadeId;
+
+    @NotNull(message = "Campo requerido")
+    @Positive(message = "Deve ser informado um ID positivo para Estado")
     private Long estadoId;
 
     public EnderecoInput() {

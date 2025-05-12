@@ -1,6 +1,7 @@
 package com.dutra.food_api.api.model.input;
 
 import com.dutra.food_api.domain.models.Restaurante;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
@@ -20,6 +21,7 @@ public class RestauranteInput {
     @Positive(message = "Deve ser informado um ID positivo para Cozinha")
     private Long cozinhaId;
 
+    @Valid
     private EnderecoInput endereco;
 
     public RestauranteInput() {
