@@ -2,7 +2,6 @@ package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
-import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
@@ -30,13 +29,17 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
 
     private final RestauranteRepository restauranteRepository;
     private final CadastroCozinhaService cozinhaService;
+    private final CadastroCidadeService cidadeService;
+    private final CadastroEstadoService estadoService;
     private final SmartValidator validator;
 
     public CadastroRestauranteService(RestauranteRepository restauranteRepository,
-                                      CadastroCozinhaService cozinhaService,
-                                      SmartValidator validator) {
+                                      CadastroCozinhaService cozinhaService, CadastroCidadeService cidadeService,
+                                      CadastroEstadoService estadoService, SmartValidator validator) {
         this.restauranteRepository = restauranteRepository;
         this.cozinhaService = cozinhaService;
+        this.cidadeService = cidadeService;
+        this.estadoService = estadoService;
         this.validator = validator;
     }
 
@@ -49,10 +52,16 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
 
     @Transactional
     @Override
-    public RestauranteOutput salvar(RestauranteInput restaurante) {
+    public RestauranteOutput salvar(RestauranteInput restauranteInput) {
 
-        Restaurante restauranteNovo = restaurante.toEntity();
-        restauranteNovo.setCozinha(cozinhaService.buscarCozinha(restaurante.getCozinhaId()));
+        Restaurante restauranteNovo = restauranteInput.toEntity();
+        restauranteNovo.setCozinha(cozinhaService.buscarCozinha(restauranteInput.getCozinhaId()));
+
+        restauranteNovo.getEndereco()
+                .setCidade(cidadeService.buscaInternaCidade(restauranteInput.getEndereco().getCidadeId()));
+
+        restauranteNovo.getEndereco()
+                .setEstado(restauranteNovo.getEndereco().getCidade().getEstado());
 
         return RestauranteOutput.toRestauranteOutput(restauranteRepository.save(restauranteNovo));
     }
@@ -72,7 +81,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
 
     @Transactional
     @Override
-    public RestauranteOutput atualizarTudo(Long id, Restaurante restaurante) {
+    public RestauranteOutput atualizarTudo(Long id, RestauranteInput restaurante) {
         Restaurante restauranteAlvo = findRestaurante(id);
 
         ObjectMapper objectMapper = new ObjectMapper();

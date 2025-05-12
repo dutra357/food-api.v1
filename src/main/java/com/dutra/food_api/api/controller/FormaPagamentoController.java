@@ -43,9 +43,9 @@ public class FormaPagamentoController {
     }
 
     @DeleteMapping("/{formaPagamentoId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void excluir(@PathVariable Long formaPagamentoId) {
+    public ResponseEntity<Void> excluir(@PathVariable Long formaPagamentoId) {
         service.excluir(formaPagamentoId);
+        return ResponseEntity.noContent().build();
     }
 
 }

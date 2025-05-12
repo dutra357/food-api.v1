@@ -1,11 +1,9 @@
-package com.dutra.food_api.domain.models;
+package com.dutra.food_api.api.model.input;
+
+import com.dutra.food_api.domain.models.Endereco;
 
 
-import jakarta.persistence.*;
-
-
-@Embeddable
-public class Endereco {
+public class EnderecoInput {
 
     private String cep;
     private String logradouro;
@@ -13,26 +11,33 @@ public class Endereco {
     private String complemento;
     private String bairro;
 
-    @ManyToOne
-    @JoinColumn(name = "cidade_id")
-    private Cidade cidade;
+    private Long cidadeId;
+    private Long estadoId;
 
-    @ManyToOne
-    @JoinColumn(name = "estado_id")
-    private Estado estado;
+    public EnderecoInput() {
 
-    public Endereco() {}
+    }
 
-    public Endereco(String cep, String logradouro,
-                    String numero, String complemento,
-                    String bairro, Cidade cidade, Estado estado) {
+    public EnderecoInput(String cep, String logradouro,
+                         String numero, String complemento,
+                         String bairro, Long cidadeId, Long estadoId) {
         this.cep = cep;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
-        this.cidade = cidade;
-        this.estado = estado;
+        this.cidadeId = cidadeId;
+        this.estadoId = estadoId;
+    }
+
+    public Endereco toEntity() {
+        Endereco  endereco = new Endereco();
+        endereco.setCep(cep);
+        endereco.setLogradouro(logradouro);
+        endereco.setNumero(numero);
+        endereco.setComplemento(complemento);
+        endereco.setBairro(bairro);
+        return endereco;
     }
 
     public String getCep() {
@@ -75,19 +80,19 @@ public class Endereco {
         this.bairro = bairro;
     }
 
-    public Cidade getCidade() {
-        return cidade;
+    public Long getCidadeId() {
+        return cidadeId;
     }
 
-    public void setCidade(Cidade cidade) {
-        this.cidade = cidade;
+    public void setCidadeId(Long cidadeId) {
+        this.cidadeId = cidadeId;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public Long getEstadoId() {
+        return estadoId;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setEstadoId(Long estadoId) {
+        this.estadoId = estadoId;
     }
 }

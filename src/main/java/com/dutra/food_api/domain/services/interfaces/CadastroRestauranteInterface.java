@@ -2,7 +2,6 @@ package com.dutra.food_api.domain.services.interfaces;
 
 import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
-import com.dutra.food_api.domain.models.Restaurante;
 
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,7 @@ public interface CadastroRestauranteInterface {
 
     List<RestauranteOutput> buscarTodos();
 
-    RestauranteOutput atualizarTudo(Long id, Restaurante restaurante);
+    RestauranteOutput atualizarTudo(Long id, RestauranteInput restaurante);
 
     RestauranteOutput atualizarParcial(Long id, Map<String, Object> camposInformados);
 

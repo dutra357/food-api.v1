@@ -1,38 +1,40 @@
-package com.dutra.food_api.domain.models;
+package com.dutra.food_api.api.model.output;
 
 
-import jakarta.persistence.*;
+import com.dutra.food_api.domain.models.Endereco;
 
-
-@Embeddable
-public class Endereco {
+public class EnderecoOutput {
 
     private String cep;
     private String logradouro;
     private String numero;
     private String complemento;
     private String bairro;
+    private CidadeOutput cidade;
 
-    @ManyToOne
-    @JoinColumn(name = "cidade_id")
-    private Cidade cidade;
+    public EnderecoOutput() {}
 
-    @ManyToOne
-    @JoinColumn(name = "estado_id")
-    private Estado estado;
-
-    public Endereco() {}
-
-    public Endereco(String cep, String logradouro,
-                    String numero, String complemento,
-                    String bairro, Cidade cidade, Estado estado) {
+    public EnderecoOutput(String cep, String logradouro, String numero,
+                          String complemento, String bairro,
+                          CidadeOutput cidade) {
         this.cep = cep;
         this.logradouro = logradouro;
         this.numero = numero;
         this.complemento = complemento;
         this.bairro = bairro;
         this.cidade = cidade;
-        this.estado = estado;
+    }
+
+    public static EnderecoOutput toEnderecoOutput(Endereco endereco) {
+        EnderecoOutput  enderecoOutput = new EnderecoOutput();
+        enderecoOutput.setCep(endereco.getCep());
+        enderecoOutput.setLogradouro(endereco.getLogradouro());
+        enderecoOutput.setNumero(endereco.getNumero());
+        enderecoOutput.setComplemento(endereco.getComplemento());
+        enderecoOutput.setBairro(endereco.getBairro());
+
+        enderecoOutput.setCidade(CidadeOutput.toCidadeOutput(endereco.getCidade()));
+        return enderecoOutput;
     }
 
     public String getCep() {
@@ -75,19 +77,11 @@ public class Endereco {
         this.bairro = bairro;
     }
 
-    public Cidade getCidade() {
+    public CidadeOutput getCidade() {
         return cidade;
     }
 
-    public void setCidade(Cidade cidade) {
+    public void setCidade(CidadeOutput cidade) {
         this.cidade = cidade;
-    }
-
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
     }
 }

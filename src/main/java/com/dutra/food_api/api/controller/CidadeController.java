@@ -3,6 +3,7 @@ package com.dutra.food_api.api.controller;
 import com.dutra.food_api.api.model.input.CidadeInput;
 import com.dutra.food_api.api.model.output.CidadeOutput;
 import com.dutra.food_api.domain.services.CadastroCidadeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,12 +33,12 @@ public class CidadeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<CidadeOutput> salvar(CidadeInput cidadeInput) {
+    public ResponseEntity<CidadeOutput> salvar(@RequestBody @Valid CidadeInput cidadeInput) {
         return ResponseEntity.ok(cadastroCidadeService.salvar(cidadeInput));
     }
 
     @PutMapping("/{cidadeId}")
-    public ResponseEntity<CidadeOutput> atualizar(@PathVariable Long cidadeId, CidadeInput cidadeInput) {
+    public ResponseEntity<CidadeOutput> atualizar(@PathVariable Long cidadeId,@RequestBody @Valid CidadeInput cidadeInput) {
         return ResponseEntity.ok(cadastroCidadeService.atualizar(cidadeId, cidadeInput));
     }
 

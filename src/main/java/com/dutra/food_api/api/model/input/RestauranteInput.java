@@ -1,6 +1,5 @@
 package com.dutra.food_api.api.model.input;
 
-import com.dutra.food_api.domain.models.Endereco;
 import com.dutra.food_api.domain.models.Restaurante;
 import jakarta.validation.constraints.*;
 
@@ -21,13 +20,13 @@ public class RestauranteInput {
     @Positive(message = "Deve ser informado um ID positivo para Cozinha")
     private Long cozinhaId;
 
-    private Endereco endereco;
+    private EnderecoInput endereco;
 
     public RestauranteInput() {
     }
 
     public RestauranteInput(String nome, BigDecimal taxaFrete,
-                            Long cozinhaId, Endereco endereco) {
+                            Long cozinhaId, EnderecoInput endereco) {
         this.nome = nome;
         this.taxaFrete = taxaFrete;
         this.cozinhaId = cozinhaId;
@@ -38,7 +37,7 @@ public class RestauranteInput {
         Restaurante  restaurante = new Restaurante();
         restaurante.setNome(nome);
         restaurante.setTaxaFrete(taxaFrete);
-        restaurante.setEndereco(endereco);
+        restaurante.setEndereco(endereco.toEntity());
         return restaurante;
     }
 
@@ -66,12 +65,11 @@ public class RestauranteInput {
         this.cozinhaId = cozinhaId;
     }
 
-    public Endereco getEndereco() {
+    public EnderecoInput getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Endereco endereco) {
+    public void setEndereco(EnderecoInput endereco) {
         this.endereco = endereco;
     }
-
 }

@@ -1,7 +1,7 @@
 package com.dutra.food_api.api.model.output;
 
-import com.dutra.food_api.domain.models.Endereco;
 import com.dutra.food_api.domain.models.Restaurante;
+
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
@@ -14,7 +14,8 @@ public class RestauranteOutput {
     private BigDecimal taxaFrete;
     private Boolean ativo;
     private CozinhaOutput cozinha;
-    private Endereco endereco;
+
+    private EnderecoOutput enderecoOutput;
 
     private OffsetDateTime dataCadastro;
     private OffsetDateTime dataAtualizacao;
@@ -23,14 +24,14 @@ public class RestauranteOutput {
     }
 
     public RestauranteOutput(Long id, String nome, BigDecimal taxaFrete,
-                             CozinhaOutput cozinha, Endereco endereco,
+                             CozinhaOutput cozinha, EnderecoOutput enderecoOutput,
                              OffsetDateTime dataCadastro, OffsetDateTime dataAtualizacao,
                              boolean  ativo) {
         this.id = id;
         this.nome = nome;
         this.taxaFrete = taxaFrete;
         this.cozinha = cozinha;
-        this.endereco = endereco;
+        this.enderecoOutput = enderecoOutput;
         this.dataCadastro = dataCadastro;
         this.dataAtualizacao = dataAtualizacao;
         this.ativo = ativo;
@@ -42,7 +43,7 @@ public class RestauranteOutput {
                 restaurante.getNome(),
                 restaurante.getTaxaFrete(),
                 CozinhaOutput.toCozinhaOutput(restaurante.getCozinha()),
-                restaurante.getEndereco(),
+                EnderecoOutput.toEnderecoOutput(restaurante.getEndereco()),
                 restaurante.getDataCadastro(),
                 restaurante.getDataAtualizacao(),
                 restaurante.getAtivo()
@@ -89,12 +90,12 @@ public class RestauranteOutput {
         this.cozinha = cozinha;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public EnderecoOutput getEndereco() {
+        return enderecoOutput;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
+    public void setEndereco(EnderecoOutput enderecoOutput) {
+        this.enderecoOutput = enderecoOutput;
     }
 
     public OffsetDateTime getDataCadastro() {

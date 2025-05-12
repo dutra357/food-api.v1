@@ -4,6 +4,7 @@ import com.dutra.food_api.api.model.input.EstadoInput;
 import com.dutra.food_api.api.model.output.EstadoOutput;
 import com.dutra.food_api.domain.models.Estado;
 import com.dutra.food_api.domain.services.CadastroEstadoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,18 +31,17 @@ public class EstadoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EstadoOutput> atualizar(@PathVariable Long id, @RequestBody EstadoInput  estadoInput) {
+    public ResponseEntity<EstadoOutput> atualizar(@PathVariable Long id, @RequestBody @Valid EstadoInput  estadoInput) {
         return ResponseEntity.ok(cadastroEstadoService.atualizar(id, estadoInput));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EstadoOutput> salvar(@RequestBody EstadoInput  estadoInput) {
+    public ResponseEntity<EstadoOutput> salvar(@RequestBody @Valid EstadoInput  estadoInput) {
         return ResponseEntity.ok(cadastroEstadoService.salvar(estadoInput));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         cadastroEstadoService.delete(id);
         return ResponseEntity.noContent().build();

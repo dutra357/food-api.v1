@@ -19,6 +19,14 @@ public class Cidade {
     @JoinColumn(name = "estado_id")
     private Estado estado;
 
+    public Cidade() {
+    }
+
+    public Cidade(String nome, Estado estado) {
+        this.nome = nome;
+        this.estado = estado;
+    }
+
     public Long getId() {
         return id;
     }

@@ -15,9 +15,10 @@ public class Estado {
     @Column(nullable = false)
     private String nome;
 
-    public Estado() {}
-    public Estado(Long id, String nome) {
-        this.id = id;
+    public Estado() {
+    }
+
+    public Estado(String nome) {
         this.nome = nome;
     }
 
