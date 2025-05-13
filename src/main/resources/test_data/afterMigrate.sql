@@ -35,3 +35,11 @@ insert into tb_produto (nome, descricao, preco, ativo, restaurante_id) values ('
 insert into tb_produto (nome, descricao, preco, ativo, restaurante_id) values ('T-Bone', 'Corte muito saboroso, com um osso em formato de T, sendo de um lado o contrafilé e do outro o filé mignon', 89, true, 4);
 insert into tb_produto (nome, descricao, preco, ativo, restaurante_id) values ('Sanduíche X-Tudo', 'Sandubão com muito queijo, hamburger bovino, bacon, ovo, salada e maionese', 19, true, 2);
 insert into tb_produto (nome, descricao, preco, ativo, restaurante_id) values ('Espetinho de Cupim', 'Acompanha farinha, mandioca e vinagrete', 8, true, 2);
+
+insert into tb_grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+
+INSERT INTO tb_usuario (nome, email, senha, data_cadastro) VALUES
+('João da Silva', 'joao.ger@algafood.com', '123', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+('Maria Joaquina', 'maria.vnd@algafood.com', '123', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+('José Souza', 'jose.aux@algafood.com', '123', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+('Sebastião Martins', 'sebastiao.cad@algafood.com', '123', CURRENT_TIMESTAMP AT TIME ZONE 'UTC');

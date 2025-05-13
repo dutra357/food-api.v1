@@ -3,6 +3,7 @@ package com.dutra.food_api.api.excemptions;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
+import com.dutra.food_api.domain.services.exceptions.ValidationException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -135,6 +136,20 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(status).body(problemDetail);
     }
 
+    //Handler para validação de senha incorreta
+    @ExceptionHandler(ValidationException.class)
+    private ResponseEntity<ProblemDetail> handleValidationException(ValidationException  exception,
+                                                                    HttpServletRequest request) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setType(URI.create("/errors/incorrect-password"));
+        problemDetail.setTitle(exception.getMessage());
+        problemDetail.setDetail("Senha inválida: " + exception.getCause());
+        problemDetail.setInstance(URI.create(request.getRequestURI()));
+
+        return ResponseEntity.of(problemDetail).build();
+    }
+
     //Handler geral
     @ExceptionHandler(Exception.class)
     private ResponseEntity<ProblemDetail> handleException(Exception exception,
@@ -153,6 +168,4 @@ public class ApiExceptionHandler {
 
         return ResponseEntity.of(problemDetail).build();
     }
-
-
 }

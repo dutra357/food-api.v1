@@ -1,9 +1,11 @@
 package com.dutra.food_api.api.model.input;
 
 import com.dutra.food_api.domain.models.Grupo;
+import jakarta.validation.constraints.NotNull;
 
 public class GrupoInput {
 
+    @NotNull(message = "Campo requerido")
     private String nome;
 
     public GrupoInput() {}

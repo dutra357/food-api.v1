@@ -34,8 +34,7 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
     @Transactional
     @Override
     public CozinhaOutput atualizarCozinha(Long cozinhaId, CozinhaInput cozinhaInput) {
-        Cozinha cozinhaAtual = cozinhaRepository.findById(cozinhaId)
-                .orElseThrow( () -> new EntidadeNaoEncontradaException(COZINHA_NOT_FOUND));
+        Cozinha cozinhaAtual = buscarCozinha(cozinhaId);
 
         cozinhaAtual.setNome(cozinhaInput.getNome());
         return CozinhaOutput.toCozinhaOutput(cozinhaRepository.save(cozinhaAtual));
