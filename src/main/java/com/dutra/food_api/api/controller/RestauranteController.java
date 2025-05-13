@@ -2,7 +2,6 @@ package com.dutra.food_api.api.controller;
 
 import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
-import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.impl.RestauranteImpl;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import jakarta.validation.Valid;
