@@ -1,7 +1,6 @@
 package com.dutra.food_api.api.controller;
 
 import com.dutra.food_api.api.model.output.FormaPagamentoOutput;
-import com.dutra.food_api.domain.services.interfaces.CadastroFormaPagamentoInterface;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,13 +9,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/restaurantes/{restauranteId}/formas-pagamento")
-public class PagamentosController {
+public class RestaurantePagamentosController {
 
-    public final CadastroFormaPagamentoInterface cadastroFormaPagamento;
+
     public final CadastroRestauranteInterface cadastroRestaurante;
-
-    public PagamentosController(CadastroFormaPagamentoInterface cadastroFormaPagamento, CadastroRestauranteInterface cadastroRestaurante) {
-        this.cadastroFormaPagamento = cadastroFormaPagamento;
+    public RestaurantePagamentosController(CadastroRestauranteInterface cadastroRestaurante) {
         this.cadastroRestaurante = cadastroRestaurante;
     }
 

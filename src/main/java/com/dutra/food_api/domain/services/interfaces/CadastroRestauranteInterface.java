@@ -2,6 +2,7 @@ package com.dutra.food_api.domain.services.interfaces;
 
 import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.FormaPagamentoOutput;
+import com.dutra.food_api.api.model.output.ProdutoOutput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
 
 import java.util.List;
@@ -32,4 +33,14 @@ public interface CadastroRestauranteInterface {
     void removerFormaPagamento(Long restauranteId, Long formaPagamentoId);
 
     void associarFormaPagamento(Long restauranteId, Long formaPagamentoId);
+
+    List<ProdutoOutput> buscarProdutos(Long restauranteId);
+
+    void associarProduto(Long restauranteId, Long produtoId);
+
+    void desassociarProduto(Long restauranteId, Long produtoId);
+
+    void abrirRestaurante(Long id);
+
+    void fecharRestaurante(Long id);
 }

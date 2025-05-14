@@ -2,13 +2,14 @@ package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.FormaPagamentoOutput;
+import com.dutra.food_api.api.model.output.ProdutoOutput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
+import com.dutra.food_api.domain.models.Produto;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
-import com.dutra.food_api.domain.services.interfaces.CadastroFormaPagamentoInterface;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,16 +34,18 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     private final CadastroCozinhaService cozinhaService;
     private final CadastroCidadeService cidadeService;
     private final FormaPagamentoService  serviceFormaPagamento;
+    private final CadastroProdutoService produtoService;
 
     private final SmartValidator validator;
 
     public CadastroRestauranteService(RestauranteRepository restauranteRepository,
                                       CadastroCozinhaService cozinhaService, CadastroCidadeService cidadeService,
-                                      FormaPagamentoService serviceFormaPagamento, SmartValidator validator) {
+                                      FormaPagamentoService serviceFormaPagamento, CadastroProdutoService produtoService, SmartValidator validator) {
         this.restauranteRepository = restauranteRepository;
         this.cozinhaService = cozinhaService;
         this.cidadeService = cidadeService;
         this.serviceFormaPagamento = serviceFormaPagamento;
+        this.produtoService = produtoService;
         this.validator = validator;
     }
 
@@ -141,7 +144,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         }
     }
 
-    @Transactional(propagation = Propagation.MANDATORY)
+    @Transactional
     @Override
     public void ativar(Long id) {
         Restaurante restaurante = findRestaurante(id);
@@ -150,11 +153,25 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         //dispensado o 'save'.
     }
 
-    @Transactional(propagation = Propagation.MANDATORY)
+    @Transactional
     @Override
     public void inativar(Long id) {
         Restaurante restaurante = findRestaurante(id);
         restaurante.inativar();
+    }
+
+    @Transactional
+    @Override
+    public void abrirRestaurante(Long id) {
+        Restaurante restaurante = findRestaurante(id);
+        restaurante.setAberto(true);
+    }
+
+    @Transactional
+    @Override
+    public void fecharRestaurante(Long id) {
+        Restaurante restaurante = findRestaurante(id);
+        restaurante.setAberto(false);
     }
 
     @Transactional(readOnly = true)
@@ -179,6 +196,33 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         Restaurante restaurante = findRestaurante(restauranteId);
         restaurante.getFormasPagamento()
                 .add(serviceFormaPagamento.buscaPagamentoRestaurante(formaPagamentoId));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ProdutoOutput> buscarProdutos(Long restauranteId) {
+        Restaurante restaurante = findRestaurante(restauranteId);
+        return restaurante.getProdutos()
+                .stream().map(ProdutoOutput::toProdutoOutput).toList();
+    }
+
+    @Transactional
+    @Override
+    public void associarProduto(Long restauranteId, Long produtoId) {
+        Restaurante restaurante = findRestaurante(restauranteId);
+        Produto produto = produtoService.buscarProduto(produtoId);
+
+        produto.setRestaurante(restaurante);
+    }
+
+    @Transactional
+    @Override
+    public void desassociarProduto(Long restauranteId, Long produtoId) {
+        Produto produto = produtoService.buscarProduto(produtoId);
+
+        if (produto.getRestaurante().getId().equals(restauranteId)) {
+            produto.setRestaurante(null);
+        }
     }
 
     private Restaurante findRestaurante(Long id) {

@@ -122,94 +122,94 @@
         usuario_id bigint not null
     );
 
-    alter table if exists tb_cidade 
-       add constraint FKlxge3ne91xrep1oe4cvrjldmm 
-       foreign key (estado_id) 
+    alter table if exists tb_cidade
+       add constraint FKlxge3ne91xrep1oe4cvrjldmm
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKebkjqmqseopi0eipijfo06vh8 
-       foreign key (permissao_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKebkjqmqseopi0eipijfo06vh8
+       foreign key (permissao_id)
        references tb_permissao;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKc35tefcxk6t0b4u5qaenlv63e 
-       foreign key (grupo_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKc35tefcxk6t0b4u5qaenlv63e
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_item_pedido 
-       add constraint FK3qvnhpdyxagngbf1t326cvnse 
-       foreign key (pedido_id) 
+    alter table if exists tb_item_pedido
+       add constraint FK3qvnhpdyxagngbf1t326cvnse
+       foreign key (pedido_id)
        references tb_pedido;
 
-    alter table if exists tb_item_pedido 
-       add constraint FKgfmv77km3wt2evaaq2vkiv2oj 
-       foreign key (produto_id) 
+    alter table if exists tb_item_pedido
+       add constraint FKgfmv77km3wt2evaaq2vkiv2oj
+       foreign key (produto_id)
        references tb_produto;
 
-    alter table if exists tb_pedido 
-       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1 
-       foreign key (usuario_id) 
+    alter table if exists tb_pedido
+       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1
+       foreign key (usuario_id)
        references tb_usuario;
 
-    alter table if exists tb_pedido 
-       add constraint FK3ra17rv1by8nmkk5aurdo4spr 
-       foreign key (cidade_id) 
+    alter table if exists tb_pedido
+       add constraint FK3ra17rv1by8nmkk5aurdo4spr
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_pedido 
-       add constraint FKdj927gncw00873vcuy08o5wm1 
-       foreign key (estado_id) 
+    alter table if exists tb_pedido
+       add constraint FKdj927gncw00873vcuy08o5wm1
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_pedido 
-       add constraint FK4gcd7u6xju8bmmgxx8c303job 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_pedido
+       add constraint FK4gcd7u6xju8bmmgxx8c303job
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_pedido 
-       add constraint FKbb7n8l77yto4r2hix87w3x4oy 
-       foreign key (restaurante_id) 
+    alter table if exists tb_pedido
+       add constraint FKbb7n8l77yto4r2hix87w3x4oy
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_produto 
-       add constraint FK1fh03prrjxetvrl6d4ut5r1r0 
-       foreign key (restaurante_id) 
+    alter table if exists tb_produto
+       add constraint FK1fh03prrjxetvrl6d4ut5r1r0
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_restaurante 
-       add constraint FKpsus3qnrv5sxgm95m8epaievn 
-       foreign key (cozinha_id) 
+    alter table if exists tb_restaurante
+       add constraint FKpsus3qnrv5sxgm95m8epaievn
+       foreign key (cozinha_id)
        references tb_cozinha;
 
-    alter table if exists tb_restaurante 
-       add constraint FKadsa5a6icqd2b6c8m1qe10gr2 
-       foreign key (cidade_id) 
+    alter table if exists tb_restaurante
+       add constraint FKadsa5a6icqd2b6c8m1qe10gr2
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_restaurante 
-       add constraint FKkffac1awlmrvtegrar3869y37 
-       foreign key (estado_id) 
+    alter table if exists tb_restaurante
+       add constraint FKkffac1awlmrvtegrar3869y37
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKsi78wf2v77p8yv9swve1qd4bx 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKsi78wf2v77p8yv9swve1qd4bx
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKngs0dntt47n5xpnued71e7oc5 
-       foreign key (restaurante_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKngs0dntt47n5xpnued71e7oc5
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKfox4y8jslkfybem54i4jyndnj 
-       foreign key (grupo_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKfox4y8jslkfybem54i4jyndnj
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKos1k9g527yqpdorasypy0h72d 
-       foreign key (usuario_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKos1k9g527yqpdorasypy0h72d
+       foreign key (usuario_id)
        references tb_usuario;
 
     create table tb_cidade (
@@ -335,94 +335,94 @@
         usuario_id bigint not null
     );
 
-    alter table if exists tb_cidade 
-       add constraint FKlxge3ne91xrep1oe4cvrjldmm 
-       foreign key (estado_id) 
+    alter table if exists tb_cidade
+       add constraint FKlxge3ne91xrep1oe4cvrjldmm
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKebkjqmqseopi0eipijfo06vh8 
-       foreign key (permissao_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKebkjqmqseopi0eipijfo06vh8
+       foreign key (permissao_id)
        references tb_permissao;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKc35tefcxk6t0b4u5qaenlv63e 
-       foreign key (grupo_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKc35tefcxk6t0b4u5qaenlv63e
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_item_pedido 
-       add constraint FK3qvnhpdyxagngbf1t326cvnse 
-       foreign key (pedido_id) 
+    alter table if exists tb_item_pedido
+       add constraint FK3qvnhpdyxagngbf1t326cvnse
+       foreign key (pedido_id)
        references tb_pedido;
 
-    alter table if exists tb_item_pedido 
-       add constraint FKgfmv77km3wt2evaaq2vkiv2oj 
-       foreign key (produto_id) 
+    alter table if exists tb_item_pedido
+       add constraint FKgfmv77km3wt2evaaq2vkiv2oj
+       foreign key (produto_id)
        references tb_produto;
 
-    alter table if exists tb_pedido 
-       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1 
-       foreign key (usuario_id) 
+    alter table if exists tb_pedido
+       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1
+       foreign key (usuario_id)
        references tb_usuario;
 
-    alter table if exists tb_pedido 
-       add constraint FK3ra17rv1by8nmkk5aurdo4spr 
-       foreign key (cidade_id) 
+    alter table if exists tb_pedido
+       add constraint FK3ra17rv1by8nmkk5aurdo4spr
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_pedido 
-       add constraint FKdj927gncw00873vcuy08o5wm1 
-       foreign key (estado_id) 
+    alter table if exists tb_pedido
+       add constraint FKdj927gncw00873vcuy08o5wm1
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_pedido 
-       add constraint FK4gcd7u6xju8bmmgxx8c303job 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_pedido
+       add constraint FK4gcd7u6xju8bmmgxx8c303job
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_pedido 
-       add constraint FKbb7n8l77yto4r2hix87w3x4oy 
-       foreign key (restaurante_id) 
+    alter table if exists tb_pedido
+       add constraint FKbb7n8l77yto4r2hix87w3x4oy
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_produto 
-       add constraint FK1fh03prrjxetvrl6d4ut5r1r0 
-       foreign key (restaurante_id) 
+    alter table if exists tb_produto
+       add constraint FK1fh03prrjxetvrl6d4ut5r1r0
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_restaurante 
-       add constraint FKpsus3qnrv5sxgm95m8epaievn 
-       foreign key (cozinha_id) 
+    alter table if exists tb_restaurante
+       add constraint FKpsus3qnrv5sxgm95m8epaievn
+       foreign key (cozinha_id)
        references tb_cozinha;
 
-    alter table if exists tb_restaurante 
-       add constraint FKadsa5a6icqd2b6c8m1qe10gr2 
-       foreign key (cidade_id) 
+    alter table if exists tb_restaurante
+       add constraint FKadsa5a6icqd2b6c8m1qe10gr2
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_restaurante 
-       add constraint FKkffac1awlmrvtegrar3869y37 
-       foreign key (estado_id) 
+    alter table if exists tb_restaurante
+       add constraint FKkffac1awlmrvtegrar3869y37
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKsi78wf2v77p8yv9swve1qd4bx 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKsi78wf2v77p8yv9swve1qd4bx
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKngs0dntt47n5xpnued71e7oc5 
-       foreign key (restaurante_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKngs0dntt47n5xpnued71e7oc5
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKfox4y8jslkfybem54i4jyndnj 
-       foreign key (grupo_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKfox4y8jslkfybem54i4jyndnj
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKos1k9g527yqpdorasypy0h72d 
-       foreign key (usuario_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKos1k9g527yqpdorasypy0h72d
+       foreign key (usuario_id)
        references tb_usuario;
 
     create table tb_cidade (
@@ -548,94 +548,94 @@
         usuario_id bigint not null
     );
 
-    alter table if exists tb_cidade 
-       add constraint FKlxge3ne91xrep1oe4cvrjldmm 
-       foreign key (estado_id) 
+    alter table if exists tb_cidade
+       add constraint FKlxge3ne91xrep1oe4cvrjldmm
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKebkjqmqseopi0eipijfo06vh8 
-       foreign key (permissao_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKebkjqmqseopi0eipijfo06vh8
+       foreign key (permissao_id)
        references tb_permissao;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKc35tefcxk6t0b4u5qaenlv63e 
-       foreign key (grupo_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKc35tefcxk6t0b4u5qaenlv63e
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_item_pedido 
-       add constraint FK3qvnhpdyxagngbf1t326cvnse 
-       foreign key (pedido_id) 
+    alter table if exists tb_item_pedido
+       add constraint FK3qvnhpdyxagngbf1t326cvnse
+       foreign key (pedido_id)
        references tb_pedido;
 
-    alter table if exists tb_item_pedido 
-       add constraint FKgfmv77km3wt2evaaq2vkiv2oj 
-       foreign key (produto_id) 
+    alter table if exists tb_item_pedido
+       add constraint FKgfmv77km3wt2evaaq2vkiv2oj
+       foreign key (produto_id)
        references tb_produto;
 
-    alter table if exists tb_pedido 
-       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1 
-       foreign key (usuario_id) 
+    alter table if exists tb_pedido
+       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1
+       foreign key (usuario_id)
        references tb_usuario;
 
-    alter table if exists tb_pedido 
-       add constraint FK3ra17rv1by8nmkk5aurdo4spr 
-       foreign key (cidade_id) 
+    alter table if exists tb_pedido
+       add constraint FK3ra17rv1by8nmkk5aurdo4spr
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_pedido 
-       add constraint FKdj927gncw00873vcuy08o5wm1 
-       foreign key (estado_id) 
+    alter table if exists tb_pedido
+       add constraint FKdj927gncw00873vcuy08o5wm1
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_pedido 
-       add constraint FK4gcd7u6xju8bmmgxx8c303job 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_pedido
+       add constraint FK4gcd7u6xju8bmmgxx8c303job
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_pedido 
-       add constraint FKbb7n8l77yto4r2hix87w3x4oy 
-       foreign key (restaurante_id) 
+    alter table if exists tb_pedido
+       add constraint FKbb7n8l77yto4r2hix87w3x4oy
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_produto 
-       add constraint FK1fh03prrjxetvrl6d4ut5r1r0 
-       foreign key (restaurante_id) 
+    alter table if exists tb_produto
+       add constraint FK1fh03prrjxetvrl6d4ut5r1r0
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_restaurante 
-       add constraint FKpsus3qnrv5sxgm95m8epaievn 
-       foreign key (cozinha_id) 
+    alter table if exists tb_restaurante
+       add constraint FKpsus3qnrv5sxgm95m8epaievn
+       foreign key (cozinha_id)
        references tb_cozinha;
 
-    alter table if exists tb_restaurante 
-       add constraint FKadsa5a6icqd2b6c8m1qe10gr2 
-       foreign key (cidade_id) 
+    alter table if exists tb_restaurante
+       add constraint FKadsa5a6icqd2b6c8m1qe10gr2
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_restaurante 
-       add constraint FKkffac1awlmrvtegrar3869y37 
-       foreign key (estado_id) 
+    alter table if exists tb_restaurante
+       add constraint FKkffac1awlmrvtegrar3869y37
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKsi78wf2v77p8yv9swve1qd4bx 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKsi78wf2v77p8yv9swve1qd4bx
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKngs0dntt47n5xpnued71e7oc5 
-       foreign key (restaurante_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKngs0dntt47n5xpnued71e7oc5
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKfox4y8jslkfybem54i4jyndnj 
-       foreign key (grupo_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKfox4y8jslkfybem54i4jyndnj
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKos1k9g527yqpdorasypy0h72d 
-       foreign key (usuario_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKos1k9g527yqpdorasypy0h72d
+       foreign key (usuario_id)
        references tb_usuario;
 
     create table tb_cidade (
@@ -761,94 +761,94 @@
         usuario_id bigint not null
     );
 
-    alter table if exists tb_cidade 
-       add constraint FKlxge3ne91xrep1oe4cvrjldmm 
-       foreign key (estado_id) 
+    alter table if exists tb_cidade
+       add constraint FKlxge3ne91xrep1oe4cvrjldmm
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKebkjqmqseopi0eipijfo06vh8 
-       foreign key (permissao_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKebkjqmqseopi0eipijfo06vh8
+       foreign key (permissao_id)
        references tb_permissao;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKc35tefcxk6t0b4u5qaenlv63e 
-       foreign key (grupo_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKc35tefcxk6t0b4u5qaenlv63e
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_item_pedido 
-       add constraint FK3qvnhpdyxagngbf1t326cvnse 
-       foreign key (pedido_id) 
+    alter table if exists tb_item_pedido
+       add constraint FK3qvnhpdyxagngbf1t326cvnse
+       foreign key (pedido_id)
        references tb_pedido;
 
-    alter table if exists tb_item_pedido 
-       add constraint FKgfmv77km3wt2evaaq2vkiv2oj 
-       foreign key (produto_id) 
+    alter table if exists tb_item_pedido
+       add constraint FKgfmv77km3wt2evaaq2vkiv2oj
+       foreign key (produto_id)
        references tb_produto;
 
-    alter table if exists tb_pedido 
-       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1 
-       foreign key (usuario_id) 
+    alter table if exists tb_pedido
+       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1
+       foreign key (usuario_id)
        references tb_usuario;
 
-    alter table if exists tb_pedido 
-       add constraint FK3ra17rv1by8nmkk5aurdo4spr 
-       foreign key (cidade_id) 
+    alter table if exists tb_pedido
+       add constraint FK3ra17rv1by8nmkk5aurdo4spr
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_pedido 
-       add constraint FKdj927gncw00873vcuy08o5wm1 
-       foreign key (estado_id) 
+    alter table if exists tb_pedido
+       add constraint FKdj927gncw00873vcuy08o5wm1
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_pedido 
-       add constraint FK4gcd7u6xju8bmmgxx8c303job 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_pedido
+       add constraint FK4gcd7u6xju8bmmgxx8c303job
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_pedido 
-       add constraint FKbb7n8l77yto4r2hix87w3x4oy 
-       foreign key (restaurante_id) 
+    alter table if exists tb_pedido
+       add constraint FKbb7n8l77yto4r2hix87w3x4oy
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_produto 
-       add constraint FK1fh03prrjxetvrl6d4ut5r1r0 
-       foreign key (restaurante_id) 
+    alter table if exists tb_produto
+       add constraint FK1fh03prrjxetvrl6d4ut5r1r0
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_restaurante 
-       add constraint FKpsus3qnrv5sxgm95m8epaievn 
-       foreign key (cozinha_id) 
+    alter table if exists tb_restaurante
+       add constraint FKpsus3qnrv5sxgm95m8epaievn
+       foreign key (cozinha_id)
        references tb_cozinha;
 
-    alter table if exists tb_restaurante 
-       add constraint FKadsa5a6icqd2b6c8m1qe10gr2 
-       foreign key (cidade_id) 
+    alter table if exists tb_restaurante
+       add constraint FKadsa5a6icqd2b6c8m1qe10gr2
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_restaurante 
-       add constraint FKkffac1awlmrvtegrar3869y37 
-       foreign key (estado_id) 
+    alter table if exists tb_restaurante
+       add constraint FKkffac1awlmrvtegrar3869y37
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKsi78wf2v77p8yv9swve1qd4bx 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKsi78wf2v77p8yv9swve1qd4bx
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKngs0dntt47n5xpnued71e7oc5 
-       foreign key (restaurante_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKngs0dntt47n5xpnued71e7oc5
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKfox4y8jslkfybem54i4jyndnj 
-       foreign key (grupo_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKfox4y8jslkfybem54i4jyndnj
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKos1k9g527yqpdorasypy0h72d 
-       foreign key (usuario_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKos1k9g527yqpdorasypy0h72d
+       foreign key (usuario_id)
        references tb_usuario;
 
     create table tb_cidade (
@@ -974,92 +974,92 @@
         usuario_id bigint not null
     );
 
-    alter table if exists tb_cidade 
-       add constraint FKlxge3ne91xrep1oe4cvrjldmm 
-       foreign key (estado_id) 
+    alter table if exists tb_cidade
+       add constraint FKlxge3ne91xrep1oe4cvrjldmm
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKebkjqmqseopi0eipijfo06vh8 
-       foreign key (permissao_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKebkjqmqseopi0eipijfo06vh8
+       foreign key (permissao_id)
        references tb_permissao;
 
-    alter table if exists tb_grupo_permissao 
-       add constraint FKc35tefcxk6t0b4u5qaenlv63e 
-       foreign key (grupo_id) 
+    alter table if exists tb_grupo_permissao
+       add constraint FKc35tefcxk6t0b4u5qaenlv63e
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_item_pedido 
-       add constraint FK3qvnhpdyxagngbf1t326cvnse 
-       foreign key (pedido_id) 
+    alter table if exists tb_item_pedido
+       add constraint FK3qvnhpdyxagngbf1t326cvnse
+       foreign key (pedido_id)
        references tb_pedido;
 
-    alter table if exists tb_item_pedido 
-       add constraint FKgfmv77km3wt2evaaq2vkiv2oj 
-       foreign key (produto_id) 
+    alter table if exists tb_item_pedido
+       add constraint FKgfmv77km3wt2evaaq2vkiv2oj
+       foreign key (produto_id)
        references tb_produto;
 
-    alter table if exists tb_pedido 
-       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1 
-       foreign key (usuario_id) 
+    alter table if exists tb_pedido
+       add constraint FK5h0d3j6fio8o9dmrdwd1n58k1
+       foreign key (usuario_id)
        references tb_usuario;
 
-    alter table if exists tb_pedido 
-       add constraint FK3ra17rv1by8nmkk5aurdo4spr 
-       foreign key (cidade_id) 
+    alter table if exists tb_pedido
+       add constraint FK3ra17rv1by8nmkk5aurdo4spr
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_pedido 
-       add constraint FKdj927gncw00873vcuy08o5wm1 
-       foreign key (estado_id) 
+    alter table if exists tb_pedido
+       add constraint FKdj927gncw00873vcuy08o5wm1
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_pedido 
-       add constraint FK4gcd7u6xju8bmmgxx8c303job 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_pedido
+       add constraint FK4gcd7u6xju8bmmgxx8c303job
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_pedido 
-       add constraint FKbb7n8l77yto4r2hix87w3x4oy 
-       foreign key (restaurante_id) 
+    alter table if exists tb_pedido
+       add constraint FKbb7n8l77yto4r2hix87w3x4oy
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_produto 
-       add constraint FK1fh03prrjxetvrl6d4ut5r1r0 
-       foreign key (restaurante_id) 
+    alter table if exists tb_produto
+       add constraint FK1fh03prrjxetvrl6d4ut5r1r0
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_restaurante 
-       add constraint FKpsus3qnrv5sxgm95m8epaievn 
-       foreign key (cozinha_id) 
+    alter table if exists tb_restaurante
+       add constraint FKpsus3qnrv5sxgm95m8epaievn
+       foreign key (cozinha_id)
        references tb_cozinha;
 
-    alter table if exists tb_restaurante 
-       add constraint FKadsa5a6icqd2b6c8m1qe10gr2 
-       foreign key (cidade_id) 
+    alter table if exists tb_restaurante
+       add constraint FKadsa5a6icqd2b6c8m1qe10gr2
+       foreign key (cidade_id)
        references tb_cidade;
 
-    alter table if exists tb_restaurante 
-       add constraint FKkffac1awlmrvtegrar3869y37 
-       foreign key (estado_id) 
+    alter table if exists tb_restaurante
+       add constraint FKkffac1awlmrvtegrar3869y37
+       foreign key (estado_id)
        references tb_estado;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKsi78wf2v77p8yv9swve1qd4bx 
-       foreign key (forma_pagamento_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKsi78wf2v77p8yv9swve1qd4bx
+       foreign key (forma_pagamento_id)
        references tb_forma_pagamento;
 
-    alter table if exists tb_restaurante_forma_pagamento 
-       add constraint FKngs0dntt47n5xpnued71e7oc5 
-       foreign key (restaurante_id) 
+    alter table if exists tb_restaurante_forma_pagamento
+       add constraint FKngs0dntt47n5xpnued71e7oc5
+       foreign key (restaurante_id)
        references tb_restaurante;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKfox4y8jslkfybem54i4jyndnj 
-       foreign key (grupo_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKfox4y8jslkfybem54i4jyndnj
+       foreign key (grupo_id)
        references tb_grupo;
 
-    alter table if exists tb_usuario_grupo 
-       add constraint FKos1k9g527yqpdorasypy0h72d 
-       foreign key (usuario_id) 
+    alter table if exists tb_usuario_grupo
+       add constraint FKos1k9g527yqpdorasypy0h72d
+       foreign key (usuario_id)
        references tb_usuario;

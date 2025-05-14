@@ -52,6 +52,8 @@ public class Restaurante {
 
     private boolean ativo = true;
 
+    private boolean aberto = true;
+
     @CreationTimestamp
     @Column(columnDefinition = "datetime")
     private OffsetDateTime dataCadastro = OffsetDateTime.now();
@@ -61,7 +63,7 @@ public class Restaurante {
     private OffsetDateTime dataAtualizacao;
 
     @OneToMany(mappedBy = "restaurante")
-    private final List<Produto> produtos = new ArrayList<>();
+    private final Set<Produto> produtos = new HashSet<>();
 
     public Restaurante() {
     }
@@ -76,6 +78,15 @@ public class Restaurante {
         this.ativo = ativo;
         this.dataCadastro = dataCadastro;
         this.dataAtualizacao = dataAtualizacao;
+    }
+
+
+    public boolean isAberto() {
+        return aberto;
+    }
+
+    public void setAberto(boolean status) {
+        this.aberto = status;
     }
 
     public void ativar() {
@@ -94,7 +105,7 @@ public class Restaurante {
         this.ativo = ativo;
     }
 
-    public List<Produto> getProdutos() {
+    public Set<Produto> getProdutos() {
         return produtos;
     }
 

@@ -1,14 +1,24 @@
 package com.dutra.food_api.api.model.input;
 
 import com.dutra.food_api.domain.models.Produto;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
 public class ProdutoInput {
 
+    @NotNull(message = "Campo requerido")
     private String nome;
+
+    @NotNull(message = "Campo requerido")
     private String descricao;
+
+    @NotNull(message = "Campo requerido")
+    @DecimalMin(value = "0", message = "Deve ser informado um valor positivo ou zero para Preço")
     private BigDecimal preco;
+
+    @NotNull(message = "Campo requerido")
     private Boolean ativo;
 
     public ProdutoInput() {}
