@@ -1,32 +1,25 @@
-package com.dutra.food_api.domain.models;
+package com.dutra.food_api.api.model.output;
 
-import jakarta.persistence.*;
+import com.dutra.food_api.domain.models.Permissao;
 
-import java.util.*;
+import java.util.Objects;
 
-@Entity
-@Table(name = "tb_permissao")
-public class Permissao {
+public class PermissaoOutput {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String nome;
-
-    @Column(nullable = false)
     private String descricao;
 
-    @ManyToMany(mappedBy = "permissoes")
-    private Set<Grupo> grupos = new HashSet<>();
+    public PermissaoOutput() {}
 
-    public Permissao() {}
-
-    public Permissao(Long id, String nome, String descricao) {
+    public PermissaoOutput(Long id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
+    }
+
+    public static PermissaoOutput toPermissaoOutput(Permissao permissao) {
+        return new PermissaoOutput(permissao.getId(), permissao.getNome(), permissao.getDescricao());
     }
 
     public Long getId() {
@@ -55,14 +48,13 @@ public class Permissao {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Permissao permissao = (Permissao) o;
-        return Objects.equals(id, permissao.id);
+        PermissaoOutput that = (PermissaoOutput) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hashCode(id);
     }
 }

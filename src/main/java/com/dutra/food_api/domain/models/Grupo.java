@@ -3,7 +3,9 @@ package com.dutra.food_api.domain.models;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_grupo")
@@ -20,6 +22,9 @@ public class Grupo {
             joinColumns = @JoinColumn(name = "grupo_id"),
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
     private final List<Permissao> permissoes = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "grupos")
+    private final Set<Usuario> usuarios = new HashSet<>();
 
     public Grupo() {}
 
