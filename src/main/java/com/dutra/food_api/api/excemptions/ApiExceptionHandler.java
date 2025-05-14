@@ -1,9 +1,6 @@
 package com.dutra.food_api.api.excemptions;
 
-import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
-import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
-import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
-import com.dutra.food_api.domain.services.exceptions.ValidationException;
+import com.dutra.food_api.domain.services.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -146,6 +143,22 @@ public class ApiExceptionHandler {
         problemDetail.setTitle(exception.getMessage());
         problemDetail.setDetail("Senha inválida: " + exception.getCause());
         problemDetail.setInstance(URI.create(request.getRequestURI()));
+
+        return ResponseEntity.of(problemDetail).build();
+    }
+
+    //Handler para validação de usuário já cadastrado
+    @ExceptionHandler(UsuarioExistenteException.class)
+    private ResponseEntity<ProblemDetail> handleUsuarioExistenteException(UsuarioExistenteException  exception,
+                                                                    HttpServletRequest request) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setType(URI.create("/errors/user-already-exists"));
+        problemDetail.setTitle(exception.getMessage());
+        problemDetail.setDetail("Já existe um usuário cadastrado com este e-mail: " + exception.getCause());
+        problemDetail.setInstance(URI.create(request.getRequestURI()));
+
+        problemDetail.setProperty("StackTrace:", exception.getStackTrace());
 
         return ResponseEntity.of(problemDetail).build();
     }

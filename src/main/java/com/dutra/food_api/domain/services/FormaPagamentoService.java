@@ -72,4 +72,10 @@ public class FormaPagamentoService implements CadastroFormaPagamentoInterface {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Forma de pagamento não encontrada"));
 
     }
+
+    protected FormaPagamento buscaPagamentoRestaurante(Long id) {
+        return formaPagamentoRepository.findById(id)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Forma de pagamento não encontrada"));
+
+    }
 }

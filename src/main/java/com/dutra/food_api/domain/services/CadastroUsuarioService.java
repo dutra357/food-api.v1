@@ -8,6 +8,7 @@ import com.dutra.food_api.domain.models.Usuario;
 import com.dutra.food_api.domain.repositories.UsuarioRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
+import com.dutra.food_api.domain.services.exceptions.UsuarioExistenteException;
 import com.dutra.food_api.domain.services.exceptions.ValidationException;
 import com.dutra.food_api.domain.services.interfaces.CadastroUsuarioInterface;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -30,6 +31,11 @@ public class CadastroUsuarioService implements CadastroUsuarioInterface {
     @Transactional
     @Override
     public UsuarioOutput salvar(UsuarioInput usuarioInput) {
+
+        if (verificaEmail(usuarioInput.getEmail())) {
+            throw new UsuarioExistenteException("Usuário já cadastrado.");
+        }
+
         Usuario novoUsuario = usuarioInput.toEntity();
         return UsuarioOutput.toUsuarioOutput(usuarioRepository.save(novoUsuario));
     }
@@ -86,6 +92,10 @@ public class CadastroUsuarioService implements CadastroUsuarioInterface {
 
     private boolean verificaSenha(String senhaAtual, Usuario usuario) {
         return senhaAtual.equals(usuario.getSenha());
+    }
+
+    private boolean verificaEmail(String email) {
+        return usuarioRepository.findByEmail(email).isPresent();
     }
 
     private Usuario buscaUsuarioInterna(Long usuarioId) {

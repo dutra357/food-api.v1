@@ -1,12 +1,14 @@
 package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.api.model.input.RestauranteInput;
+import com.dutra.food_api.api.model.output.FormaPagamentoOutput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
+import com.dutra.food_api.domain.services.interfaces.CadastroFormaPagamentoInterface;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,16 +32,17 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     private final RestauranteRepository restauranteRepository;
     private final CadastroCozinhaService cozinhaService;
     private final CadastroCidadeService cidadeService;
-    private final CadastroEstadoService estadoService;
+    private final FormaPagamentoService  serviceFormaPagamento;
+
     private final SmartValidator validator;
 
     public CadastroRestauranteService(RestauranteRepository restauranteRepository,
                                       CadastroCozinhaService cozinhaService, CadastroCidadeService cidadeService,
-                                      CadastroEstadoService estadoService, SmartValidator validator) {
+                                      FormaPagamentoService serviceFormaPagamento, SmartValidator validator) {
         this.restauranteRepository = restauranteRepository;
         this.cozinhaService = cozinhaService;
         this.cidadeService = cidadeService;
-        this.estadoService = estadoService;
+        this.serviceFormaPagamento = serviceFormaPagamento;
         this.validator = validator;
     }
 
@@ -139,6 +142,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
+    @Override
     public void ativar(Long id) {
         Restaurante restaurante = findRestaurante(id);
         restaurante.ativar();
@@ -147,9 +151,34 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     }
 
     @Transactional(propagation = Propagation.MANDATORY)
+    @Override
     public void inativar(Long id) {
         Restaurante restaurante = findRestaurante(id);
         restaurante.inativar();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<FormaPagamentoOutput> buscarFormasPagamento(Long restauranteId) {
+        Restaurante restaurante = findRestaurante(restauranteId);
+        return restaurante.getFormasPagamento()
+                .stream().map(FormaPagamentoOutput::toFormaPagamentoOutput).toList();
+    }
+
+    @Transactional
+    @Override
+    public void removerFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+        Restaurante restaurante = findRestaurante(restauranteId);
+        restaurante.getFormasPagamento()
+                .removeIf(formaPagamento -> formaPagamento.getId().equals(formaPagamentoId));
+    }
+
+    @Transactional
+    @Override
+    public void associarFormaPagamento(Long restauranteId, Long formaPagamentoId) {
+        Restaurante restaurante = findRestaurante(restauranteId);
+        restaurante.getFormasPagamento()
+                .add(serviceFormaPagamento.buscaPagamentoRestaurante(formaPagamentoId));
     }
 
     private Restaurante findRestaurante(Long id) {
