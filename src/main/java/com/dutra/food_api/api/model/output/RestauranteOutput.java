@@ -16,7 +16,7 @@ public class RestauranteOutput {
     private Boolean aberto;
     private CozinhaOutput cozinha;
 
-    private EnderecoOutput enderecoOutput;
+    private EnderecoOutput enderecoRestaurante;
 
     private OffsetDateTime dataCadastro;
     private OffsetDateTime dataAtualizacao;
@@ -25,14 +25,14 @@ public class RestauranteOutput {
     }
 
     public RestauranteOutput(Long id, String nome, BigDecimal taxaFrete,
-                             CozinhaOutput cozinha, EnderecoOutput enderecoOutput,
+                             CozinhaOutput cozinha, EnderecoOutput endereco,
                              OffsetDateTime dataCadastro, OffsetDateTime dataAtualizacao,
                              boolean  ativo, boolean aberto) {
         this.id = id;
         this.nome = nome;
         this.taxaFrete = taxaFrete;
         this.cozinha = cozinha;
-        this.enderecoOutput = enderecoOutput;
+        this.enderecoRestaurante = endereco;
         this.dataCadastro = dataCadastro;
         this.dataAtualizacao = dataAtualizacao;
         this.ativo = ativo;
@@ -53,20 +53,20 @@ public class RestauranteOutput {
         );
     }
 
+    public EnderecoOutput getEnderecoRestaurante() {
+        return enderecoRestaurante;
+    }
+
+    public void setEnderecoRestaurante(EnderecoOutput enderecoRestaurante) {
+        this.enderecoRestaurante = enderecoRestaurante;
+    }
+
     public Boolean getAberto() {
         return aberto;
     }
 
     public void setAberto(Boolean aberto) {
         this.aberto = aberto;
-    }
-
-    public EnderecoOutput getEnderecoOutput() {
-        return enderecoOutput;
-    }
-
-    public void setEnderecoOutput(EnderecoOutput enderecoOutput) {
-        this.enderecoOutput = enderecoOutput;
     }
 
     public Boolean getAtivo() {
@@ -107,14 +107,6 @@ public class RestauranteOutput {
 
     public void setCozinha(CozinhaOutput cozinha) {
         this.cozinha = cozinha;
-    }
-
-    public EnderecoOutput getEndereco() {
-        return enderecoOutput;
-    }
-
-    public void setEndereco(EnderecoOutput enderecoOutput) {
-        this.enderecoOutput = enderecoOutput;
     }
 
     public OffsetDateTime getDataCadastro() {

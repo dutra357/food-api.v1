@@ -86,6 +86,14 @@ public class Restaurante {
         this.dataAtualizacao = dataAtualizacao;
     }
 
+    public boolean aceitaFormaPagamento(FormaPagamento formaPagamento) {
+        return getFormasPagamento().contains(formaPagamento);
+    }
+
+    public boolean naoAceitaFormaPagamento(FormaPagamento formaPagamento) {
+        return !aceitaFormaPagamento(formaPagamento);
+    }
+
     public Set<Usuario> getResponsaveis() {
         return responsaveis;
     }

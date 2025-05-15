@@ -43,7 +43,7 @@ public class Pedido {
     private Endereco enderecoEntrega;
 
     @Column(nullable = false)
-    private StatusPedido status;
+    private StatusPedido status = StatusPedido.CRIADO;
 
     @ManyToOne
     @JoinColumn(name = "forma_pagamento_id", nullable = false)
@@ -81,6 +81,22 @@ public class Pedido {
         this.formaPagamento = formaPagamento;
         this.restaurante = restaurante;
         this.cliente = cliente;
+    }
+
+    public void calcularValorTotal() {
+        this.subTotal = getItemPedido().stream()
+                .map(ItemPedido::getPrecoTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        this.valorTotal = this.subTotal.add(this.taxaFrete);
+    }
+
+    public void definirFrete() {
+        setTaxaFrete(getRestaurante().getTaxaFrete());
+    }
+
+    public void atribuirPedidoAosItens() {
+        getItemPedido().forEach(item -> item.setPedido(this));
     }
 
     public Long getId() {

@@ -14,16 +14,16 @@ public class ItemPedido {
     private Long id;
 
     @Column(nullable = false)
-    private Integer quantidade;
+    private Integer quantidade = 1;
 
     @Column(nullable = false)
-    private BigDecimal precoUnitario;
+    private BigDecimal precoUnitario = BigDecimal.ZERO;
 
     @Column(nullable = false)
-    private BigDecimal precoTotal;
+    private BigDecimal precoTotal = BigDecimal.ZERO;
 
     @Column(nullable = false)
-    private String observacao;
+    private String observacao = "..";
 
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false)
@@ -46,6 +46,21 @@ public class ItemPedido {
         this.observacao = observacao;
         this.produto = produto;
         this.pedido = pedido;
+    }
+
+    public void calcularPrecoTotal() {
+        BigDecimal precoUnitario = this.getPrecoUnitario();
+        Integer quantidade = this.getQuantidade();
+
+        if (precoUnitario == null) {
+            precoUnitario = BigDecimal.ZERO;
+        }
+
+        if (quantidade == null) {
+            quantidade = 0;
+        }
+
+        this.setPrecoTotal(precoUnitario.multiply(new BigDecimal(quantidade)));
     }
 
     public Long getId() {

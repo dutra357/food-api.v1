@@ -8,9 +8,7 @@ import com.dutra.food_api.api.model.output.UsuarioOutput;
 import com.dutra.food_api.domain.models.Produto;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
-import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
-import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
-import com.dutra.food_api.domain.services.exceptions.PatchMergeFieldsException;
+import com.dutra.food_api.domain.services.exceptions.*;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.SmartValidator;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -166,13 +165,31 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     @Override
     @Transactional
     public void ativarTodos(List<Long> ids) {
-        ids.forEach(this::ativar);
+        Long entidadeId = 0L;
+        try {
+            for (Long id : ids) {
+                entidadeId = id;
+                Restaurante  restaurante = findRestaurante(id);
+                restaurante.ativar();
+            }
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegotioException(e.getMessage(), "Problema nos campos informados.", entidadeId);
+        }
     }
 
     @Override
     @Transactional
     public void inativarTodos(List<Long> ids) {
-        ids.forEach(this::inativar);
+        Long entidadeId = 0L;
+        try {
+            for (Long id : ids) {
+                entidadeId = id;
+                Restaurante  restaurante = findRestaurante(id);
+                restaurante.inativar();
+            }
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegotioException(e.getMessage(), "Problema nos campos informados.", entidadeId);
+        }
     }
 
     @Transactional

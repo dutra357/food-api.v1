@@ -53,3 +53,25 @@ INSERT INTO tb_usuario (nome, email, senha, data_cadastro) VALUES
 ('Manoel Lima', 'manoel.loja@gmail.com', '123', CURRENT_TIMESTAMP);
 
 insert into tb_restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
+
+INSERT INTO tb_pedido (restaurante_id, usuario_id, forma_pagamento_id, cidade_id, cep,
+    logradouro, numero, complemento, bairro,
+    status, data_criacao, sub_total, taxa_frete, valor_total)
+VALUES (1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
+0, CURRENT_TIMESTAMP, 298.90, 10, 308.90);
+
+INSERT INTO tb_item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (1, 1, 1, 78.9, 78.9, 'sem obs');
+
+INSERT INTO tb_item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (1, 2, 2, 110, 220, 'Menos picante, por favor');
+
+
+INSERT INTO tb_pedido (restaurante_id, usuario_id, forma_pagamento_id, cidade_id, cep,
+        logradouro, numero, complemento, bairro,
+        status, data_criacao, sub_total, taxa_frete, valor_total)
+VALUES (4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
+0, CURRENT_TIMESTAMP, 79, 0, 79);
+
+INSERT INTO tb_item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
+VALUES (2, 6, 1, 79, 79, 'Ao ponto');

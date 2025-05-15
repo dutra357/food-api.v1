@@ -163,6 +163,20 @@ public class ApiExceptionHandler {
         return ResponseEntity.of(problemDetail).build();
     }
 
+    //Handler para validação de regra de negócio
+    @ExceptionHandler(NegotioException.class)
+    private ResponseEntity<ProblemDetail> handleNegotioException(NegotioException  exception,
+                                                                          HttpServletRequest request) {
+
+        ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
+        problemDetail.setType(URI.create("/errors/negotiate-rule-errors"));
+        problemDetail.setTitle(exception.getOption() != null ? "Erro de negociação: " + exception.getOption() : "Erro de negociação");
+        problemDetail.setDetail(exception.getMessage() + ", ID informado: " + exception.getEntidadeId());
+        problemDetail.setInstance(URI.create(request.getRequestURI()));
+
+        return ResponseEntity.of(problemDetail).build();
+    }
+
     //Handler geral
     @ExceptionHandler(Exception.class)
     private ResponseEntity<ProblemDetail> handleException(Exception exception,
