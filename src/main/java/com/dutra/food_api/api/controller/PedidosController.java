@@ -1,6 +1,7 @@
 package com.dutra.food_api.api.controller;
 
 import com.dutra.food_api.api.model.output.PedidoOutput;
+import com.dutra.food_api.api.model.output.PedidoOutputShort;
 import com.dutra.food_api.domain.services.interfaces.CadastroPedidosInterface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class PedidosController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PedidoOutput>> buscarTodos(){
+    public ResponseEntity<List<PedidoOutputShort>> buscarTodos(){
         return ResponseEntity.ok(cadastropedidosService.buscarTodos());
     }
 }

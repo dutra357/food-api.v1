@@ -1,6 +1,7 @@
 package com.dutra.food_api.domain.services;
 
 import com.dutra.food_api.api.model.output.PedidoOutput;
+import com.dutra.food_api.api.model.output.PedidoOutputShort;
 import com.dutra.food_api.domain.models.Pedido;
 import com.dutra.food_api.domain.repositories.ItemPedidoRepository;
 import com.dutra.food_api.domain.repositories.PedidosRepository;
@@ -37,9 +38,9 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PedidoOutput> buscarTodos() {
-        return pedidosRepository.findAll()
-                .stream().map(PedidoOutput::toPedidoOutput).toList();
+    public List<PedidoOutputShort> buscarTodos() {
+        return pedidosRepository.buscarPedidosComDetalhes()
+                .stream().map(PedidoOutputShort::toPedidoOutputShort).toList();
     }
 
 
