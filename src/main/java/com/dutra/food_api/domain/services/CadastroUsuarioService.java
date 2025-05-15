@@ -3,7 +3,9 @@ package com.dutra.food_api.domain.services;
 import com.dutra.food_api.api.model.input.SenhaInput;
 import com.dutra.food_api.api.model.input.UsuarioInput;
 import com.dutra.food_api.api.model.input.UsuarioUpdateInput;
+import com.dutra.food_api.api.model.output.GrupoOutput;
 import com.dutra.food_api.api.model.output.UsuarioOutput;
+import com.dutra.food_api.domain.models.Grupo;
 import com.dutra.food_api.domain.models.Usuario;
 import com.dutra.food_api.domain.repositories.UsuarioRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
@@ -23,9 +25,12 @@ public class CadastroUsuarioService implements CadastroUsuarioInterface {
     private static final String USUARIO_NOT_FOUND = "Usuário não encontrado.";
 
     private final UsuarioRepository usuarioRepository;
+    private final CadastroGrupoService cadastroGrupoService;
 
-    public CadastroUsuarioService(UsuarioRepository usuarioRepository) {
+    public CadastroUsuarioService(UsuarioRepository usuarioRepository,
+                                  CadastroGrupoService cadastroGrupoService) {
         this.usuarioRepository = usuarioRepository;
+        this.cadastroGrupoService = cadastroGrupoService;
     }
 
     @Transactional
@@ -98,8 +103,32 @@ public class CadastroUsuarioService implements CadastroUsuarioInterface {
         return usuarioRepository.findByEmail(email).isPresent();
     }
 
-    private Usuario buscaUsuarioInterna(Long usuarioId) {
+    protected Usuario buscaUsuarioInterna(Long usuarioId) {
         return usuarioRepository.findById(usuarioId)
                 .orElseThrow( () -> new EntidadeNaoEncontradaException(USUARIO_NOT_FOUND));
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<GrupoOutput> buscarGruposUsuario(Long usuarioId) {
+        Usuario usuario = buscaUsuarioInterna(usuarioId);
+        return usuario.getGrupos().stream().map(GrupoOutput::toGrupoOutput).toList();
+    }
+
+    @Transactional
+    @Override
+    public void associarGrupo(Long usuarioId, Long grupoId) {
+        Usuario usuario = buscaUsuarioInterna(usuarioId);
+        Grupo grupo = cadastroGrupoService.buscaInternaGrupo(grupoId);
+        usuario.getGrupos().add(grupo);
+    }
+
+    @Transactional
+    @Override
+    public void desassociarGrupo(Long usuarioId, Long grupoId) {
+        Usuario usuario = buscaUsuarioInterna(usuarioId);
+        Grupo grupo = cadastroGrupoService.buscaInternaGrupo(grupoId);
+        usuario.getGrupos().remove(grupo);
+    }
+
 }

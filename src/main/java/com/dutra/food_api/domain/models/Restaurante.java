@@ -65,6 +65,12 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurante")
     private final Set<Produto> produtos = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(name = "tb_restaurante_usuario_responsavel",
+            joinColumns = @JoinColumn(name = "restaurante_id"),
+            inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private final Set<Usuario> responsaveis = new HashSet<>();
+
     public Restaurante() {
     }
     public Restaurante(Long id, String nome, BigDecimal taxaFrete,
@@ -80,6 +86,9 @@ public class Restaurante {
         this.dataAtualizacao = dataAtualizacao;
     }
 
+    public Set<Usuario> getResponsaveis() {
+        return responsaveis;
+    }
 
     public boolean isAberto() {
         return aberto;

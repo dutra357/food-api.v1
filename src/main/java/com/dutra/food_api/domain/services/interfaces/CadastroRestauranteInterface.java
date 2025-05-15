@@ -4,6 +4,7 @@ import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.FormaPagamentoOutput;
 import com.dutra.food_api.api.model.output.ProdutoOutput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
+import com.dutra.food_api.api.model.output.UsuarioOutput;
 
 import java.util.List;
 import java.util.Map;
@@ -43,4 +44,10 @@ public interface CadastroRestauranteInterface {
     void abrirRestaurante(Long id);
 
     void fecharRestaurante(Long id);
+
+    void desassociarUsuario(Long restauranteId, Long usuarioId);
+
+    List<UsuarioOutput> buscarResponsaveis(Long restauranteId);
+
+    void associarUsuario(Long restauranteId, Long usuarioId);
 }

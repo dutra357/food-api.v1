@@ -68,8 +68,8 @@ public class CadastroGrupoService implements CadastroGrupoInterface {
                 .stream().map(GrupoOutput::toGrupoOutput).toList();
     }
 
-    private Grupo buscaInternaGrupo(Long id) {
-        return grupoRepository.findById(id)
+    protected Grupo buscaInternaGrupo(Long grupoId) {
+        return grupoRepository.findById(grupoId)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(CIDADE_NOT_FOUND));
     }
 }

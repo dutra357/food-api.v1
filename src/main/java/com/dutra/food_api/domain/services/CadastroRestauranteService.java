@@ -4,6 +4,7 @@ import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.FormaPagamentoOutput;
 import com.dutra.food_api.api.model.output.ProdutoOutput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
+import com.dutra.food_api.api.model.output.UsuarioOutput;
 import com.dutra.food_api.domain.models.Produto;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.RestauranteRepository;
@@ -15,7 +16,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -35,17 +35,20 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
     private final CadastroCidadeService cidadeService;
     private final FormaPagamentoService  serviceFormaPagamento;
     private final CadastroProdutoService produtoService;
+    private final CadastroUsuarioService cadastroUsuarioService;
 
     private final SmartValidator validator;
 
     public CadastroRestauranteService(RestauranteRepository restauranteRepository,
                                       CadastroCozinhaService cozinhaService, CadastroCidadeService cidadeService,
-                                      FormaPagamentoService serviceFormaPagamento, CadastroProdutoService produtoService, SmartValidator validator) {
+                                      FormaPagamentoService serviceFormaPagamento, CadastroProdutoService produtoService,
+                                      CadastroUsuarioService cadastroUsuarioService, SmartValidator validator) {
         this.restauranteRepository = restauranteRepository;
         this.cozinhaService = cozinhaService;
         this.cidadeService = cidadeService;
         this.serviceFormaPagamento = serviceFormaPagamento;
         this.produtoService = produtoService;
+        this.cadastroUsuarioService = cadastroUsuarioService;
         this.validator = validator;
     }
 
@@ -238,5 +241,30 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         if (bindingResult.hasErrors()) {
             throw new PatchMergeFieldsException("Erro nos campos informados.");
         }
+    }
+
+    @Override
+    @Transactional
+    public void associarUsuario(Long restauranteId, Long usuarioId) {
+        Restaurante restaurante = findRestaurante(restauranteId);
+        cadastroUsuarioService.buscaUsuarioInterna(usuarioId);
+
+        restaurante.getResponsaveis().add(cadastroUsuarioService.buscaUsuarioInterna(usuarioId));
+    }
+
+    @Override
+    @Transactional
+    public void desassociarUsuario(Long restauranteId, Long usuarioId) {
+        Restaurante restaurante = findRestaurante(restauranteId);
+        cadastroUsuarioService.buscaUsuarioInterna(usuarioId);
+
+        restaurante.getResponsaveis().remove(cadastroUsuarioService.buscaUsuarioInterna(usuarioId));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<UsuarioOutput> buscarResponsaveis(Long restauranteId) {
+        Restaurante restaurante = findRestaurante(restauranteId);
+        return restaurante.getResponsaveis().stream().map(UsuarioOutput::toUsuarioOutput).toList();
     }
 }

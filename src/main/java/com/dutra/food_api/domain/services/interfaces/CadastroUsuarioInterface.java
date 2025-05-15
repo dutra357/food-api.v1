@@ -3,6 +3,7 @@ package com.dutra.food_api.domain.services.interfaces;
 import com.dutra.food_api.api.model.input.SenhaInput;
 import com.dutra.food_api.api.model.input.UsuarioInput;
 import com.dutra.food_api.api.model.input.UsuarioUpdateInput;
+import com.dutra.food_api.api.model.output.GrupoOutput;
 import com.dutra.food_api.api.model.output.UsuarioOutput;
 
 import java.util.List;
@@ -20,4 +21,11 @@ public interface CadastroUsuarioInterface {
     void remover(Long usuarioId);
 
     void alterarSenha(Long usuarioId, SenhaInput senhaInput);
+
+    List<GrupoOutput> buscarGruposUsuario(Long usuarioId);
+
+    void associarGrupo(Long usuarioId, Long grupoId);
+
+    void desassociarGrupo(Long usuarioId, Long grupoId);
+
 }

@@ -35,8 +35,6 @@ public class RestauranteController {
         return ResponseEntity.ok(cadastroRestauranteService.buscarPrimeiro());
     }
 
-
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RestauranteOutput> salvar(@RequestBody @Valid RestauranteInput restaurante) {

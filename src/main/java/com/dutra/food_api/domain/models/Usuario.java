@@ -5,7 +5,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.OffsetDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -34,6 +33,9 @@ public class Usuario {
             joinColumns = @JoinColumn(name = "usuario_id"),
             inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     private final Set<Grupo> grupos = new HashSet<>();
+
+    @ManyToMany(mappedBy = "responsaveis")
+    private final Set<Restaurante> restaurantes = new HashSet<>();
 
     public Usuario() {}
 

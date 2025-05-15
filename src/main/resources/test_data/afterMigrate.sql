@@ -43,3 +43,13 @@ INSERT INTO tb_usuario (nome, email, senha, data_cadastro) VALUES
 ('Maria Joaquina', 'maria.vnd@algafood.com', '123', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
 ('José Souza', 'jose.aux@algafood.com', '123', CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
 ('Sebastião Martins', 'sebastiao.cad@algafood.com', '123', CURRENT_TIMESTAMP AT TIME ZONE 'UTC');
+
+insert into tb_grupo (nome) values ('Gerente'), ('Vendedor'), ('Secretária'), ('Cadastrador');
+insert into tb_grupo_permissao (grupo_id, permissao_id) values (1, 1), (1, 2), (2, 1), (2, 2), (3, 1);
+
+insert into tb_usuario_grupo (usuario_id, grupo_id) values (1, 1), (1, 2), (2, 2);
+
+INSERT INTO tb_usuario (nome, email, senha, data_cadastro) VALUES
+('Manoel Lima', 'manoel.loja@gmail.com', '123', CURRENT_TIMESTAMP);
+
+insert into tb_restaurante_usuario_responsavel (restaurante_id, usuario_id) values (1, 5), (3, 5);
