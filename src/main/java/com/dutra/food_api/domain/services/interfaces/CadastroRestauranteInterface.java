@@ -29,6 +29,10 @@ public interface CadastroRestauranteInterface {
 
     void inativar(Long id);
 
+    void inativarTodos(List<Long> ids);
+
+    void ativarTodos(List<Long> ids);
+
     List<FormaPagamentoOutput> buscarFormasPagamento(Long restauranteId);
 
     void removerFormaPagamento(Long restauranteId, Long formaPagamentoId);

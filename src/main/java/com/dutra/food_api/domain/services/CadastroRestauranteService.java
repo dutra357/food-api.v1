@@ -163,6 +163,18 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         restaurante.inativar();
     }
 
+    @Override
+    @Transactional
+    public void ativarTodos(List<Long> ids) {
+        ids.forEach(this::ativar);
+    }
+
+    @Override
+    @Transactional
+    public void inativarTodos(List<Long> ids) {
+        ids.forEach(this::inativar);
+    }
+
     @Transactional
     @Override
     public void abrirRestaurante(Long id) {

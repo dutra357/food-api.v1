@@ -64,26 +64,38 @@ public class RestauranteController {
     }
 
     @PutMapping("/{id}/ativar")
-    public void ativar(@PathVariable Long id) {
+    public ResponseEntity<Void> ativar(@PathVariable Long id) {
         cadastroRestauranteService.ativar(id);
-        ResponseEntity.noContent();
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}/inativar")
-    public void inativar(@PathVariable Long id) {
+    public ResponseEntity<Void> inativar(@PathVariable Long id) {
         cadastroRestauranteService.inativar(id);
-        ResponseEntity.noContent();
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/ativar-todos")
+    public ResponseEntity<Void> ativarTodos(@RequestBody List<Long> ids) {
+        cadastroRestauranteService.ativarTodos(ids);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/inativar-todos")
+    public ResponseEntity<Void> inativarTodos(@RequestBody List<Long> ids) {
+        cadastroRestauranteService.inativarTodos(ids);
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/fechamento")
-    public void fecharRestaurante(@PathVariable Long id) {
+    public ResponseEntity<Void> fecharRestaurante(@PathVariable Long id) {
         cadastroRestauranteService.fecharRestaurante(id);
-        ResponseEntity.noContent();
+        return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}/abertura")
-    public void abrirRestaurante(@PathVariable Long id) {
+    public ResponseEntity<Void> abrirRestaurante(@PathVariable Long id) {
         cadastroRestauranteService.abrirRestaurante(id);
-        ResponseEntity.noContent();
+        return ResponseEntity.noContent().build();
     }
 }
