@@ -25,7 +25,7 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
     List<Pedido> buscarPedidosComDetalhes();
 
 
-    
+
     @EntityGraph(attributePaths = {
             "cliente",
             "restaurante",

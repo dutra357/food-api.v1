@@ -257,7 +257,7 @@ public class CadastroRestauranteService implements CadastroRestauranteInterface 
         }
     }
 
-    private Restaurante findRestaurante(Long id) {
+    protected Restaurante findRestaurante(Long id) {
         return restauranteRepository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(RESTAURANTE_NOT_FOUND));
     }

@@ -57,8 +57,8 @@ public class Pedido {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario cliente;
 
-    @OneToMany(mappedBy = "pedido")
-    private final Set<ItemPedido> itemPedido = new HashSet<>();
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL)
+    private final List<ItemPedido> itemPedido = new ArrayList<>();
 
 
     public Pedido() {
@@ -84,11 +84,13 @@ public class Pedido {
     }
 
     public void calcularValorTotal() {
+        this.valorTotal = getSubTotal().add(getTaxaFrete());
+    }
+
+    public void calcularSubTotal() {
         this.subTotal = getItemPedido().stream()
                 .map(ItemPedido::getPrecoTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        this.valorTotal = this.subTotal.add(this.taxaFrete);
     }
 
     public void definirFrete() {
@@ -203,7 +205,7 @@ public class Pedido {
         this.cliente = cliente;
     }
 
-    public Set<ItemPedido> getItemPedido() {
+    public List<ItemPedido> getItemPedido() {
         return itemPedido;
     }
 

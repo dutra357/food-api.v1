@@ -67,7 +67,7 @@ public class FormaPagamentoService implements CadastroFormaPagamentoInterface {
         return formaPagamentoRepository.findAll().stream().map(FormaPagamentoOutput::toFormaPagamentoOutput).toList();
     }
 
-    private FormaPagamento buscaInternaFormaPagamento(Long id) {
+    protected FormaPagamento buscaInternaFormaPagamento(Long id) {
         return formaPagamentoRepository.findById(id)
                 .orElseThrow(() -> new EntidadeNaoEncontradaException("Forma de pagamento não encontrada"));
 

@@ -23,7 +23,7 @@ public class ItemPedido {
     private BigDecimal precoTotal = BigDecimal.ZERO;
 
     @Column(nullable = false)
-    private String observacao = "..";
+    private String observacao;
 
     @ManyToOne
     @JoinColumn(name = "produto_id", nullable = false)

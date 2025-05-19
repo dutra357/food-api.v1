@@ -5,6 +5,7 @@ import com.dutra.food_api.api.model.output.FormaPagamentoOutput;
 import com.dutra.food_api.api.model.output.ProdutoOutput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
 import com.dutra.food_api.api.model.output.UsuarioOutput;
+import com.dutra.food_api.domain.models.Restaurante;
 
 import java.util.List;
 import java.util.Map;

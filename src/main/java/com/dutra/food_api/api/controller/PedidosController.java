@@ -1,13 +1,12 @@
 package com.dutra.food_api.api.controller;
 
+import com.dutra.food_api.api.model.input.PedidoInput;
 import com.dutra.food_api.api.model.output.PedidoOutput;
 import com.dutra.food_api.api.model.output.PedidoOutputShort;
 import com.dutra.food_api.domain.services.interfaces.CadastroPedidosInterface;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +28,10 @@ public class PedidosController {
     @GetMapping
     public ResponseEntity<List<PedidoOutputShort>> buscarTodos(){
         return ResponseEntity.ok(cadastropedidosService.buscarTodos());
+    }
+
+    @PostMapping
+    public ResponseEntity<PedidoOutput> salvar(@RequestBody @Valid PedidoInput pedidoInput){
+        return ResponseEntity.ok(cadastropedidosService.salvar(pedidoInput));
     }
 }
