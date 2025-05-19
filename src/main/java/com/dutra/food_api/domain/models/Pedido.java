@@ -1,6 +1,7 @@
 package com.dutra.food_api.domain.models;
 
 import com.dutra.food_api.domain.models.enumerations.StatusPedido;
+import com.dutra.food_api.domain.services.exceptions.NegotioException;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -116,6 +117,18 @@ public class Pedido {
         setStatus(StatusPedido.ENTREGUE);
     }
 
+    public void setStatus(StatusPedido novoStatus) {
+        if (getStatus().naoPodeAlterarPara(novoStatus)) {
+            throw new NegotioException(
+                    String.format("Impossível alterar o status de %s para %s",
+                            getStatus().getDescricao(),
+                            novoStatus.getDescricao())
+            );
+        }
+
+        this.status = novoStatus;
+    }
+
 
     public Long getId() {
         return id;
@@ -191,10 +204,6 @@ public class Pedido {
 
     public StatusPedido getStatus() {
         return status;
-    }
-
-    public void setStatus(StatusPedido status) {
-        this.status = status;
     }
 
     public FormaPagamento getFormaPagamento() {
