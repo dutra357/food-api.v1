@@ -171,7 +171,7 @@ public class ApiExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
         problemDetail.setType(URI.create("/errors/negotiate-rule-errors"));
         problemDetail.setTitle(exception.getOption() != null ? "Erro de negociação: " + exception.getOption() : "Erro de negociação");
-        problemDetail.setDetail(exception.getMessage() + ", ID informado: " + exception.getEntidadeId());
+        problemDetail.setDetail(exception.getMessage());
         problemDetail.setInstance(URI.create(request.getRequestURI()));
 
         return ResponseEntity.of(problemDetail).build();

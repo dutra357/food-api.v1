@@ -8,8 +8,8 @@ import com.dutra.food_api.domain.services.exceptions.EntidadeEmUsoException;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.interfaces.CadastroProdutoInterface;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -66,6 +66,9 @@ public class CadastroProdutoService implements CadastroProdutoInterface {
         return produtoRepository.findAll().stream().map(ProdutoOutput::toProdutoOutput).toList();
     }
 
+    protected List<Produto> buscarPorIdsEPorRestaurante(@Param("ids") List<Long> ids, Long restauranteId) {
+        return produtoRepository.buscarPorIdsEPorRestaurante(ids, restauranteId);
+    }
 
     protected Produto buscarOuFalhar(Long restauranteId, Long produtoId) {
         return produtoRepository.findById(restauranteId, produtoId)

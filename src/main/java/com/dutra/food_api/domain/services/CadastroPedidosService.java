@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class CadastroPedidosService implements CadastroPedidosInterface {
@@ -26,9 +29,9 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
 
 
 
-    public CadastroPedidosService(CadastroRestauranteService restauranteService,
+    public CadastroPedidosService(CadastroRestauranteService restauranteService, CadastroCidadeService cidadeService,
                                   CadastroUsuarioService usuarioService, PedidosRepository pedidosRepository,
-                                  CadastroProdutoService produtoService, FormaPagamentoService formaPagamentoService, CadastroCidadeService cidadeService) {
+                                  CadastroProdutoService produtoService, FormaPagamentoService formaPagamentoService) {
         this.restauranteService = restauranteService;
         this.usuarioService = usuarioService;
         this.pedidosRepository = pedidosRepository;
@@ -59,17 +62,17 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
                 .stream().map(PedidoOutputShort::toPedidoOutputShort).toList();
     }
 
-
-
     private Pedido criarPedidoBasico(PedidoInput input) {
         Pedido pedido = input.toEntity();
         pedido.setCliente(usuarioService.buscaUsuarioInterna(input.getUsuarioId()));
         pedido.setRestaurante(restauranteService.findRestaurante(input.getRestauranteId()));
 
         FormaPagamento formaPagamento = formaPagamentoService.buscaInternaFormaPagamento(input.getFormaPagamentoId());
+
         if (!pedido.getRestaurante().aceitaFormaPagamento(formaPagamento)) {
             throw new NegotioException("Forma de pagamento não aceita nesse estabelecimento.");
         }
+
         pedido.setFormaPagamento(formaPagamento);
 
         Endereco endereco = input.getEnderecoEntrega().toEntity();
@@ -81,14 +84,23 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
     }
 
     private void validarEAdicionarItens(PedidoInput input, Pedido pedido) {
-        for (ItemPedidoInput itemInput : input.getItens()) {
-            Produto produto = produtoService.buscarProduto(itemInput.getProdutoId());
-            if (!pedido.getRestaurante().getProdutos().contains(produto)) {
-                throw new EntidadeNaoEncontradaException("Produto não pertence ao restaurante.");
-            }
+        Long restauranteId = pedido.getRestaurante().getId();
+        List<Long> produtoIds = input.getItens().stream()
+                .map(ItemPedidoInput::getProdutoId)
+                .distinct()
+                .toList();
 
-            ItemPedido item = liquidaItemPedido(itemInput);
-            item.setPedido(pedido);
+        List<Produto> produtos = produtoService.buscarPorIdsEPorRestaurante(produtoIds, restauranteId);
+        if (produtos.size() != produtoIds.size()) {
+            throw new NegotioException("Um ou mais produtos não pertencem ao restaurante.");
+        }
+
+        Map<Long, Produto> produtoMap = produtos.stream()
+                .collect(Collectors.toMap(Produto::getId, Function.identity()));
+
+        for (ItemPedidoInput itemInput : input.getItens()) {
+            Produto produto = produtoMap.get(itemInput.getProdutoId());
+            ItemPedido item = liquidaItemPedido(itemInput, pedido, produto);
             pedido.getItemPedido().add(item);
         }
     }
@@ -99,11 +111,12 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
         pedido.calcularValorTotal();
     }
 
-    protected ItemPedido liquidaItemPedido(ItemPedidoInput itemPedidoInput){
+    protected ItemPedido liquidaItemPedido(ItemPedidoInput itemPedidoInput,
+                                           Pedido pedido, Produto produto) {
         ItemPedido itemPedido = itemPedidoInput.toEntity();
-
-        itemPedido.setProduto(produtoService.buscarProduto(itemPedidoInput.getProdutoId()));
-        itemPedido.setPrecoUnitario(itemPedido.getProduto().getPreco());
+        itemPedido.setPrecoUnitario(produto.getPreco());
+        itemPedido.setProduto(produto);
+        itemPedido.setPedido(pedido);
         itemPedido.calcularPrecoTotal();
         return itemPedido;
     }
