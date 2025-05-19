@@ -106,7 +106,7 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
     }
 
     private void calcularTotais(Pedido pedido) {
-        pedido.setTaxaFrete(pedido.getRestaurante().getTaxaFrete());
+        pedido.definirFrete();
         pedido.calcularSubTotal();
         pedido.calcularValorTotal();
     }

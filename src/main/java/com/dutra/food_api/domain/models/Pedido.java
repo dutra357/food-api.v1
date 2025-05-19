@@ -101,6 +101,22 @@ public class Pedido {
         getItemPedido().forEach(item -> item.setPedido(this));
     }
 
+    public void confirmar() {
+        setDataConfirmacao(LocalDate.now());
+        setStatus(StatusPedido.CONFIRMADO);
+    }
+
+    public void cancelar() {
+        setDataCancelamento(LocalDate.now());
+        setStatus(StatusPedido.CANCELADO);
+    }
+
+    public void entregue() {
+        setDataEntrega(LocalDate.now());
+        setStatus(StatusPedido.ENTREGUE);
+    }
+
+
     public Long getId() {
         return id;
     }
