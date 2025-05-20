@@ -1,12 +1,14 @@
 package com.dutra.food_api.api.model.output;
 
 import com.dutra.food_api.domain.models.Restaurante;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 
+@JsonFilter("RestauranteOutputFilter")
 public class RestauranteOutput {
 
     private Long id;

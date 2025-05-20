@@ -4,9 +4,14 @@ import com.dutra.food_api.api.model.input.RestauranteInput;
 import com.dutra.food_api.api.model.output.RestauranteOutput;
 import com.dutra.food_api.domain.repositories.impl.RestauranteImpl;
 import com.dutra.food_api.domain.services.interfaces.CadastroRestauranteInterface;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import jakarta.validation.Valid;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +38,25 @@ public class RestauranteController {
     @GetMapping("/buscar-primeiro")
     public ResponseEntity<RestauranteOutput> buscarPrimeiro() {
         return ResponseEntity.ok(cadastroRestauranteService.buscarPrimeiro());
+    }
+
+    @GetMapping("/buscar-resumido") //TESTE - solução não ideal para retorno
+    public ResponseEntity<MappingJacksonValue> buscarResumido(@RequestParam(required = false) String campos) {
+
+        List<RestauranteOutput> restaurantes = cadastroRestauranteService.buscarTodos();
+
+        MappingJacksonValue  mappingJacksonValue = new MappingJacksonValue(restaurantes);
+        SimpleFilterProvider filterProvider = new SimpleFilterProvider();
+
+        filterProvider.addFilter("RestauranteOutputFilter", SimpleBeanPropertyFilter.serializeAll());
+        if (StringUtils.isNotBlank(campos)) {
+            filterProvider.addFilter("RestauranteOutputFilter",
+                    SimpleBeanPropertyFilter.filterOutAllExcept(campos.split(",")));
+        }
+
+        mappingJacksonValue.setFilters(filterProvider);
+
+        return ResponseEntity.ok(mappingJacksonValue);
     }
 
     @PostMapping
