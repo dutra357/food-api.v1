@@ -17,6 +17,8 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private UUID codigo = UUID.randomUUID();
+
     @Column(nullable = false)
     private BigDecimal subTotal;
 
@@ -129,6 +131,13 @@ public class Pedido {
         this.status = novoStatus;
     }
 
+    public UUID getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(UUID codigo) {
+        this.codigo = codigo;
+    }
 
     public Long getId() {
         return id;

@@ -56,9 +56,9 @@ insert into tb_restaurante_usuario_responsavel (restaurante_id, usuario_id) valu
 
 INSERT INTO tb_pedido (restaurante_id, usuario_id, forma_pagamento_id, cidade_id, cep,
     logradouro, numero, complemento, bairro,
-    status, data_criacao, sub_total, taxa_frete, valor_total)
+    status, data_criacao, sub_total, taxa_frete, valor_total, codigo)
 VALUES (1, 1, 1, 1, '38400-000', 'Rua Floriano Peixoto', '500', 'Apto 801', 'Brasil',
-0, CURRENT_TIMESTAMP, 298.90, 10, 308.90);
+0, CURRENT_TIMESTAMP, 298.90, 10, 308.90, gen_random_uuid());
 
 INSERT INTO tb_item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 VALUES (1, 1, 1, 78.9, 78.9, 'sem obs');
@@ -69,9 +69,9 @@ VALUES (1, 2, 2, 110, 220, 'Menos picante, por favor');
 
 INSERT INTO tb_pedido (restaurante_id, usuario_id, forma_pagamento_id, cidade_id, cep,
         logradouro, numero, complemento, bairro,
-        status, data_criacao, sub_total, taxa_frete, valor_total)
+        status, data_criacao, sub_total, taxa_frete, valor_total, codigo)
 VALUES (4, 1, 2, 1, '38400-111', 'Rua Acre', '300', 'Casa 2', 'Centro',
-0, CURRENT_TIMESTAMP, 79, 0, 79);
+0, CURRENT_TIMESTAMP, 79, 0, 79, gen_random_uuid());
 
 INSERT INTO tb_item_pedido (pedido_id, produto_id, quantidade, preco_unitario, preco_total, observacao)
 VALUES (2, 6, 1, 79, 79, 'Ao ponto');

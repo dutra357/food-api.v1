@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -53,6 +54,12 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
     @Transactional(readOnly = true)
     public PedidoOutput buscarPorId(Long pedidoId) {
         return PedidoOutput.toPedidoOutput(buscaPorPedido(pedidoId));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PedidoOutput buscarPedidoPorCodigo(String codigo) {
+        return PedidoOutput.toPedidoOutput(buscaPorPedidoPorCodigo(codigo));
     }
 
     @Override
@@ -119,6 +126,11 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
         itemPedido.setPedido(pedido);
         itemPedido.calcularPrecoTotal();
         return itemPedido;
+    }
+
+    protected Pedido buscaPorPedidoPorCodigo(String codigo){
+        return pedidosRepository.buscarPedidoPorCodigo(UUID.fromString(codigo))
+                .orElseThrow(() -> new EntidadeNaoEncontradaException("Pedido não encontrado."));
     }
 
     protected Pedido buscaPorPedido(Long pedidoId){

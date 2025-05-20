@@ -8,11 +8,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class PedidoOutput {
 
 
-    private Long id;
+    private UUID codigo;
     private BigDecimal subTotal;
     private BigDecimal taxaFrete;
     private BigDecimal valorTotal;
@@ -34,13 +35,13 @@ public class PedidoOutput {
     public PedidoOutput() {
     }
 
-    public PedidoOutput(Long id, BigDecimal subTotal, BigDecimal taxaFrete,
+    public PedidoOutput(UUID codigo, BigDecimal subTotal, BigDecimal taxaFrete,
                         BigDecimal valorTotal, StatusPedido status, LocalDate dataCriacao,
                         LocalDate dataConfirmacao, LocalDate dataEntrega,
                         LocalDate dataCancelamento, RestauranteOutput restaurante,
                         UsuarioOutput cliente, FormaPagamento formaPagamento,
                         EnderecoOutput enderecoEntrega) {
-        this.id = id;
+        this.codigo = codigo;
         this.subTotal = subTotal;
         this.taxaFrete = taxaFrete;
         this.valorTotal = valorTotal;
@@ -58,7 +59,7 @@ public class PedidoOutput {
     public static PedidoOutput toPedidoOutput(Pedido pedido) {
         if (pedido == null) return null;
         PedidoOutput pedidoOutput = new PedidoOutput(
-                pedido.getId(),
+                pedido.getCodigo(),
                 pedido.getSubTotal(),
                 pedido.getTaxaFrete(),
                 pedido.getValorTotal(),
@@ -80,12 +81,12 @@ public class PedidoOutput {
         return pedidoOutput;
     }
 
-    public Long getId() {
-        return id;
+    public UUID getCodigo() {
+        return codigo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCodigo(UUID codigo) {
+        this.codigo = codigo;
     }
 
     public BigDecimal getSubTotal() {
@@ -192,11 +193,11 @@ public class PedidoOutput {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         PedidoOutput that = (PedidoOutput) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(codigo, that.codigo);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(codigo);
     }
 }

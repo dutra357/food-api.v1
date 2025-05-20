@@ -25,6 +25,11 @@ public class PedidosController {
         return ResponseEntity.ok(cadastropedidosService.buscarPorId(pedidoId));
     }
 
+    @GetMapping("/codigo/{codigo}")
+    public ResponseEntity<PedidoOutput> buscarPorCodigo(@PathVariable String codigo){
+        return ResponseEntity.ok(cadastropedidosService.buscarPedidoPorCodigo(codigo));
+    }
+
     @GetMapping
     public ResponseEntity<List<PedidoOutputShort>> buscarTodos(){
         return ResponseEntity.ok(cadastropedidosService.buscarTodos());

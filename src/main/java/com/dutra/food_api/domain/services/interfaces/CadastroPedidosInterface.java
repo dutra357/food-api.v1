@@ -13,4 +13,6 @@ public interface CadastroPedidosInterface {
     List<PedidoOutputShort> buscarTodos();
 
     PedidoOutput salvar(PedidoInput pedidoInput);
+
+    PedidoOutput buscarPedidoPorCodigo(String codigo);
 }
