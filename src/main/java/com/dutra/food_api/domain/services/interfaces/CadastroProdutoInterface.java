@@ -16,4 +16,6 @@ public interface CadastroProdutoInterface {
     ProdutoOutput buscarPorId(Long produtoId);
 
     List<ProdutoOutput> buscarTodas();
+
+    List<ProdutoOutput> findAtivoByRestaurante(Long restauranteId, boolean incluirInativos);
 }

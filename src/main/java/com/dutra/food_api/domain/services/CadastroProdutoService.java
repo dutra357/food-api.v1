@@ -66,6 +66,19 @@ public class CadastroProdutoService implements CadastroProdutoInterface {
         return produtoRepository.findAll().stream().map(ProdutoOutput::toProdutoOutput).toList();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProdutoOutput> findAtivoByRestaurante(Long restauranteId, boolean incluirInativos) {
+
+        if (incluirInativos) {
+            return produtoRepository.findAtivoByRestaurante(restauranteId)
+                    .stream().map(ProdutoOutput::toProdutoOutput).toList();
+        }
+
+        return produtoRepository.findAllByRestaurante(restauranteId)
+                .stream().map(ProdutoOutput::toProdutoOutput).toList();
+    }
+
     protected List<Produto> buscarPorIdsEPorRestaurante(@Param("ids") List<Long> ids, Long restauranteId) {
         return produtoRepository.buscarPorIdsEPorRestaurante(ids, restauranteId);
     }

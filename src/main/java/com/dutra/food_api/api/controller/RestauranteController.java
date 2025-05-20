@@ -40,7 +40,9 @@ public class RestauranteController {
         return ResponseEntity.ok(cadastroRestauranteService.buscarPrimeiro());
     }
 
-    @GetMapping("/buscar-resumido") //TESTE - solução não ideal para retorno
+    //TESTE - solução não ideal para retorno
+    //Uso de JAVA.LANG3 - adicionada ao POM
+    @GetMapping("/buscar-resumido")
     public ResponseEntity<MappingJacksonValue> buscarResumido(@RequestParam(required = false) String campos) {
 
         List<RestauranteOutput> restaurantes = cadastroRestauranteService.buscarTodos();

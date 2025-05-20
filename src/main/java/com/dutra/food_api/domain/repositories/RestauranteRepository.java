@@ -1,5 +1,6 @@
 package com.dutra.food_api.domain.repositories;
 
+import com.dutra.food_api.api.model.output.RestauranteOutput;
 import com.dutra.food_api.domain.models.Restaurante;
 import com.dutra.food_api.domain.repositories.custom.CustomJpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -16,7 +17,6 @@ public interface RestauranteRepository extends CustomJpaRepository<Restaurante, 
     //Para problem N+1
     @Query("from Restaurante r join fetch r.cozinha left join fetch r.formasPagamento")
     List<Restaurante> buscarTodosSemN1();
-
 
     @Query("from Restaurante where nome like %:parametro% and cozinha.id = :id")
     List<Restaurante> findPersonalizado(String parametro, @Param("id") Long cozinhaId);
