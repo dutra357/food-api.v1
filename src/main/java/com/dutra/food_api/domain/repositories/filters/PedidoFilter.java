@@ -9,16 +9,9 @@ public class PedidoFilter {
     private LocalDate dataCriacaoInicio;
     private LocalDate dataCriacaoFim;
 
+
     public PedidoFilter() {
-
-    }
-
-    public PedidoFilter(Long clienteId, Long restauranteId,
-                        LocalDate dataCriacaoInicio, LocalDate dataCriacaoFim) {
-        this.clienteId = clienteId;
-        this.restauranteId = restauranteId;
-        this.dataCriacaoInicio = dataCriacaoInicio;
-        this.dataCriacaoFim = dataCriacaoFim;
+        //construtor vazio para Spring
     }
 
     public Long getClienteId() {

@@ -2,9 +2,7 @@ package com.dutra.food_api.api.excemptions;
 
 import com.dutra.food_api.domain.services.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -16,6 +14,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @ControllerAdvice
@@ -65,7 +64,7 @@ public class ApiExceptionHandler {
         return problemDetail;
     }
 
-    //Handler para path variable de tipo errado
+    //Handler para path variable de tipo errado, inclusive 'specification'
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     private ResponseEntity<ProblemDetail> handleMethodArgumentNotValid(MethodArgumentTypeMismatchException exception,
                                                                        HttpServletRequest request) {
@@ -122,11 +121,13 @@ public class ApiExceptionHandler {
         problemDetail.setTitle("Erro de validação");
         problemDetail.setDetail("Um ou mais campos possuem valores inválidos.");
         problemDetail.setInstance(URI.create(request.getRequestURI()));
+        problemDetail.setProperty("timestamp", OffsetDateTime.now());
 
-        Map<String, String> fieldErrors = new HashMap<>();
-        for (FieldError fieldError : exception.getBindingResult().getFieldErrors()) {
-            fieldErrors.put(fieldError.getField(), fieldError.getDefaultMessage());
-        }
+        List<Map<String, String>> fieldErrors = exception.getBindingResult().getFieldErrors().stream()
+                .map(error -> Map.of(
+                        "campo", error.getField(),
+                        "mensagem", error.getDefaultMessage()))
+                .toList();
 
         problemDetail.setProperty("fieldErrors", fieldErrors);
 

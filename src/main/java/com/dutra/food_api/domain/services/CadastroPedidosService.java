@@ -6,6 +6,7 @@ import com.dutra.food_api.api.model.output.PedidoOutput;
 import com.dutra.food_api.api.model.output.PedidoOutputShort;
 import com.dutra.food_api.domain.models.*;
 import com.dutra.food_api.domain.repositories.PedidosRepository;
+import com.dutra.food_api.domain.repositories.specifications.PedidosFilterSpec;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.exceptions.NegotioException;
 import com.dutra.food_api.domain.services.interfaces.CadastroPedidosInterface;

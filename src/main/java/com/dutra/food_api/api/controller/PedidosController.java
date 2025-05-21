@@ -37,6 +37,7 @@ public class PedidosController {
         return ResponseEntity.ok(cadastropedidosService.buscarTodos());
     }
 
+    //Consulta customizada com Specification, JpaSpecificationExecutor
     @GetMapping("/com-spec")
     public ResponseEntity<List<PedidoOutputShort>> pesquisar(PedidoFilter pedidoFilter){
         return ResponseEntity.ok(cadastropedidosService.buscarTodosComSpec(PedidosFilterSpec.usingFilter(pedidoFilter)));

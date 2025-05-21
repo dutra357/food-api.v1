@@ -6,6 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PedidosFilterSpec {
 
@@ -22,7 +23,7 @@ public class PedidosFilterSpec {
                 query.distinct(true);
             }
 
-            var predicates = new ArrayList<Predicate>();
+            List<Predicate> predicates = new ArrayList<>();
 
             if (filter.getClienteId() != null) {
                 predicates.add(builder.equal(builder.toLong(root.get("cliente").get("id")),filter.getClienteId()));
