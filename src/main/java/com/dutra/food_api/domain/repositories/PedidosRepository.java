@@ -3,6 +3,7 @@ package com.dutra.food_api.domain.repositories;
 import com.dutra.food_api.domain.models.Pedido;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface PedidosRepository extends JpaRepository<Pedido, Long> {
+public interface PedidosRepository extends JpaRepository<Pedido, Long>, JpaSpecificationExecutor<Pedido> {
 
     @Query("from Pedido WHERE codigo = :codigo")
     Optional<Pedido> buscarPedidoPorCodigo(UUID codigo);
@@ -28,8 +29,6 @@ public interface PedidosRepository extends JpaRepository<Pedido, Long> {
     })
     @Query("SELECT p FROM Pedido p")
     List<Pedido> buscarPedidosComDetalhes();
-
-
 
     @EntityGraph(attributePaths = {
             "cliente",

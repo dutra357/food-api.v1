@@ -3,6 +3,8 @@ package com.dutra.food_api.api.controller;
 import com.dutra.food_api.api.model.input.PedidoInput;
 import com.dutra.food_api.api.model.output.PedidoOutput;
 import com.dutra.food_api.api.model.output.PedidoOutputShort;
+import com.dutra.food_api.domain.repositories.filters.PedidoFilter;
+import com.dutra.food_api.domain.repositories.specifications.PedidosFilterSpec;
 import com.dutra.food_api.domain.services.interfaces.CadastroPedidosInterface;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +33,13 @@ public class PedidosController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PedidoOutputShort>> buscarTodos(){
+    public ResponseEntity<List<PedidoOutputShort>> pesquisar(){
         return ResponseEntity.ok(cadastropedidosService.buscarTodos());
+    }
+
+    @GetMapping("/com-spec")
+    public ResponseEntity<List<PedidoOutputShort>> pesquisar(PedidoFilter pedidoFilter){
+        return ResponseEntity.ok(cadastropedidosService.buscarTodosComSpec(PedidosFilterSpec.usingFilter(pedidoFilter)));
     }
 
     @PostMapping

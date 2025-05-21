@@ -9,6 +9,7 @@ import com.dutra.food_api.domain.repositories.PedidosRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.exceptions.NegotioException;
 import com.dutra.food_api.domain.services.interfaces.CadastroPedidosInterface;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,6 +67,13 @@ public class CadastroPedidosService implements CadastroPedidosInterface {
     @Transactional(readOnly = true)
     public List<PedidoOutputShort> buscarTodos() {
         return pedidosRepository.buscarPedidosComDetalhes()
+                .stream().map(PedidoOutputShort::toPedidoOutputShort).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PedidoOutputShort> buscarTodosComSpec(Specification<Pedido> specification) {
+        return pedidosRepository.findAll(specification)
                 .stream().map(PedidoOutputShort::toPedidoOutputShort).toList();
     }
 
