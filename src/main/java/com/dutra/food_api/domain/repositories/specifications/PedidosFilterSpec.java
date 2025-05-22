@@ -13,10 +13,12 @@ public class PedidosFilterSpec {
     public static Specification<Pedido> usingFilter(PedidoFilter filter) {
         return (root, query, builder) -> {
 
-            var restauranteFetch = root.fetch("restaurante");
-            restauranteFetch.fetch("cozinha");
-            root.fetch("cliente");
-            root.fetch("formaPagamento");
+            if (Pedido.class.equals(query.getResultType())) {
+                var restauranteFetch = root.fetch("restaurante");
+                restauranteFetch.fetch("cozinha");
+                root.fetch("cliente");
+                root.fetch("formaPagamento");
+            }
 
             // Evita duplicatas no resultado
             if (query.getResultType() != Long.class) {

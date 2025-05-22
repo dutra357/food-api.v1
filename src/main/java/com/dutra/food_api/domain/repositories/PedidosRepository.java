@@ -1,6 +1,10 @@
 package com.dutra.food_api.domain.repositories;
 
+import com.dutra.food_api.api.model.output.PedidoOutputShort;
 import com.dutra.food_api.domain.models.Pedido;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -13,6 +17,8 @@ import java.util.UUID;
 
 @Repository
 public interface PedidosRepository extends JpaRepository<Pedido, Long>, JpaSpecificationExecutor<Pedido> {
+
+    Page<Pedido> findAll(Specification<Pedido> specification, Pageable pageable);
 
     @Query("from Pedido WHERE codigo = :codigo")
     Optional<Pedido> buscarPedidoPorCodigo(UUID codigo);

@@ -8,6 +8,8 @@ import com.dutra.food_api.domain.repositories.CozinhaRepository;
 import com.dutra.food_api.domain.services.exceptions.EntidadeNaoEncontradaException;
 import com.dutra.food_api.domain.services.interfaces.CadastroCozinhaInterface;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,8 +66,8 @@ public class CadastroCozinhaService implements CadastroCozinhaInterface {
 
     @Transactional(readOnly = false)
     @Override
-    public List<CozinhaOutput> buscarTodas() {
-        return cozinhaRepository.findAll().stream().map(CozinhaOutput::toCozinhaOutput).toList();
+    public Page<CozinhaOutput> buscarTodas(Pageable pageable) {
+        return cozinhaRepository.findAll(pageable).map(CozinhaOutput::toCozinhaOutput);
     }
 
     protected Cozinha buscarCozinha(Long id) {

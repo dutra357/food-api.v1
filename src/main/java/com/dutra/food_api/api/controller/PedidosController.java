@@ -7,6 +7,9 @@ import com.dutra.food_api.domain.repositories.filters.PedidoFilter;
 import com.dutra.food_api.domain.repositories.specifications.PedidosFilterSpec;
 import com.dutra.food_api.domain.services.interfaces.CadastroPedidosInterface;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,8 +42,9 @@ public class PedidosController {
 
     //Consulta customizada com Specification, JpaSpecificationExecutor
     @GetMapping("/com-spec")
-    public ResponseEntity<List<PedidoOutputShort>> pesquisar(PedidoFilter pedidoFilter){
-        return ResponseEntity.ok(cadastropedidosService.buscarTodosComSpec(PedidosFilterSpec.usingFilter(pedidoFilter)));
+    public ResponseEntity<Page<PedidoOutputShort>> pesquisar(@PageableDefault(size = 10, page = 0) Pageable pageable,
+                                                             PedidoFilter pedidoFilter){
+        return ResponseEntity.ok(cadastropedidosService.buscarTodosComSpec(pageable, PedidosFilterSpec.usingFilter(pedidoFilter)));
     }
 
     @PostMapping
