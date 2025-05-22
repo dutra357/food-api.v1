@@ -2,6 +2,7 @@ package com.dutra.food_api.api.controller;
 
 import com.dutra.food_api.api.model.input.CozinhaInput;
 import com.dutra.food_api.api.model.output.CozinhaOutput;
+import com.dutra.food_api.core.PageDto;
 import com.dutra.food_api.domain.services.CadastroCozinhaService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -34,8 +35,8 @@ public class CozinhaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<CozinhaOutput>> buscarTodas(Pageable pageable) {
-        return ResponseEntity.ok(cadastroCozinhaService.buscarTodas(pageable));
+    public ResponseEntity<PageDto<CozinhaOutput>> buscarTodas(Pageable pageable) {
+        return ResponseEntity.ok(new PageDto<>(cadastroCozinhaService.buscarTodas(pageable)));
     }
 
     @GetMapping("/{cozinhaId}")
