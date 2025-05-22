@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.*;
 
 @Entity
@@ -29,17 +29,17 @@ public class Pedido {
     private BigDecimal valorTotal;
 
     @CreationTimestamp
-    @Column(columnDefinition = "datetime", nullable = false)
-    private LocalDate  dataCriacao;
+    @Column(columnDefinition = "timestamp with time zone", nullable = false)
+    private OffsetDateTime  dataCriacao;
 
-    @Column(columnDefinition = "datetime")
-    private LocalDate dataConfirmacao;
+    @Column(columnDefinition = "timestamp with time zone")
+    private OffsetDateTime dataConfirmacao;
 
-    @Column(columnDefinition = "datetime")
-    private LocalDate dataCancelamento;
+    @Column(columnDefinition = "timestamp with time zone")
+    private OffsetDateTime dataCancelamento;
 
-    @Column(columnDefinition = "datetime")
-    private LocalDate dataEntrega;
+    @Column(columnDefinition = "timestamp with time zone")
+    private OffsetDateTime dataEntrega;
 
     @Embedded
     @Column(nullable = false)
@@ -68,8 +68,8 @@ public class Pedido {
     }
 
     public Pedido(Long id, BigDecimal subTotal, BigDecimal taxaFrete,
-                  BigDecimal valorTotal, LocalDate dataCriacao, LocalDate dataConfirmacao,
-                  LocalDate dataCancelamento, LocalDate dataEntrega, Endereco enderecoEntrega,
+                  BigDecimal valorTotal, OffsetDateTime dataCriacao, OffsetDateTime dataConfirmacao,
+                  OffsetDateTime dataCancelamento, OffsetDateTime dataEntrega, Endereco enderecoEntrega,
                   StatusPedido status, FormaPagamento formaPagamento, Restaurante restaurante, Usuario cliente) {
         this.id = id;
         this.subTotal = subTotal;
@@ -105,17 +105,17 @@ public class Pedido {
     }
 
     public void confirmar() {
-        setDataConfirmacao(LocalDate.now());
+        setDataConfirmacao(OffsetDateTime.now());
         setStatus(StatusPedido.CONFIRMADO);
     }
 
     public void cancelar() {
-        setDataCancelamento(LocalDate.now());
+        setDataCancelamento(OffsetDateTime.now());
         setStatus(StatusPedido.CANCELADO);
     }
 
     public void entregue() {
-        setDataEntrega(LocalDate.now());
+        setDataEntrega(OffsetDateTime.now());
         setStatus(StatusPedido.ENTREGUE);
     }
 
@@ -171,35 +171,35 @@ public class Pedido {
         this.valorTotal = valorTotal;
     }
 
-    public LocalDate getDataCriacao() {
+    public OffsetDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
+    public void setDataCriacao(OffsetDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDate getDataConfirmacao() {
+    public OffsetDateTime getDataConfirmacao() {
         return dataConfirmacao;
     }
 
-    public void setDataConfirmacao(LocalDate dataConfirmacao) {
+    public void setDataConfirmacao(OffsetDateTime dataConfirmacao) {
         this.dataConfirmacao = dataConfirmacao;
     }
 
-    public LocalDate getDataCancelamento() {
+    public OffsetDateTime getDataCancelamento() {
         return dataCancelamento;
     }
 
-    public void setDataCancelamento(LocalDate dataCancelamento) {
+    public void setDataCancelamento(OffsetDateTime dataCancelamento) {
         this.dataCancelamento = dataCancelamento;
     }
 
-    public LocalDate getDataEntrega() {
+    public OffsetDateTime getDataEntrega() {
         return dataEntrega;
     }
 
-    public void setDataEntrega(LocalDate dataEntrega) {
+    public void setDataEntrega(OffsetDateTime dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 

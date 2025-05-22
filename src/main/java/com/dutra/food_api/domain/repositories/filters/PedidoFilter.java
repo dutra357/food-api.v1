@@ -1,13 +1,13 @@
 package com.dutra.food_api.domain.repositories.filters;
 
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
 public class PedidoFilter {
 
     private Long clienteId;
     private Long restauranteId;
-    private LocalDate dataCriacaoInicio;
-    private LocalDate dataCriacaoFim;
+    private OffsetDateTime dataCriacaoInicio;
+    private OffsetDateTime dataCriacaoFim;
 
 
     public PedidoFilter() {
@@ -30,19 +30,19 @@ public class PedidoFilter {
         this.restauranteId = restauranteId;
     }
 
-    public LocalDate getDataCriacaoInicio() {
+    public OffsetDateTime getDataCriacaoInicio() {
         return dataCriacaoInicio;
     }
 
-    public void setDataCriacaoInicio(LocalDate dataCriacaoInicio) {
+    public void setDataCriacaoInicio(OffsetDateTime dataCriacaoInicio) {
         this.dataCriacaoInicio = dataCriacaoInicio;
     }
 
-    public LocalDate getDataCriacaoFim() {
+    public OffsetDateTime getDataCriacaoFim() {
         return dataCriacaoFim;
     }
 
-    public void setDataCriacaoFim(LocalDate dataCriacaoFim) {
+    public void setDataCriacaoFim(OffsetDateTime dataCriacaoFim) {
         this.dataCriacaoFim = dataCriacaoFim;
     }
 }

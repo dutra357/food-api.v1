@@ -1,6 +1,6 @@
 package com.dutra.food_api.api.controller;
 
-import com.dutra.food_api.api.model.metrics.VendaDiaria;
+import com.dutra.food_api.api.model.metrics.VendaDiariaOutput;
 import com.dutra.food_api.domain.repositories.filters.VendaDiariaFilter;
 import com.dutra.food_api.domain.services.interfaces.VendasMetricasInterface;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class MetricasController {
     }
 
     @GetMapping("/vendas-diarias")
-    public ResponseEntity<List<VendaDiaria>> consultarVendasDiarias(VendaDiariaFilter filtro) {
+    public ResponseEntity<List<VendaDiariaOutput>> consultarVendasDiarias(VendaDiariaFilter filtro) {
         return ResponseEntity.ok(vendasMetricasService.consultarVendasDiarias(filtro));
     }
 }

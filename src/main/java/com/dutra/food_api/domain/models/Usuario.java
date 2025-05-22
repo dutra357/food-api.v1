@@ -25,7 +25,7 @@ public class Usuario {
     private String senha;
 
     @CreationTimestamp
-    @Column(columnDefinition = "datetime")
+    @Column(columnDefinition = "timestamp with time zone")
     private OffsetDateTime dataCadastro;
 
     @ManyToMany

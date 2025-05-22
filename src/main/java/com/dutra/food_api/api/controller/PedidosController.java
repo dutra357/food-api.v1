@@ -55,7 +55,8 @@ public class PedidosController {
         return ResponseEntity.ok(cadastropedidosService.salvar(pedidoInput));
     }
 
-    public Pageable translateFields(Pageable pageableInput) {
+    //Exclusivamente para ajuste dos parâmetros de paginação
+    private Pageable translateFields(Pageable pageableInput) {
         var mapeamento = ImmutableMap.of(
                 "nomeCliente",  "cliente.nome",
                 "restauranteId", "restaurante.id",

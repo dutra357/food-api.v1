@@ -1,30 +1,30 @@
 package com.dutra.food_api.api.model.metrics;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 
-public class VendaDiaria {
+public class VendaDiariaOutput {
 
-    private LocalDate dataVendas;
+    private OffsetDateTime dataVendas;
     private Long totalVendas;
     private BigDecimal totalFaturado;
 
-    public VendaDiaria() {
+    public VendaDiariaOutput() {
 
     }
 
-    public VendaDiaria(LocalDate dataVendas,
-                       Long totalVendas, BigDecimal totalFaturado) {
+    public VendaDiariaOutput(OffsetDateTime dataVendas,
+                             Long totalVendas, BigDecimal totalFaturado) {
         this.dataVendas = dataVendas;
         this.totalVendas = totalVendas;
         this.totalFaturado = totalFaturado;
     }
 
-    public LocalDate getDataVendas() {
+    public OffsetDateTime getDataVendas() {
         return dataVendas;
     }
 
-    public void setDataVendas(LocalDate dataVendas) {
+    public void setDataVendas(OffsetDateTime dataVendas) {
         this.dataVendas = dataVendas;
     }
 

@@ -53,11 +53,11 @@ public class Restaurante {
     private boolean aberto = true;
 
     @CreationTimestamp
-    @Column(columnDefinition = "datetime")
+    @Column(columnDefinition = "timestamp with time zone")
     private OffsetDateTime dataCadastro = OffsetDateTime.now();
 
     @UpdateTimestamp
-    @Column(columnDefinition = "datetime")
+    @Column(columnDefinition = "timestamp with time zone")
     private OffsetDateTime dataAtualizacao;
 
     @OneToMany(mappedBy = "restaurante")

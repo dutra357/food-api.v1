@@ -4,7 +4,7 @@ import com.dutra.food_api.domain.models.Pedido;
 import com.dutra.food_api.domain.models.enumerations.StatusPedido;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 public class PedidoOutputShort {
@@ -18,7 +18,7 @@ public class PedidoOutputShort {
 
     private StatusPedido status;
 
-    private LocalDate dataCriacao;
+    private OffsetDateTime dataCriacao;
     private RestauranteOutput restaurante;
     private UsuarioOutput cliente;
 
@@ -27,7 +27,7 @@ public class PedidoOutputShort {
 
     public PedidoOutputShort(Long id, BigDecimal subTotal,
                              BigDecimal taxaFrete, BigDecimal valorTotal,
-                             StatusPedido status, LocalDate dataCriacao,
+                             StatusPedido status, OffsetDateTime dataCriacao,
                              RestauranteOutput restaurante, UsuarioOutput cliente) {
         this.id = id;
         this.subTotal = subTotal;
@@ -92,11 +92,11 @@ public class PedidoOutputShort {
         this.status = status;
     }
 
-    public LocalDate getDataCriacao() {
+    public OffsetDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
+    public void setDataCriacao(OffsetDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 

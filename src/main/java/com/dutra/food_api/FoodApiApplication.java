@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableJpaRepositories(repositoryBaseClass = CustomRepositoryImpl.class) //Especialização do SimpleJpa
@@ -14,7 +13,9 @@ public class FoodApiApplication {
 
 	public static void main(String[] args) {
 
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC")); //Seta o timeZone 'Z' em UTZ para a aplicação
+		//Seta o timeZone 'Z' em UTC para a aplicação
+		//Substituído pela config
+		//TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
 
 
 		SpringApplication.run(FoodApiApplication.class, args);

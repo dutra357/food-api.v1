@@ -4,7 +4,7 @@ import com.dutra.food_api.domain.models.*;
 import com.dutra.food_api.domain.models.enumerations.StatusPedido;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,10 +20,10 @@ public class PedidoOutput {
 
     private StatusPedido status;
 
-    private LocalDate dataCriacao;
-    private LocalDate dataConfirmacao;
-    private LocalDate dataEntrega;
-    private LocalDate dataCancelamento;
+    private OffsetDateTime dataCriacao;
+    private OffsetDateTime dataConfirmacao;
+    private OffsetDateTime dataEntrega;
+    private OffsetDateTime dataCancelamento;
 
     private RestauranteOutput restaurante;
     private UsuarioOutput cliente;
@@ -36,9 +36,9 @@ public class PedidoOutput {
     }
 
     public PedidoOutput(UUID codigo, BigDecimal subTotal, BigDecimal taxaFrete,
-                        BigDecimal valorTotal, StatusPedido status, LocalDate dataCriacao,
-                        LocalDate dataConfirmacao, LocalDate dataEntrega,
-                        LocalDate dataCancelamento, RestauranteOutput restaurante,
+                        BigDecimal valorTotal, StatusPedido status, OffsetDateTime dataCriacao,
+                        OffsetDateTime dataConfirmacao, OffsetDateTime dataEntrega,
+                        OffsetDateTime dataCancelamento, RestauranteOutput restaurante,
                         UsuarioOutput cliente, FormaPagamento formaPagamento,
                         EnderecoOutput enderecoEntrega) {
         this.codigo = codigo;
@@ -121,35 +121,35 @@ public class PedidoOutput {
         this.status = status;
     }
 
-    public LocalDate getDataCriacao() {
+    public OffsetDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDate dataCriacao) {
+    public void setDataCriacao(OffsetDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDate getDataConfirmacao() {
+    public OffsetDateTime getDataConfirmacao() {
         return dataConfirmacao;
     }
 
-    public void setDataConfirmacao(LocalDate dataConfirmacao) {
+    public void setDataConfirmacao(OffsetDateTime dataConfirmacao) {
         this.dataConfirmacao = dataConfirmacao;
     }
 
-    public LocalDate getDataEntrega() {
+    public OffsetDateTime getDataEntrega() {
         return dataEntrega;
     }
 
-    public void setDataEntrega(LocalDate dataEntrega) {
+    public void setDataEntrega(OffsetDateTime dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 
-    public LocalDate getDataCancelamento() {
+    public OffsetDateTime getDataCancelamento() {
         return dataCancelamento;
     }
 
-    public void setDataCancelamento(LocalDate dataCancelamento) {
+    public void setDataCancelamento(OffsetDateTime dataCancelamento) {
         this.dataCancelamento = dataCancelamento;
     }
 
