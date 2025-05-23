@@ -1,13 +1,18 @@
 package com.dutra.food_api.domain.repositories.filters;
 
 import com.dutra.food_api.domain.models.enumerations.StatusPedido;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.OffsetDateTime;
 
 public class VendaDiariaFilter {
 
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime dataCriacaoInicio;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private OffsetDateTime dataCriacaoFim;
+
     private Long restauranteId;
     private StatusPedido statusPedido;
 
